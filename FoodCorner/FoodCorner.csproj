@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\ViewModels\" />
+    <Folder Include="Areas\Admin\ViewCompanents\" />
+    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\Client\Controllers\" />
+    <Folder Include="Areas\Client\ActionFilter\" />
+    <Folder Include="Areas\Client\ViewCompanents\" />
+    <Folder Include="Areas\Client\ViewModels\" />
+    <Folder Include="Areas\Client\Views\" />
+    <Folder Include="Contracts\" />
+    <Folder Include="Database\Configuration\" />
+    <Folder Include="Database\Models\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Options\" />
+    <Folder Include="Services\Abstracts\" />
+    <Folder Include="Services\Concretes\" />
+    <Folder Include="wwwroot\Admin\" />
+    <Folder Include="wwwroot\Client\" />
+  </ItemGroup>
+
+</Project>
