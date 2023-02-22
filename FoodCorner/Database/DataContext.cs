@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FoodCorner.Extensions;
+using FoodCorner.Database.Models;
+
 namespace FoodCorner.Database
 {
     public class DataContext : DbContext
@@ -10,7 +12,8 @@ namespace FoodCorner.Database
 
         }
 
-
+        public DbSet<Navbar> Navbars { get; set; }
+        public DbSet<SubNavbar> SubNavbars { get; set; }
 
 
 

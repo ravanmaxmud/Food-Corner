@@ -1,0 +1,42 @@
+﻿@*<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Books</h4>
+            </div>
+            <div class="card-body">
+                <div class="general-label">
+                    <form method="POST" asp-route="admin-nav-update" asp-route-id="@Model.Id">
+                        <div class="form-check form-switch">
+                            <label asp-for="IsViewFooter"></label>
+                            <input type="checkbox" asp-for="IsViewFooter" class="form-check-input">
+                            <span asp-validation-for="IsViewFooter" class="text-danger"></span>
+                        </div>
+                        <div class="form-check form-switch">
+                            <label asp-for="IsViewHeader"></label>
+                            <input type="checkbox" asp-for="IsViewHeader" class="form-check-input">
+                            <span asp-validation-for="IsViewHeader" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ToURL"></label>
+                            <input asp-for="ToURL" class="form-control">
+                            <span asp-validation-for="ToURL" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Order"></label>
+                            <input asp-for="Order" class="form-control">
+                            <span asp-validation-for="Order" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div>
+</div>*@
