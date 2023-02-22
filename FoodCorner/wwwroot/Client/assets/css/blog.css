@@ -1,0 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.featured-products img {
+  width: 90px;
+  height: 120px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}/*# sourceMappingURL=blog.css.map */

@@ -11,23 +11,39 @@
     <Folder Include="Areas\Admin\ViewModels\" />
     <Folder Include="Areas\Admin\ViewCompanents\" />
     <Folder Include="Areas\Admin\Views\" />
-    <Folder Include="Areas\Client\Controllers\" />
     <Folder Include="Areas\Client\ActionFilter\" />
     <Folder Include="Areas\Client\ViewCompanents\" />
     <Folder Include="Areas\Client\ViewModels\" />
-    <Folder Include="Areas\Client\Views\" />
     <Folder Include="Contracts\" />
     <Folder Include="Database\Configuration\" />
     <Folder Include="Database\Models\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Infrastructure\" />
     <Folder Include="Migrations\" />
     <Folder Include="Options\" />
     <Folder Include="Services\Abstracts\" />
     <Folder Include="Services\Concretes\" />
-    <Folder Include="wwwroot\Admin\" />
-    <Folder Include="wwwroot\Client\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.IServiceCollection.AddIUrlHelper" Version="1.1.0" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="MailKit" Version="3.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
+    <PackageReference Include="MimeKit" Version="3.5.0" />
   </ItemGroup>
 
 </Project>

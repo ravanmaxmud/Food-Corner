@@ -1,0 +1,201 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/*>>>>>>>> My-account <<<<<<<<<*/
+.myaccount-tab-menu {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+  .myaccount-tab-menu a {
+    border: 1px solid #cecece;
+    border-bottom: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 12px;
+    display: block;
+    padding: 15px 15px 13px;
+    text-transform: uppercase; }
+    .myaccount-tab-menu a:last-child {
+      border-bottom: 1px solid #cecece; }
+    .myaccount-tab-menu a:hover, .myaccount-tab-menu a.active {
+      background-color: #0F4438;
+      color: #fff; }
+    .myaccount-tab-menu a i {
+      font-size: 14px;
+      text-align: center;
+      width: 25px; }
+
+/*-- My Account Content -*/
+.myaccount-content {
+  font-size: 14px;
+  border: 1px solid #cecece;
+  padding: 30px;
+  color: #333; }
+  @media only screen and (max-width: 479px) {
+    .myaccount-content {
+      padding: 20px 15px; } }
+  .myaccount-content h3 {
+    border-bottom: 1px dashed #cecece;
+    padding-bottom: 10px;
+    margin-bottom: 25px; }
+  .myaccount-content .welcome a {
+    color: inherit; }
+    .myaccount-content .welcome a:hover {
+      color: #62ab00; }
+  .myaccount-content .welcome strong {
+    font-weight: 600; }
+  .myaccount-content a.btn i {
+    padding-right: 5px; }
+  .myaccount-content button.save-change-btn {
+    background: none;
+    border: none;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #ffffff;
+    background-color: #555555;
+    border-color: #555555;
+    width: 140px;
+    padding: 10px 0;
+    border-radius: 3px; }
+    .myaccount-content button.save-change-btn:hover {
+      background-color: #62ab00; }
+
+/*-- My Account Table -*/
+.myaccount-table {
+  white-space: nowrap;
+  font-size: 15px; }
+  .myaccount-table table th,
+  .myaccount-table .table th {
+    padding: 10px;
+    background: #14191E;
+    color: #fff;
+    border-color: #565f69; }
+  .myaccount-table table td,
+  .myaccount-table .table td {
+    padding: 20px 10px;
+    vertical-align: middle;
+    border-color: #565f69; }
+    .myaccount-table table td a:hover,
+    .myaccount-table .table td a:hover {
+      color: #62ab00; }
+
+.saved-message {
+  border-top: 3px solid #62ab00;
+  border-radius: 5px 5px 0 0;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 20px; }
+
+/*-- My Account Details Form -*/
+.account-details-form h4 {
+  margin: 0; }
+
+.account-details-form input {
+  display: block;
+  width: 100%;
+  border: 1px solid #cecece;
+  border-radius: 0;
+  line-height: 24px;
+  padding: 11px 25px;
+  color: #333;
+  background: transparent;
+  border-radius: 3px; }
+  .account-details-form input:focus {
+    border-color: #0F4438;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none; }
+
+/*=====  End of 16. My Account  ======*/
+/*-- Order Complete --*/
+/*Order Complete Message*/
+.order-complete-message h1 {
+  color: #333;
+  font-size: 36px;
+  line-height: 48px;
+  font-weight: 700; }
+  @media only screen and (max-width: 575px) {
+    .order-complete-message h1 {
+      font-size: 26px;
+      line-height: 30px; } }
+
+.order-complete-message p {
+  font-size: 24px;
+  font-weight: 300; }
+  @media only screen and (max-width: 575px) {
+    .order-complete-message p {
+      font-size: 18px;
+      line-height: 24px; } }
+
+.order-table-title {
+  font-size: 24px;
+  font-weight: 600; }
+
+/*Order Details List*/
+.order-details-list {
+  list-style: inside;
+  margin-bottom: 10px; }
+
+/*Order Details Table*/
+.order-details-table {
+  border: 1px solid #e5e5e5;
+  margin: 0; }
+  .order-details-table thead tr th {
+    font-weight: 400;
+    color: #333;
+    border: none;
+    border-right: 1px solid #e5e5e5; }
+  .order-details-table tbody tr td {
+    border-top: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5; }
+    .order-details-table tbody tr td .btn {
+      padding: 6px 35px; }
+  .order-details-table tfoot tr th {
+    font-weight: 400;
+    color: #333;
+    border-right: 1px solid #e5e5e5; }
+  .order-details-table tfoot tr td {
+    border-top: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5; }
+
+
+    .view-order{
+      color: #0F4438;
+      &:hover{
+        color: #BB9E60 !important;
+      }
+    }
+
+
+
+    .btn-save{
+      background-color: #0F4438;
+      color: white !important;
+      border:  3px solid #0F4438;
+      &:hover{
+          background-color: white;
+          border:  3px solid #0F4438;
+          color: #0F4438 !important;
+      }
+  }
+
+  .special-img{
+     img{
+      width: 50%;
+      height: 50px;
+      object-fit: cover;
+     }
+  }
+  .remove-special{
+    a{
+      color: #0F4438;
+       &:hover{
+        color: #BB9E60 !important;
+       }
+    }
+  }

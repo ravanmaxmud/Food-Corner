@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.remove-product {
+  font-size: 30px;
+  margin-left: 50px;
+  color: #0F4438;
+  transition: 0.5s;
+}
+.remove-product:hover {
+  color: #BB9E60;
+}
+
+.basket-product-image img {
+  width: 60px;
+  height: 90px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.check-out-btn {
+  color: white !important;
+}/*# sourceMappingURL=shoppingCart.css.map */

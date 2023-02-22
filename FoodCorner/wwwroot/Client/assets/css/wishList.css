@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.table-content .table > :not(:last-child) > :last-child > * {
+  border-bottom-color: #dee2e6;
+}
+
+.table-content table {
+  border-color: #dee2e6;
+  border-radius: 0;
+  border-style: solid;
+  border-width: 1px 0 0 1px;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .table-content table thead tr {
+    display: none;
+  }
+}
+.table-content table th,
+.table-content table td {
+  border-bottom: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+}
+
+.table-content table th {
+  border-top: medium none;
+  font-size: 15px;
+  text-transform: capitalize;
+  padding: 20px 10px;
+  text-align: center;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.table-content table td {
+  border-top: medium none;
+  padding: 18px 10px;
+  vertical-align: middle;
+  font-size: 13px;
+}
+
+@media (max-width: 767px) {
+  .table-content table td {
+    width: 100%;
+    display: block;
+  }
+}
+@media (max-width: 767px) {
+  .table-content table td:nth-child(3) {
+    padding: 32.1px 10px;
+    display: block;
+    width: 100%;
+  }
+}
+.table-content table td.product_remove {
+  font-size: 20px;
+}
+.table-content table td.product_remove a {
+  color: #0F4438;
+}
+
+.table-content table td.product-thumbnail img {
+  width: 50%;
+  height: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.table-content table td.product-name {
+  font-size: 16px;
+  text-transform: capitalize;
+}
+.table-content table td.product-name a {
+  color: #0F4438;
+}
+
+.table-content table td.product-price {
+  font-size: 16px;
+}
+
+.table-content table td.cart_btn a {
+  font-size: 14px;
+  text-transform: uppercase;
+  background: #505050;
+  color: #ffffff;
+  height: 40px;
+  line-height: 43px;
+  width: 130px;
+  display: inline-block;
+  transition: all 0.3s ease 0s;
+}
+
+.table-content table td.cart_btn a:hover {
+  background: #abd373;
+  color: #ffffff;
+}
+
+.btn-save {
+  background-color: #0F4438 !important;
+  color: white !important;
+  border: 3px solid #0F4438 !important;
+}
+.btn-save:hover {
+  background-color: white !important;
+  border: 3px solid #0F4438 !important;
+  color: #0F4438 !important;
+}/*# sourceMappingURL=wishList.css.map */

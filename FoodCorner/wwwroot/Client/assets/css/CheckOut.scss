@@ -1,0 +1,121 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.your-order {
+    background: #f1f1f1;
+    padding: 30px 40px 30px;
+  }
+  
+  .your-order h3 {
+    border-bottom: 1px solid #dee2e6;
+    font-size: 25px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    width: 100%;
+  }
+  
+  @media (max-width: 767px) {
+    .your-order h3 {
+      font-size: 18px;
+    }
+  }
+  
+  .your-order .your-order-table table {
+    background: rgba(0, 0, 0, 0);
+    border: medium none;
+    width: 100%;
+  }
+  
+  .your-order .your-order-table table thead {
+    background-color: #f1f1f1;
+  }
+  
+  .your-order .your-order-table table thead tr th {
+    border-top: medium none;
+    font-weight: normal;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    width: 250px;
+  }
+  
+  .your-order .your-order-table table thead tr th,
+  .your-order .your-order-table table thead tr td {
+    border-bottom: 1px solid #dee2e6;
+    border-right: medium none;
+    font-size: 14px;
+    padding: 15px 0;
+    text-align: center;
+  }
+  
+  .your-order .your-order-table table .cart_item:hover {
+    background: #f1f1f1;
+  }
+  
+  .your-order .your-order-table table .order-total td {
+    border-bottom: medium none;
+  }
+  
+  .your-order .your-order-table table .order-total td span {
+    font-size: 20px;
+  }
+  
+  .your-order .your-order-table table .order-total th {
+    border-bottom: medium none;
+    font-size: 18px;
+  }
+  
+  .payment-method {
+    margin-top: 20px;
+  }
+  
+  .payment-method .payment-accordion .card {
+    border: 0;
+    border-radius: 0;
+    background: #f1f1f1;
+  }
+  
+  .payment-method .payment-accordion .card-header {
+    padding: 0;
+    margin-bottom: 0;
+    background-color: #f1f1f1;
+    border-bottom: 0;
+  }
+  
+  .payment-method .payment-accordion .card-body {
+    padding: 0;
+  }
+  
+  .payment-method .payment-accordion .panel.panel-default {
+    margin-bottom: 20px;
+  }
+  
+  .payment-method .payment-accordion .panel-title {
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .order-button-payment button {
+    background-color: #505050;
+    border: medium none;
+    color: #ffffff;
+    font-size: 17px;
+    height: 50px;
+    margin: 20px 0 0;
+    padding: 0;
+    text-transform: uppercase;
+    -webkit-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    width: 100%;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .order-button-payment button:hover {
+    background-color: #0F4438;
+    color: #ffffff;
+  }
