@@ -27,8 +27,8 @@
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="ToURL"></label>
-                            <input asp-for="ToURL" class="form-control">
+                            <label>Urls</label>
+                            <select asp-for="ToURL" asp-items="@(new SelectList(Model.Urls, nameof(AddViewModel.UrlViewModel.Path), nameof(AddViewModel.UrlViewModel.Path)))" class="form-select">                            </select>
                             <span asp-validation-for="ToURL" class="text-danger"></span>
                         </div>
                         <div class="form-group">
