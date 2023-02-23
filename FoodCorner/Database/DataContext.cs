@@ -14,6 +14,7 @@ namespace FoodCorner.Database
 
         public DbSet<Navbar> Navbars { get; set; }
         public DbSet<SubNavbar> SubNavbars { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
 
 
 

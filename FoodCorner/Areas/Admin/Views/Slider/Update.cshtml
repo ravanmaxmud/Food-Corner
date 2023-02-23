@@ -1,0 +1,36 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.Slider
+@model UpdateViewModel
+
+<div class="card-body">
+    <form method="POST" asp-route="admin-slider-update" enctype="multipart/form-data" class="row g-3 needs-validation">
+        <div class="col-md-4">
+            <label asp-for="HeaderTitle" class="form-label"></label>
+            <input asp-for="HeaderTitle" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="HeaderTitle" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="MainTitle" class="form-label"></label>
+            <input asp-for="MainTitle" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="MainTitle" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Button" class="form-label"></label>
+            <input asp-for="Button" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="Button" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="ButtonRedirectUrl" class="form-label"></label>
+            <select asp-for="ButtonRedirectUrl" asp-items="@(new SelectList(Model.Urls, nameof(UpdateViewModel.UrlViewModel.Path), nameof(UpdateViewModel.UrlViewModel.Path)))" class="form-select"></select>
+            <span asp-validation-for="ButtonRedirectUrl" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Backgroundİmage" class="form-label"></label>
+            <input asp-for="Backgroundİmage" class="form-control" id="validationCustom01">
+            <span asp-validation-for="Backgroundİmage" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form><!--end form-->
+</div>

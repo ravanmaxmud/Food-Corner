@@ -1,0 +1,38 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.Slider
+@model List<ListItemViewModel>
+
+
+<div class="card-body">
+    <div class="table-responsive">
+        <a asp-route="admin-slider-add" class="btn btn-secondary">Add new Slider</a>
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                     <th>SliderImg</th>
+                    <th>HeaderTitle</th>
+                    <th>MainTitle</th>
+                    <th>Button</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><img style="width:60px; height:50px; object-fit:cover;" src="~/@item.BackgroundİmageUrl"/></td>
+                        <td>@item.HeaderTitle</td>
+                        <td>@item.MainTitle</td>
+                        <td>@item.Button</td>
+                        <td class="text-end">
+                            <a asp-route="admin-slider-update" asp-route-id="@item.Id"><i class="las la-pen text-secondary font-16"></i></a>
+                            <form method="POST" asp-route="admin-slider-delete" asp-route-id="@item.Id" id="book-form-@item.Id"></form>
+                            <button style="background-color:none; border:none;" type="submit" form="book-form-@item.Id">
+                                <i class="las la-trash-alt text-secondary font-16"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table><!--end /table-->
+    </div><!--end /tableresponsive-->
+</div>

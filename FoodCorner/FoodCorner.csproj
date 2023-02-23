@@ -9,13 +9,9 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\ViewCompanents\" />
     <Folder Include="Areas\Client\ActionFilter\" />
-    <Folder Include="Areas\Client\ViewModels\" />
-    <Folder Include="Contracts\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Migrations\" />
     <Folder Include="Options\" />
-    <Folder Include="Services\Abstracts\" />
-    <Folder Include="Services\Concretes\" />
   </ItemGroup>
 
   <ItemGroup>
