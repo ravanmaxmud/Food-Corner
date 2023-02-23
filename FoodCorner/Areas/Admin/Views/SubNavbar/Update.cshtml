@@ -1,0 +1,30 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.SubNavbars
+@model UpdateViewModel
+
+<div class="card-body">
+    <form method="POST" asp-route="admin-subnav-update" class="row g-3 needs-validation">
+        <div class="col-md-4">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Order" class="form-label"></label>
+            <input asp-for="Order" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="Order" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="ToURL" class="form-label"></label>
+            <select asp-for="ToURL" asp-items="@(new SelectList(Model.Urls, nameof(UpdateViewModel.UrlViewModel.Path), nameof(UpdateViewModel.UrlViewModel.Path)))" class="form-select"></select>
+            <span asp-validation-for="ToURL" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="NavbarId" class="form-label"></label>
+            <select asp-for="NavbarId" asp-items="@(new SelectList(Model.Navbar, nameof(NavbarListItemViewModel.Id), nameof(NavbarListItemViewModel.Name)))" class="form-select"></select>
+            <span asp-validation-for="NavbarId" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form><!--end form-->
+</div>

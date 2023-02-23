@@ -55,6 +55,11 @@ namespace FoodCorner.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model = new AddViewModel
+                {
+                    Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
+                  .Select(u => new AddViewModel.UrlViewModel(u!.AttributeRouteInfo.Template)).ToList()
+                };
                 return View(model);
             }
 
@@ -100,6 +105,8 @@ namespace FoodCorner.Areas.Admin.Controllers
                 Order = navItem.Order,
                 IsViewHeader = navItem.IsViewHeader,
                 IsViewFooter = navItem.IsViewFooter,
+                Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
+                .Select(u => new UpdateViewModel.UrlViewModel(u!.AttributeRouteInfo.Template)).ToList()
             };
             return View(model);
         }

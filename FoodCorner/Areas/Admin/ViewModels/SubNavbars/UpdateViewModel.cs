@@ -1,23 +1,18 @@
-﻿using Microsoft.Build.Framework;
-
-namespace FoodCorner.Areas.Admin.ViewModels.Navbar
+﻿namespace FoodCorner.Areas.Admin.ViewModels.SubNavbars
 {
-    public class AddViewModel
+    public class UpdateViewModel
     {
-        [Required]
+
+        public int Id { get; set; }
         public string Name { get; set; }
-        [Required]
         public string ToURL { get; set; }
 
         public List<UrlViewModel>? Urls { get; set; }
 
         public int Order { get; set; }
 
-        [Required]
-        public bool IsViewHeader { get; set; }
-        [Required]
-        public bool IsViewFooter { get; set; }
-
+        public int NavbarId { get; set; }
+        public List<NavbarListItemViewModel>? Navbar { get; set; }
 
         public class UrlViewModel
         {

@@ -16,7 +16,7 @@
 									<ul data-state="closed" class="primary-navigation" id="primary-navigation">
 										@foreach (var item in Model)
 										{
-									    <li><a asp-route="@item.ToURL">@item.Name</a></li>
+									    <li><a href="@item.ToURL">@item.Name</a></li>
 										
 										}
 									</ul>
@@ -31,7 +31,7 @@
 										<div class="dropdown-content">
 											@foreach (var subNav in item.SubNavbars )
 											{
-												<a asp-route="@subNav.ToURL">@subNav.Name</a>
+												<a href="@subNav.ToURL">@subNav.Name</a>
 											}		
 										</div>
 									</div>
@@ -39,7 +39,7 @@
 								else
 								{
 									<div class="dropdown">
-										<a asp-route="@item.ToURL" class="dropbtn">@item.Name</a>
+										<a href="@item.ToURL" class="dropbtn">@item.Name</a>
 									</div>
 								}
 								

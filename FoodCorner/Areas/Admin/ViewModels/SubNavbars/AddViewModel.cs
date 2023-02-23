@@ -1,27 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FoodCorner.Areas.Admin.ViewModels.Navbar
+namespace FoodCorner.Areas.Admin.ViewModels.SubNavbars
 {
-    public class UpdateViewModel
+    public class AddViewModel
     {
         public int Id { get; set; }
         [Required]
-        public string? Name { get; set; }
-        [Required]
-        public string? ToURL { get; set; }
+        public string Name { get; set; }
 
         [Required]
+        public string? ToURL { get; set; }
         public List<UrlViewModel>? Urls { get; set; }
+
+
         [Required]
         public int Order { get; set; }
 
         [Required]
-        public bool IsViewHeader { get; set; }
-        [Required]
-        public bool IsViewFooter { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public int NavbarId { get; set; }
+        public List<NavbarListItemViewModel>? Navbar { get; set; }
 
 
         public class UrlViewModel

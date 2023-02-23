@@ -1,0 +1,35 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.SubNavbars
+@model List<ListItemViewModel>
+
+<div class="card-body">
+    <div class="table-responsive">
+        <a asp-route="admin-subnav-add" class="btn btn-secondary">Add new Navbar</a>
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>Sub Navbar Title</th>
+                    <th>Order</th>
+                    <th>Navbar Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Order</td>
+                        <td>@item.Navbar</td>
+                        <td class="text-end">
+                            <a asp-route="admin-subnav-update" asp-route-id="@item.Id"><i class="las la-pen text-secondary font-16"></i></a>
+                            <form method="POST" asp-route="admin-subnav-delete" asp-route-id="@item.Id" id="book-form-@item.Id"></form>
+                            <button style="background-color:none; border:none;" type="submit" form="book-form-@item.Id">
+                                <i class="las la-trash-alt text-secondary font-16"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+             
+            </tbody>
+        </table><!--end /table-->
+    </div><!--end /tableresponsive-->
+</div>
