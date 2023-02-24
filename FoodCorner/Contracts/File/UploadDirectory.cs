@@ -3,6 +3,7 @@
     public enum UploadDirectory
     {
          Slider = 1,
+        Product = 2,
 
     }
 }

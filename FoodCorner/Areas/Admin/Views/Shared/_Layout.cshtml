@@ -18,6 +18,9 @@
 
     <!-- App css -->
     <link href="~/admin/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="~/admin/assets/plugins/uppy/uppy.min.css" rel="stylesheet" type="text/css" />
+      <link href="~/admin/assets/css/DropZone.css" rel="stylesheet" type="text/css" />
+
     <link href="~/admin/assets/css/icons.min.css" rel="stylesheet" type="text/css" asp-append-version="true" />
     <link href="~/admin/assets/css/app.min.css" rel="stylesheet" type="text/css" asp-append-version="true" />
 
@@ -433,9 +436,9 @@
 
 
     <!-- App js -->
-
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="~/admin/assets/js/DropZone.js" asp-append-version="true"></script>
     <script src="~/admin/assets/js/app.js" asp-append-version="true"></script>
-
     <!-- Custom Js -->
     @RenderSection("scripts", required: false)
 </body>
