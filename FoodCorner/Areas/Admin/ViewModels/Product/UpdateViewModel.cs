@@ -1,21 +1,16 @@
 ﻿using FoodCorner.Areas.Admin.Validations;
-using Microsoft.Build.Framework;
 
 namespace FoodCorner.Areas.Admin.ViewModels.Product
 {
-    public class AddViewModel
+    public class UpdateViewModel
     {
-        [Required]
+        public int Id { get; set; }
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
-        [Required]
         public int Price { get; set; }
-
-        [Required]
         public IFormFile PosterImage { get; set; }
 
-        [Required]
+        [AllowedExtensions(new string[] { ".jpg", ".png", ".jpeg" })]
         public List<IFormFile>? AllImages { get; set; }
     }
 }
