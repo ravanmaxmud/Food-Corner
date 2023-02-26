@@ -35,7 +35,7 @@
                                 <td>@nav.Name</td>
                                 <td>@nav.Description</td>
                                 <td class="text-end">
-                                    <a asp-route="admin-nav-update" asp-route-Id="@nav.Id"><i class="las la-pen text-secondary font-16"></i></a>
+                                    <a asp-route="admin-product-update" asp-route-Id="@nav.Id"><i class="las la-pen text-secondary font-16"></i></a>
                                     <form method="POST" asp-route="admin-product-delete" asp-route-id="@nav.Id" id="book-form-@nav.Id"></form>
                                     <button style="background-color:none; border:none;" type="submit" form="book-form-@nav.Id">
                                         <i class="las la-trash-alt text-secondary font-16"></i>

@@ -314,3 +314,11 @@ if (document.querySelectorAll("#navigation").length) {
         //document.getElementById('#navigation').slideToggle(400);
     });
 }
+
+
+
+let deletebutton = document.querySelectorAll(".deleteItemImage");
+
+deletebutton.forEach(btn => btn.addEventListener("click", function () {
+    btn.parentElement.remove()
+}))
