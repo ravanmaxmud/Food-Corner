@@ -1,4 +1,5 @@
-﻿@using FoodCorner.Areas.Client.ViewModels.Home
+﻿@using FoodCorner.Areas.Client.ViewCompanents
+@using FoodCorner.Areas.Client.ViewModels.Home
 
 @model IndexViewModel
 
@@ -149,87 +150,7 @@
 	<div class="container">
 		<div class="ps-carts">
 			<div class="cart-box responsive mt-4">
-				<div data-aos="fade-up" class="cart-img">
-					<div class="c-img-c">
-						<a href="~/Client/assets/singleProduct.html">
-							<img class="pamada"
-								 src="~/Client/assets/images/Product/pexels-photo-291528.jpeg"
-								 alt="">
-						</a>
-						<div class="endirim">
-							20% OFF
-						</div>
-						<div class="add-cart">
-							<div class="add-cart-text">
-								<a class="" href=""><i class="fa-solid fa-cart-shopping"></i></a>
-							</div>
-							<div class="cart-eyes">
-								<a class="js-show-modal1" href=""><i class="fa-solid fa-eye"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="cart-text text-start mt-3">
-						<a href="~/Client/assets/singleProduct.html">Level 20 RGB Cherry</a>
-						<div class="price">
-							<span class="oldprice">$80</span>
-							<span class="newprice">$60</span>
-						</div>
-					</div>
-				</div>
-				<div data-aos="fade-up" class="cart-img">
-					<div class="c-img-c">
-						<a href="~/Client/assets/singleProduct.html">
-							<img class="pamada"
-								 src="~/Client/assets/images/Product/pexels-photo-291528.jpeg"
-								 alt="">
-						</a>
-						<div class="endirim">
-							20% OFF
-						</div>
-						<div class="add-cart">
-							<div class="add-cart-text">
-								<a class="" href=""><i class="fa-solid fa-cart-shopping"></i></a>
-							</div>
-							<div class="cart-eyes">
-								<a class="js-show-modal1" href=""><i class="fa-solid fa-eye"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="cart-text text-start mt-3">
-						<a href="~/Client/assets/singleProduct.html">Level 20 RGB Cherry</a>
-						<div class="price">
-							<span class="oldprice">$80</span>
-							<span class="newprice">$60</span>
-						</div>
-					</div>
-				</div>
-				<div data-aos="fade-up" class="cart-img">
-					<div class="c-img-c">
-						<a href="~/Client/assets/singleProduct.html">
-							<img class="pamada"
-								 src="~/Client/assets/images/Product/pexels-photo-291528.jpeg"
-								 alt="">
-						</a>
-						<div class="endirim">
-							20% OFF
-						</div>
-						<div class="add-cart">
-							<div class="add-cart-text">
-								<a class="" href=""><i class="fa-solid fa-cart-shopping"></i></a>
-							</div>
-							<div class="cart-eyes">
-								<a class="js-show-modal1" href=""><i class="fa-solid fa-eye"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="cart-text text-start mt-3">
-						<a href="~/Client/assets/singleProduct.html">Level 20 RGB Cherry</a>
-						<div class="price">
-							<span class="oldprice">$80</span>
-							<span class="newprice">$60</span>
-						</div>
-					</div>
-				</div>
+				@await Component.InvokeAsync(nameof(Products))
 			</div>
 		</div>
 	</div>

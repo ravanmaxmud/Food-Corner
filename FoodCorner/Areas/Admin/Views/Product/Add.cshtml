@@ -11,20 +11,46 @@
                 <div class="general-label">
                     <form method="POST" asp-route="admin-product-add" enctype="multipart/form-data">
                         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-                        <div class="form-group">
-                            <label asp-for="Name"></label>
-                            <input asp-for="Name" class="form-control">
-                            <span asp-validation-for="Name" class="text-danger"></span>
+                        <div class="form-group  d-flex justify-content-between align-items-center">
+                            <div class="col-lg-6">
+                                <label asp-for="Name"></label>
+                                <input asp-for="Name" class="form-control">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label asp-for="Description"></label>
+                                <input asp-for="Description" class="form-control">
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Description"></label>
-                            <input asp-for="Description" class="form-control">
-                            <span asp-validation-for="Description" class="text-danger"></span>
+                        <div class="form-group d-flex justify-content-between align-items-center">
+                            <div class="col-lg-6">
+                                <label asp-for="Price"></label>
+                                <input asp-for="Price" class="form-control">
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label asp-for="DiscountPercent"></label>
+                                <input asp-for="DiscountPercent" class="form-control">
+                                <span asp-validation-for="DiscountPercent" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Price"></label>
-                            <input asp-for="Price" class="form-control">
-                            <span asp-validation-for="Price" class="text-danger"></span>
+                        <div class="form-group d-flex justify-content-between align-items-center">
+                            <div class="col-lg-4">
+                                <label>Categories</label>
+                                <select asp-for="CategoryIds" asp-items="@(new SelectList(Model.Catagories, nameof(CatagoryListItemViewModel.Id), nameof(CatagoryListItemViewModel.Title)))" class="form-select">                            </select>
+                                <span asp-validation-for="CategoryIds" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Tag</label>
+                                <select asp-for="TagIds" asp-items="@(new SelectList(Model.Tags, nameof(TagListItemViewModel.Id), nameof(TagListItemViewModel.Title)))" class="form-select">                            </select>
+                                <span asp-validation-for="TagIds" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Size</label>
+                                <select asp-for="SizeIds" asp-items="@(new SelectList(Model.Sizes, nameof(SizeListItemViewModel.Id), nameof(SizeListItemViewModel.PersonSize)))" class="form-select">                            </select>
+                                <span asp-validation-for="SizeIds" class="text-danger"></span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label asp-for="PosterImage"></label>

@@ -1,7 +1,7 @@
 ﻿using FoodCorner.Contracts.File;
 using FoodCorner.Services.Abstracts;
 
-namespace PrioFoodCornerniaApp.Services.Concretes
+namespace FoodCorner.Services.Concretes
 {
     public class FileService : IFileService
     {
@@ -26,12 +26,12 @@ namespace PrioFoodCornerniaApp.Services.Concretes
 
             try
             {
-                using FileStream fileStream = new FileStream(filePath,FileMode.Create);
+                using FileStream fileStream = new FileStream(filePath, FileMode.Create);
                 await formFile.CopyToAsync(fileStream);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                _logger.LogError(e,"Some Things Went Wrong");
+                _logger.LogError(e, "Some Things Went Wrong");
                 throw;
             }
 
@@ -40,7 +40,7 @@ namespace PrioFoodCornerniaApp.Services.Concretes
 
         public async Task DeleteAsync(string? fileName, UploadDirectory uploadDirectory)
         {
-            var deletePath = Path.Combine(GetUploadDirectory(uploadDirectory),fileName!);
+            var deletePath = Path.Combine(GetUploadDirectory(uploadDirectory), fileName!);
 
             await Task.Run(() => File.Delete(deletePath));
         }

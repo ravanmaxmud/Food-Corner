@@ -1,6 +1,6 @@
 ﻿using FoodCorner.Services.Abstracts;
+using FoodCorner.Services.Concretes;
 using Microsoft.EntityFrameworkCore;
-using PrioFoodCornerniaApp.Services.Concretes;
 
 namespace FoodCorner.Infrastructure.Configurations
 {

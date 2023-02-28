@@ -18,18 +18,21 @@ namespace FoodCorner.Areas.Admin.Controllers
         private readonly IActionDescriptorCollectionProvider _provider;
         private readonly DataContext _dataContext;
         private readonly IFileService _fileService;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(IActionDescriptorCollectionProvider provider, DataContext dataContext, IFileService fileService)
+        public ProductController(IActionDescriptorCollectionProvider provider, DataContext dataContext, IFileService fileService, ILogger<ProductController> logger)
         {
             _provider = provider;
             _dataContext = dataContext;
             _fileService = fileService;
+            _logger = logger;
         }
 
         [HttpGet("list", Name = "admin-product-list")]
         public async Task<IActionResult> List()
         {
             var model = await _dataContext.Products
+
                 .Include(p=> p.ProductImages).OrderByDescending(p => p.CreatedAt)
                 .Select(p => new ListItemViewModel(p.Id,p.Name,p.Description,p.Price,
                 p.ProductImages.Where(p => p.IsPoster == true).FirstOrDefault() != null
@@ -44,7 +47,22 @@ namespace FoodCorner.Areas.Admin.Controllers
         [HttpGet("add", Name = "admin-product-add")]
         public async Task<IActionResult> Add()
         {
-            return View();
+            var model = new AddViewModel
+            {
+                Catagories = await _dataContext.Categories
+                    .Select(c => new CatagoryListItemViewModel(c.Id, c.Title))
+                    .ToListAsync(),
+
+                Tags = await _dataContext.Tags
+                .Select(t=> new TagListItemViewModel(t.Id,t.Title))
+                .ToListAsync(),
+
+                Sizes = await _dataContext.Sizes
+                .Select(S=> new SizeListItemViewModel(S.Id,S.PersonSize))
+                .ToListAsync()
+            };
+
+            return View(model);
         }
 
 
@@ -53,7 +71,39 @@ namespace FoodCorner.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return GetView(model);
+            }
+
+            foreach (var categoryId in model.CategoryIds)
+            {
+                if (!await _dataContext.Categories.AnyAsync(c => c.Id == categoryId))
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong");
+                    _logger.LogWarning($"Category with id({categoryId}) not found in db ");
+                    return GetView(model);
+                }
+
+            }
+            foreach (var tagId in model.TagIds)
+            {
+                if (!await _dataContext.Tags.AnyAsync(c => c.Id == tagId))
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong");
+                    _logger.LogWarning($"Tag with id({tagId}) not found in db ");
+                    return GetView(model);
+                }
+
+            }
+
+            foreach (var sizeId in model.SizeIds)
+            {
+                if (!await _dataContext.Sizes.AnyAsync(c => c.Id == sizeId))
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong");
+                    _logger.LogWarning($"Size with id({sizeId}) not found in db ");
+                    return GetView(model);
+                }
+
             }
 
             await AddProduct();
@@ -61,15 +111,43 @@ namespace FoodCorner.Areas.Admin.Controllers
 
             return RedirectToRoute("admin-product-list");
 
+            IActionResult GetView(AddViewModel model)
+            {
+
+                model.Catagories = _dataContext.Categories
+                   .Select(c => new CatagoryListItemViewModel(c.Id, c.Title))
+                   .ToList();
+
+                model.Sizes = _dataContext.Sizes
+                 .Select(c => new SizeListItemViewModel(c.Id, c.PersonSize))
+                 .ToList();
+
+                //model.Colors = _dataContext.Colors
+                // .Select(c => new ColorListItemViewModel(c.Id, c.Name))
+                // .ToList();
+
+                model.Tags = _dataContext.Tags
+                 .Select(c => new TagListItemViewModel(c.Id, c.Title))
+                 .ToList();
+
+
+                return View(model);
+            }
+
             async Task AddProduct()
             {
+                var discountPrice = (model.Price * model.DiscountPercent) / 100;
+                var lastPrice = model.Price - discountPrice;
+
                 var product = new Product
                 {
                     Name = model.Name,
                     Description = model.Description,
                     Price = model.Price,
                     CreatedAt = DateTime.Now,
-                    UpdateAt = DateTime.Now
+                    UpdateAt = DateTime.Now,
+                    DiscountPercent = model.DiscountPercent,
+                    DiscountPrice = lastPrice,
                 };
 
                 await _dataContext.Products.AddAsync(product);
@@ -105,6 +183,38 @@ namespace FoodCorner.Areas.Admin.Controllers
                         await _dataContext.ProductImages.AddAsync(productAllImage);
                     }
                 }
+
+                ///////////////////////////////////////////////////////////////////
+                foreach (var catagoryId in model.CategoryIds)
+                {
+                    var productCatagory = new ProductCatagory
+                    {
+                        CatagoryId = catagoryId,
+                        Product = product,
+                    };
+
+                    await _dataContext.ProductCatagories.AddAsync(productCatagory);
+                }
+                foreach (var tagId in model.TagIds)
+                {
+                    var productTag = new ProductTag
+                    {
+                        TagId = tagId,
+                        Product = product,
+                    };
+
+                    await _dataContext.ProductTags.AddAsync(productTag);
+                }
+                foreach (var sizeId in model.SizeIds)
+                {
+                    var productSize = new ProductSize
+                    {
+                        SizeId = sizeId,
+                        Product = product,
+                    };
+
+                    await _dataContext.ProductSizes.AddAsync(productSize);
+                }
             }
         }
 
@@ -115,6 +225,9 @@ namespace FoodCorner.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateAsync([FromRoute] int id)
         {
             var product = await _dataContext.Products
+                .Include(p=> p.ProductSizes)
+                .Include(p=> p.ProductTags)
+                .Include(p=>p.ProductCatagories)
                 .Include(p => p.ProductImages).FirstOrDefaultAsync(p => p.Id == id);
 
             if (product is null)
@@ -128,25 +241,27 @@ namespace FoodCorner.Areas.Admin.Controllers
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
+                DiscountPercent = product.DiscountPercent,
+                DiscountPrice = product.DiscountPrice,
 
                 ImagesUrl = product.ProductImages
                 .Where(p=> p.IsPoster == false)
                 .Select(p=> new UpdateViewModel.Images(p.Id,_fileService.GetFileUrl(p.ImageNameFileSystem,UploadDirectory.Product))).ToList(),
 
                 PosterImgUrls = product.ProductImages.Where(p=> p.IsPoster == true)
-                .Select(p=> new UpdateViewModel.PosterImages(p.Id, _fileService.GetFileUrl(p.ImageNameFileSystem, UploadDirectory.Product))).ToList()
+                .Select(p=> new UpdateViewModel.PosterImages(p.Id, _fileService.GetFileUrl(p.ImageNameFileSystem, UploadDirectory.Product))).ToList(),
 
-                //Categories = await _dataContext.Catagories.Select(c => new CatagoryListItemViewModel(c.Id, c.Title)).ToListAsync(),
-                //CategoryIds = product.ProductCatagories.Select(pc => pc.CatagoryId).ToList(),
+                Catagories = await _dataContext.Categories.Select(c => new CatagoryListItemViewModel(c.Id, c.Title)).ToListAsync(),
+                CategoryIds = product.ProductCatagories.Select(pc => pc.CatagoryId).ToList(),
 
-                //Sizes = await _dataContext.Sizes.Select(c => new SizeListItemViewModel(c.Id, c.Title)).ToListAsync(),
-                //SizeIds = product.ProductSizes.Select(pc => pc.SizeId).ToList(),
+                Sizes = await _dataContext.Sizes.Select(c => new SizeListItemViewModel(c.Id, c.PersonSize)).ToListAsync(),
+                SizeIds = product.ProductSizes.Select(pc => pc.SizeId).ToList(),
 
                 //Colors = await _dataContext.Colors.Select(c => new ColorListItemViewModel(c.Id, c.Name)).ToListAsync(),
                 //ColorIds = product.ProductColors.Select(pc => pc.ColorId).ToList(),
 
-                //Tags = await _dataContext.Tags.Select(c => new TagListItemViewModel(c.Id, c.Title)).ToListAsync(),
-                //TagIds = product.ProductTags.Select(pc => pc.TagId).ToList(),
+                Tags = await _dataContext.Tags.Select(c => new TagListItemViewModel(c.Id, c.Title)).ToListAsync(),
+                TagIds = product.ProductTags.Select(pc => pc.TagId).ToList(),
 
             };
 
@@ -158,6 +273,9 @@ namespace FoodCorner.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateAsync(UpdateViewModel? model)
         {
             var product = await _dataContext.Products
+                    .Include(p => p.ProductSizes)
+                    .Include(p=> p.ProductTags)
+                    .Include(p=>p.ProductCatagories)
                     .Include(p=> p.ProductImages).FirstOrDefaultAsync(p => p.Id == model.Id);
 
             if (product is null)
@@ -171,49 +289,36 @@ namespace FoodCorner.Areas.Admin.Controllers
             }
 
 
-            //foreach (var categoryId in model.CategoryIds)
-            //{
-            //    if (!await _dataContext.Catagories.AnyAsync(c => c.Id == categoryId))
-            //    {
-            //        ModelState.AddModelError(string.Empty, "Something went wrong");
-            //        _logger.LogWarning($"Category with id({categoryId}) not found in db ");
-            //        return GetView(model);
-            //    }
+            foreach (var categoryId in model.CategoryIds)
+            {
+                if (!await _dataContext.Categories.AnyAsync(c => c.Id == categoryId))
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong");
+                    _logger.LogWarning($"Category with id({categoryId}) not found in db ");
+                    return GetView(model);
+                }
 
-            //}
+            }
+            foreach (var tagId in model.TagIds)
+            {
+                if (!await _dataContext.Tags.AnyAsync(c => c.Id == tagId))
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong");
+                    _logger.LogWarning($"Tag with id({tagId}) not found in db ");
+                    return GetView(model);
+                }
 
-            //foreach (var sizeId in model.SizeIds)
-            //{
-            //    if (!await _dataContext.Sizes.AnyAsync(c => c.Id == sizeId))
-            //    {
-            //        ModelState.AddModelError(string.Empty, "Something went wrong");
-            //        _logger.LogWarning($"Size with id({sizeId}) not found in db ");
-            //        return GetView(model);
-            //    }
+            }
+            foreach (var sizeId in model.SizeIds)
+            {
+                if (!await _dataContext.Sizes.AnyAsync(c => c.Id == sizeId))
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong");
+                    _logger.LogWarning($"Size with id({sizeId}) not found in db ");
+                    return GetView(model);
+                }
 
-            //}
-
-            //foreach (var colorId in model.ColorIds)
-            //{
-            //    if (!await _dataContext.Colors.AnyAsync(c => c.Id == colorId))
-            //    {
-            //        ModelState.AddModelError(string.Empty, "Something went wrong");
-            //        _logger.LogWarning($"Color with id({colorId}) not found in db ");
-            //        return GetView(model);
-            //    }
-
-            //}
-
-            //foreach (var tagId in model.TagIds)
-            //{
-            //    if (!await _dataContext.Tags.AnyAsync(c => c.Id == tagId))
-            //    {
-            //        ModelState.AddModelError(string.Empty, "Something went wrong");
-            //        _logger.LogWarning($"Tag with id({tagId}) not found in db ");
-            //        return GetView(model);
-            //    }
-
-            //}
+            }
 
 
             await UpdateProductAsync();
@@ -226,45 +331,40 @@ namespace FoodCorner.Areas.Admin.Controllers
             #region GetviewAndUpdate
             IActionResult GetView(UpdateViewModel model)
             {
-              
-
                 model.ImagesUrl = product.ProductImages
                .Where(p => p.IsPoster == false)
                .Select(p => new UpdateViewModel.Images(p.Id, _fileService.GetFileUrl(p.ImageNameFileSystem, UploadDirectory.Product))).ToList();
 
                model.PosterImgUrls = product.ProductImages.Where(p => p.IsPoster == true)
                 .Select(p => new UpdateViewModel.PosterImages(p.Id, _fileService.GetFileUrl(p.ImageNameFileSystem, UploadDirectory.Product))).ToList();
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                model.Catagories = _dataContext.Categories
+                   .Select(c => new CatagoryListItemViewModel(c.Id, c.Title))
+                   .ToList();
 
-                //model.Categories = _dataContext.Catagories
-                //   .Select(c => new CatagoryListItemViewModel(c.Id, c.Title))
-                //   .ToList();
-
-                //model.CategoryIds = product.ProductCatagories.Select(c => c.CatagoryId).ToList();
+                model.CategoryIds = product.ProductCatagories.Select(c => c.CatagoryId).ToList();
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                //model.Sizes = _dataContext.Sizes
-                // .Select(c => new SizeListItemViewModel(c.Id, c.Title))
-                // .ToList();
+                model.Sizes = _dataContext.Sizes
+                 .Select(c => new SizeListItemViewModel(c.Id, c.PersonSize))
+                 .ToList();
 
-                //model.SizeIds = product.ProductSizes.Select(c => c.SizeId).ToList();
+                 model.SizeIds = product.ProductSizes.Select(c => c.SizeId).ToList();
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //model.Colors = _dataContext.Colors
-                // .Select(c => new ColorListItemViewModel(c.Id, c.Name))
-                // .ToList();
+                model.Tags = _dataContext.Tags
+                 .Select(c => new TagListItemViewModel(c.Id, c.Title))
+                 .ToList();
 
-                //model.ColorIds = product.ProductColors.Select(c => c.ColorId).ToList();
-
-                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //model.Tags = _dataContext.Tags
-                // .Select(c => new TagListItemViewModel(c.Id, c.Title))
-                // .ToList();
-
-                //model.TagIds = product.ProductTags.Select(c => c.TagId).ToList();
+                model.TagIds = product.ProductTags.Select(c => c.TagId).ToList();
 
                 return View(model);
             }
+
+
             async Task UpdateProductAsync()
             {
+                var discountPrice = (model.Price * model.DiscountPercent) / 100;
+                var lastPrice = model.Price - discountPrice;
 
                 if (model.ProductImgIds is null)
                 {
@@ -276,7 +376,6 @@ namespace FoodCorner.Areas.Admin.Controllers
                     }
 
                 }
-
                 if (model.ProductImgIds is not null)
                 {
                     var removedImg = product.ProductImages.Where(p=>p.IsPoster == false).Where(pi => !model.ProductImgIds.Contains(pi.Id)).ToList();
@@ -298,8 +397,72 @@ namespace FoodCorner.Areas.Admin.Controllers
                 product.Description = model.Description;
                 product.Price = model.Price;
                 product.UpdateAt = DateTime.Now;
+                product.DiscountPercent = model.DiscountPercent;
+                product.DiscountPrice = lastPrice;
+
+                #region Catagory
+                var categoriesInDb = product.ProductCatagories.Select(bc => bc.CatagoryId).ToList();
+                var categoriesToRemove = categoriesInDb.Except(model.CategoryIds).ToList();
+                var categoriesToAdd = model.CategoryIds.Except(categoriesInDb).ToList();
+
+                product.ProductCatagories.RemoveAll(bc => categoriesToRemove.Contains(bc.CatagoryId));
+
+                foreach (var categoryId in categoriesToAdd)
+                {
+                    var productCatagory = new ProductCatagory
+                    {
+                        CatagoryId = categoryId,
+                        Product = product,
+                    };
+
+                    await _dataContext.ProductCatagories.AddAsync(productCatagory);
+                }
+                #endregion
+
+                #region Tag
+                var tagInDb = product.ProductTags.Select(bc => bc.TagId).ToList();
+                var tagToRemove = tagInDb.Except(model.TagIds).ToList();
+                var tagToAdd = model.TagIds.Except(tagInDb).ToList();
+
+                product.ProductTags.RemoveAll(bc => tagToRemove.Contains(bc.TagId));
 
 
+                foreach (var tagId in tagToAdd)
+                {
+                    var productTag = new ProductTag
+                    {
+                        TagId = tagId,
+                        Product = product,
+                    };
+
+                    await _dataContext.ProductTags.AddAsync(productTag);
+                }
+                #endregion
+
+
+                #region Size
+                var sizeInDb = product.ProductSizes.Select(bc => bc.SizeId).ToList();
+                var sizeToRemove = sizeInDb.Except(model.SizeIds).ToList();
+                var sizeToAdd = model.SizeIds.Except(sizeInDb).ToList();
+
+                product.ProductSizes.RemoveAll(bc => sizeToRemove.Contains(bc.SizeId));
+
+
+                foreach (var sizeId in sizeToAdd)
+                {
+                    var productSize = new ProductSize
+                    {
+                        SizeId = sizeId,
+                        Product = product,
+                    };
+
+                    await _dataContext.ProductSizes.AddAsync(productSize);
+                }
+
+                #endregion
+
+
+                #region Images
                 if (model.PosterImage is not null)
                 {
                     var productImg = await _dataContext.ProductImages.Where(p => p.IsPoster == true).FirstOrDefaultAsync(p=> p.ProductId == product.Id);
@@ -333,87 +496,7 @@ namespace FoodCorner.Areas.Admin.Controllers
                         await _dataContext.ProductImages.AddAsync(productAllImage);
                     }
                 }
-
-                //#region Catagory
-                //var categoriesInDb = product.ProductCatagories.Select(bc => bc.CatagoryId).ToList();
-                //var categoriesToRemove = categoriesInDb.Except(model.CategoryIds).ToList();
-                //var categoriesToAdd = model.CategoryIds.Except(categoriesInDb).ToList();
-
-                //product.ProductCatagories.RemoveAll(bc => categoriesToRemove.Contains(bc.CatagoryId));
-
-                //foreach (var categoryId in categoriesToAdd)
-                //{
-                //    var productCatagory = new ProductCatagory
-                //    {
-                //        CatagoryId = categoryId,
-                //        Product = product,
-                //    };
-
-                //    await _dataContext.ProductCatagories.AddAsync(productCatagory);
-                //}
-                //#endregion
-
-                //#region Color
-                //var colorInDb = product.ProductColors.Select(bc => bc.ColorId).ToList();
-                //var colorToRemove = colorInDb.Except(model.ColorIds).ToList();
-                //var colorToAdd = model.ColorIds.Except(colorInDb).ToList();
-
-                //product.ProductColors.RemoveAll(bc => colorToRemove.Contains(bc.ColorId));
-
-
-                //foreach (var colorId in colorToAdd)
-                //{
-                //    var productColor = new ProductColor
-                //    {
-                //        ColorId = colorId,
-                //        Product = product,
-                //    };
-
-                //    await _dataContext.ProductColors.AddAsync(productColor);
-                //}
-                //#endregion
-
-
-                //#region Size
-                //var sizeInDb = product.ProductSizes.Select(bc => bc.SizeId).ToList();
-                //var sizeToRemove = sizeInDb.Except(model.SizeIds).ToList();
-                //var sizeToAdd = model.SizeIds.Except(sizeInDb).ToList();
-
-                //product.ProductSizes.RemoveAll(bc => sizeToRemove.Contains(bc.SizeId));
-
-
-                //foreach (var sizeId in sizeToAdd)
-                //{
-                //    var productSize = new ProductSize
-                //    {
-                //        SizeId = sizeId,
-                //        Product = product,
-                //    };
-
-                //    await _dataContext.ProductSizes.AddAsync(productSize);
-                //}
-
-                //#endregion
-
-                //#region Tag
-                //var tagInDb = product.ProductTags.Select(bc => bc.TagId).ToList();
-                //var tagToRemove = tagInDb.Except(model.TagIds).ToList();
-                //var tagToAdd = model.TagIds.Except(tagInDb).ToList();
-
-                //product.ProductTags.RemoveAll(bc => tagToRemove.Contains(bc.TagId));
-
-
-                //foreach (var tagId in tagToAdd)
-                //{
-                //    var productTag = new ProductTag
-                //    {
-                //        TagId = tagId,
-                //        Product = product,
-                //    };
-
-                //    await _dataContext.ProductTags.AddAsync(productTag);
-                //}
-                //#endregion
+                #endregion        
             }
             #endregion
         }

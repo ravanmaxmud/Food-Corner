@@ -1,0 +1,45 @@
+﻿@using FoodCorner.Areas.Client.ViewModels.Home
+@model List<ProductListItemViewModel>
+
+
+@foreach (var item in Model)
+{
+<div data-aos="fade-up" class="cart-img">
+	<div class="c-img-c">
+		<a href="~/Client/assets/singleProduct.html">
+			<img class="pamada"
+				 src="~/@item.MainImgUrl"
+				 alt="">
+		</a>
+		@if(item.DiscountPercent != null)
+		{
+				<div class="endirim">
+					@item.DiscountPercent% OFF
+				</div>
+			}
+		<div class="add-cart">
+			<div class="add-cart-text">
+				<a class="" href=""><i class="fa-solid fa-cart-shopping"></i></a>
+			</div>
+			<div class="cart-eyes">
+				<a class="js-show-modal1" href=""><i class="fa-solid fa-eye"></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="cart-text text-start mt-3">
+		<a href="~/Client/assets/singleProduct.html">@item.Name</a>
+		<div class="price">
+			@if(item.DiscountPrice != null)
+		    {
+			<span class="oldprice">$@item.Price</span>
+			<span class="newprice">$@item.DiscountPrice</span>	
+			}
+			else
+			{
+			  <span class="newprice">$@item.Price</span>
+			}
+	
+		</div>
+	</div>
+</div>	
+}
