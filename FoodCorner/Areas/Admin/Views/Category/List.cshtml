@@ -1,17 +1,17 @@
-﻿@using FoodCorner.Areas.Admin.ViewModels.Navbar
+﻿@using FoodCorner.Areas.Admin.ViewModels.Category
 @model List<ListItemViewModel>
 
 <div class="col-lg-12">
     <div class="row justify-content-end">
         <div class="">
-            <a asp-controller="navbar" asp-action="add" target="_blank" class="btn btn-secondary">Add new Navbar</a>
+            <a asp-controller="category" asp-action="add"  class="btn btn-secondary">Add new Category</a>
         </div>
     </div>
 </div>
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Navbars</h4>
+            <h4 class="card-title">Categoryies</h4>
         </div><!--end card-header-->
         <div class="card-body">
             <div class="table-responsive">
@@ -19,21 +19,17 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Order</th>
-                            @*     <th>Author</th>
-                            <th>Created at</th>
-                            <th class="text-end">Actions</th>*@
+                            <th>Parent Category</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var nav in Model)
                         {
                             <tr>
-                                <td>@nav.Name</td>
-                                <td>@nav.Order</td>
+                                <td>@nav.Title</td>
+                                <td>@nav.ParentName</td>
                                 <td class="text-end">
-                                    <a asp-route="admin-nav-update" asp-route-Id="@nav.Id"><i class="las la-pen text-secondary font-16"></i></a>
-                                    <form method="POST" asp-route="admin-nav-delete" asp-route-id="@nav.Id" id="book-form-@nav.Id"></form>
+                                    <form method="POST" asp-route="admin-cate-delete" asp-route-id="@nav.Id" id="book-form-@nav.Id"></form>
                                     <button style="background-color:none; border:none;" type="submit" form="book-form-@nav.Id">
                                         <i class="las la-trash-alt text-secondary font-16"></i>
                                     </button>

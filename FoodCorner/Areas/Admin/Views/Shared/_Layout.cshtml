@@ -94,7 +94,47 @@
                         <h6 class="menu-title">App</h6>
                     </div>
 
-                    <ul class="nav flex-column">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#sidebarAnalytics" data-bs-toggle="collapse" role="button"
+                               aria-expanded="false" aria-controls="sidebarAnalytics">
+                                Product
+                            </a>
+                            <div class="collapse " id="sidebarAnalytics">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a asp-route="admin-product-list" class="nav-link">Products</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-route="admin-cate-list" class="nav-link">Product Category</a>
+                                    </li><!--end nav-item-->
+                                </ul><!--end nav-->
+                            </div><!--end sidebarAnalytics-->
+                        </li><!--end nav-item-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#sidebarPayments" data-bs-toggle="collapse" role="button"
+                               aria-expanded="false" aria-controls="sidebarPayments">
+                                Navbar
+                            </a>
+                            <div class="collapse " id="sidebarPayments">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a asp-route="admin-nav-list" class="nav-link">Navbars</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-route="admin-subnav-list" class="nav-link ">SubNavbars</a>
+                                    </li>
+                                </ul><!--end nav-->
+                            </div><!--end sidebarAnalytics-->
+                        </li><!--end nav-item-->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-route="admin-slider-list">
+                                Slider
+                            </a>
+                        </li><!--end nav-item-->
+                    </ul>
+
+            @*        <ul class="nav flex-column">
                         <li class="nav-item">
                             <a asp-route="admin-nav-list" class="nav-link">NAVBARS</a>
                         </li>
@@ -122,7 +162,7 @@
                         <li class="nav-item">
                             <a asp-route="admin-blog-list" class="nav-link">BLOGS</a>
                         </li><!--end nav-item-->
-                    </ul><!--end nav-->
+                    </ul><!--end nav-->*@
                 </div>
             </div>
             <!--end menu-body-->
