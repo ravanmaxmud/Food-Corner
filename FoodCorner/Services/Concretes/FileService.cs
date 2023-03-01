@@ -55,6 +55,8 @@ namespace FoodCorner.Services.Concretes
                     return $"{initialSegment}/sliders/{fileName}";
                 case UploadDirectory.Product:
                     return $"{initialSegment}/products/{fileName}";
+                case UploadDirectory.Category:
+                    return $"{initialSegment}/category/{fileName}";
                 default:
                     throw new Exception("Something went wrong");
             }
@@ -75,6 +77,8 @@ namespace FoodCorner.Services.Concretes
                     return Path.Combine(startPath, "sliders");
                 case UploadDirectory.Product:
                     return Path.Combine(startPath, "products");
+                case UploadDirectory.Category:
+                    return Path.Combine(startPath, "category");
                 default:
                     throw new Exception("Something went wrong");
             }

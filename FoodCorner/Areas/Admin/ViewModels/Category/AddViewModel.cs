@@ -8,6 +8,10 @@ namespace FoodCorner.Areas.Admin.ViewModels.Category
         [Required]
         public string Title { get; set; }
 
+        [Required]
+        public IFormFile? Backgroundİmage { get; set; }
+        public string? BackgroundİmageUrl { get; set; }
+
         public int? CategoryIds { get; set; }
         public List<CatagoryListItemViewModel>? Catagories { get; set; }
     }

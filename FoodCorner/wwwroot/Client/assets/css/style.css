@@ -1699,3 +1699,10 @@ header {
   opacity: 1 !important;
   visibility: visible !important;
 }/*# sourceMappingURL=style.css.map */
+
+.banner-tab img {
+    width: 504px !important;
+    height: 500px !important;
+    -o-object-fit: cover;
+    object-fit: cover !important;
+}

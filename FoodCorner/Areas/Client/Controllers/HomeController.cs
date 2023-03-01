@@ -30,8 +30,13 @@ namespace FoodCorner.Areas.Client.Controllers
         {
             var model = new IndexViewModel
             {
-                Sliders = await _dataContext.Sliders.Select(s => new SliderViewModel(s.Id, s.HeaderTitle, s.MainTitle, s.Button, s.ButtonRedirectUrl,
+                Sliders = await _dataContext.Sliders
+                .Select(s => new SliderViewModel(s.Id, s.HeaderTitle, s.MainTitle, s.Button, s.ButtonRedirectUrl,
                 _fileService.GetFileUrl(s.BackgroundİmageInFileSystem, UploadDirectory.Slider))).ToListAsync(),
+
+                Categories = await _dataContext.Categories
+                .OrderByDescending(c=> c.Id).Take(3).Select(c => new CategoryViewModel(c.Id,c.Title,
+                _fileService.GetFileUrl(c.BackgroundİmageInFileSystem,UploadDirectory.Category))).ToListAsync(),
             };
 
             return View(model);

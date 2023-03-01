@@ -1,37 +1,33 @@
-﻿@using FoodCorner.Areas.Admin.ViewModels.Category
+﻿@using FoodCorner.Areas.Admin.ViewModels.Tag
 @model List<ListItemViewModel>
 
 <div class="col-lg-12">
     <div class="row justify-content-end">
         <div class="">
-            <a asp-controller="category" asp-action="add"  class="btn btn-secondary">Add new Category</a>
+            <a asp-controller="tag" asp-action="add"  class="btn btn-secondary">Add new Tag</a>
         </div>
     </div>
 </div>
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Categoryies</h4>
+            <h4 class="card-title">Tags</h4>
         </div><!--end card-header-->
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped mb-0">
                     <thead>
                         <tr>
-                            <th>Category Img</th>
-                            <th>Name</th>
-                            <th>Parent Category</th>
+                            <th>Tag Name</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var nav in Model)
                         {
                             <tr>
-                                <td><img style="width:60px; height:50px; object-fit:cover;" src="~/@nav.BackgroundİmageUrl" /></td>
                                 <td>@nav.Title</td>
-                                <td>@nav.ParentName</td>
                                 <td class="text-end">
-                                    <form method="POST" asp-route="admin-cate-delete" asp-route-id="@nav.Id" id="book-form-@nav.Id"></form>
+                                    <form method="POST" asp-route="admin-tag-delete" asp-route-id="@nav.Id" id="book-form-@nav.Id"></form>
                                     <button style="background-color:none; border:none;" type="submit" form="book-form-@nav.Id">
                                         <i class="las la-trash-alt text-secondary font-16"></i>
                                     </button>

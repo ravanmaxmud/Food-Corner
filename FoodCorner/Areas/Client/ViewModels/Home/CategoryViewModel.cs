@@ -8,7 +8,15 @@
             Title = title;
         }
 
+        public CategoryViewModel(int id, string title, string backgroundİmageUrl)
+        {
+            Id = id;
+            Title = title;
+            BackgroundİmageUrl = backgroundİmageUrl;
+        }
+
         public int Id { get; set; }
         public string Title { get; set; }
+        public string BackgroundİmageUrl { get; set; }
     }
 }
