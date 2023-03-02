@@ -768,7 +768,7 @@ header {
   display: flex;
   align-items: center;
   bottom: -50px;
-  right: 90px;
+  right: 60px;
   transition: 0.5s;
 }
 #product-slider .ps-carts .cart-box .cart-img .c-img-c .add-cart .cart-eyes {

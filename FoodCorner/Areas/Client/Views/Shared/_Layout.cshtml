@@ -43,6 +43,8 @@
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/main.css">
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/style.css">
+
+    @RenderSection("link", required : false)
 </head>
 <body>
 
@@ -62,8 +64,33 @@
                                     <button class="header-ico-btn  search-btn-index border-0" href=""><i class="fa-solid fa-magnifying-glass"></i></button>
 
 
-                                    @await Component.InvokeAsync(nameof(MiniBasket))
+                                    <button class="header-ico-btn basket-btn icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </button>
 
+                                    <div class="wrap-header-cart js-panel-cart">
+                                        <div class="s-full js-hide-cart"></div>
+
+                                        <div class="header-cart flex-col-l p-l-65 p-r-25">
+                                            <div class="header-cart-title flex-w flex-sb-m p-b-8">
+                                                <span class="cl2">
+                                                    Your Cart
+                                                </span>
+
+                                                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+                                                    <i class="zmdi zmdi-close"></i>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="cart-block header-cart-content flex-w js-pscroll">
+                                                @await Component.InvokeAsync(nameof(MiniBasket))
+                                            </div>
+                                          
+
+
+                                        </div>
+                                    </div>
 
                                     <button class="header-ico-btn basket-btn icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                                         <a style="color: #0F4438;" href=""><i class="fa-solid fa-heart"></i></a>
@@ -190,140 +217,8 @@
                     <img src="~/Client/assets/images/icons/icon-close.png" alt="CLOSE">
                 </button>
 
-                <div class="row">
-                    <div class="col-md-6 col-lg-7 p-b-30">
-                        <div class="p-l-25 p-r-30 p-lr-0-lg">
-                            <div class="wrap-slick3 flex-sb flex-w">
-                                <div class="wrap-slick3-dots"></div>
-                                <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+                <div class="product-details-modal row">
 
-                                <div class="slick3 gallery-lb">
-                                    <div class="item-slick3" data-thumb="~/Client/assets/images/Product/Ciyelekli.jpg">
-                                        <div class="pr-img-single wrap-pic-w pos-relative">
-                                            <img src="~/Client/assets/images/Product/Ciyelekli.jpg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="~/Client/assets/images/Product/Ciyelekli.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item-slick3" data-thumb="~/Client/assets/images/Product/Ciyelekli.jpg">
-                                        <div class="pr-img-single wrap-pic-w pos-relative">
-                                            <img src="~/Client/assets/images/Product/Ciyelekli.jpg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="~/Client/assets/images/Product/Ciyelekli.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item-slick3" data-thumb="~/Client/assets/images/Product/Ciyelekli.jpg">
-                                        <div class="pr-img-single wrap-pic-w pos-relative">
-                                            <img src="~/Client/assets/images/Product/Ciyelekli.jpg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="~/Client/assets/images/Product/Ciyelekli.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item-slick3" data-thumb="~/Client/assets/images/Product/Ciyelekli.jpg">
-                                        <div class="pr-img-single wrap-pic-w pos-relative">
-                                            <img src="~/Client/assets/images/Product/Ciyelekli.jpg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="~/Client/assets/images/Product/Ciyelekli.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="item-slick3" data-thumb="~/Client/assets/images/Product/SekaTort2.jpeg  ">
-                                        <div class="pr-img-single wrap-pic-w pos-relative">
-                                            <img src="~/Client/assets/images/Product/SekaTort2.jpeg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="~/Client/assets/images/Product/SekaTort2.jpeg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-5 p-b-30">
-                        <div class="p-r-50 p-t-5 p-lr-0-lg">
-                            <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                                Lightweight Jacket
-                            </h4>
-
-                            <span class="mtext-106 cl2">
-                                $58.79
-                            </span>
-
-                            <p class="stext-102 cl3 p-t-23">
-                                Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
-                            </p>
-
-                            <!--  -->
-                            <div class="p-t-33">
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Size
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option>Size S</option>
-                                                <option>Size M</option>
-                                                <option>Size L</option>
-                                                <option>Size XL</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Color
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option>Red</option>
-                                                <option>Blue</option>
-                                                <option>White</option>
-                                                <option>Grey</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-204 flex-w flex-m respon6-next">
-                                        <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                            <div class="btn-num-product-down btn-minus cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
-
-                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
-
-                                            <div class="btn-num-product-up btn-plus cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
-                                            </div>
-                                        </div>
-
-                                        <a href="" class="btn-add-cart flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                                            Add to cart
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -402,9 +297,11 @@
     </script>
     <!--===============================================================================================-->
     <script src="~/Client/assets/js/main.js"></script>
+    <script src="~/Client/assets/js/Basket.js" asp-append-version="true"></script>
 
     <script src="~/Client/assets/js/app.js" asp-append-version="true"></script>
 
     <script src="~/Client/assets/js/shop.js"></script>
+    @RenderSection("script", required : false)
 </body>
 </html>
