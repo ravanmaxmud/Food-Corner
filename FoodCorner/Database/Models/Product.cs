@@ -13,6 +13,7 @@ namespace FoodCorner.Database.Models
         public List<ProductTag>? ProductTags { get; set; }
         public List<ProductSize>? ProductSizes { get; set; }
         public List<ProductImage>? ProductImages { get; set; }
+        public List<BasketProduct> BasketProducts { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdateAt { get; set; }
     }

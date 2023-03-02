@@ -61,101 +61,8 @@
                                 <div class="header-icon d-flex justify-content-between align-items-center">
                                     <button class="header-ico-btn  search-btn-index border-0" href=""><i class="fa-solid fa-magnifying-glass"></i></button>
 
-                                    <button class="header-ico-btn basket-btn icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart">
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                        <span class="model-count">5</span>
-                                    </button>
 
-                                    <div class="wrap-header-cart js-panel-cart">
-                                        <div class="s-full js-hide-cart"></div>
-
-                                        <div class="header-cart flex-col-l p-l-65 p-r-25">
-                                            <div class="header-cart-title flex-w flex-sb-m p-b-8">
-                                                <span class="cl2">
-                                                    Your Cart
-                                                </span>
-
-                                                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
-                                                    <i class="zmdi zmdi-close"></i>
-                                                </div>
-                                            </div>
-
-                                            <div class="header-cart-content flex-w js-pscroll">
-                                                <ul class="header-cart-wrapitem w-full">
-                                                    <li class="header-cart-item d-flex justify-content-between align-items-center flex-w flex-t m-b-12">
-                                                        <div class="remove-basket">
-                                                            <button><i class="fa-solid fa-xmark"></i></button>
-                                                        </div>
-                                                        <div class="">
-                                                            <img src="images/item-cart-01.jpg" alt="IMG">
-                                                        </div>
-
-                                                        <div class="header-cart-item-txt p-t-8">
-                                                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                                                White Shirt Pleat
-                                                            </a>
-
-                                                            <span class="header-cart-item-info">
-                                                                1 x $19.00
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="header-cart-item d-flex justify-content-between align-items-center flex-w flex-t m-b-12">
-                                                        <div class="remove-basket">
-                                                            <button><i class="fa-solid fa-xmark"></i></button>
-                                                        </div>
-                                                        <div class="">
-                                                            <img src="images/item-cart-01.jpg" alt="IMG">
-                                                        </div>
-
-                                                        <div class="header-cart-item-txt p-t-8">
-                                                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                                                White Shirt Pleat
-                                                            </a>
-
-                                                            <span class="header-cart-item-info">
-                                                                1 x $19.00
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="header-cart-item d-flex justify-content-between align-items-center flex-w flex-t m-b-12">
-                                                        <div class="remove-basket">
-                                                            <button><i class="fa-solid fa-xmark"></i></button>
-                                                        </div>
-                                                        <div class="">
-                                                            <img src="images/item-cart-01.jpg" alt="IMG">
-                                                        </div>
-
-                                                        <div class="header-cart-item-txt p-t-8">
-                                                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                                                White Shirt Pleat
-                                                            </a>
-
-                                                            <span class="header-cart-item-info">
-                                                                1 x $19.00
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-
-                                                <div class="w-full">
-                                                    <div class="header-cart-total w-full p-tb-40">
-                                                        Total: $75.00
-                                                    </div>
-
-                                                    <div class="header-cart-buttons flex-w w-full">
-                                                        <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-                                                            View Cart
-                                                        </a>
-
-                                                        <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                                                            Check Out
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @await Component.InvokeAsync(nameof(MiniBasket))
 
 
                                     <button class="header-ico-btn basket-btn icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
@@ -207,8 +114,8 @@
     <footer id="footer" class="bg3 p-t-75 p-b-32">
         <div class="container">
             <div class="row">
-   
-            @await Component.InvokeAsync(nameof(Footer))
+
+                @await Component.InvokeAsync(nameof(Footer))
 
                 <div class="col-sm-6 col-lg-3 p-b-50">
                     <h4 class="stext-301 cl0 p-b-30">
@@ -496,7 +403,7 @@
     <!--===============================================================================================-->
     <script src="~/Client/assets/js/main.js"></script>
 
-    <script src="~/Client/assets/js/app.js"></script>
+    <script src="~/Client/assets/js/app.js" asp-append-version="true"></script>
 
     <script src="~/Client/assets/js/shop.js"></script>
 </body>
