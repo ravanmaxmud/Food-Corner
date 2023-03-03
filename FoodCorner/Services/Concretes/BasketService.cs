@@ -73,15 +73,34 @@ namespace FoodCorner.Services.Concretes
                 var cookieViewModel = productCookieViewModel!.FirstOrDefault(pc => pc.Id == product.Id);
                 if (cookieViewModel is null)
                 {
-                    productCookieViewModel.Add
-                        (new BasketCookieViewModel(product.Id, product.Name, product.ProductImages.Take(1).FirstOrDefault() != null
-                        ? _fileService.GetFileUrl(product.ProductImages.Take(1).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
-                        : String.Empty, 1, product.Price, product.Price));
+                    if (product.DiscountPrice is null)
+                    {
+                        productCookieViewModel.Add
+                                       (new BasketCookieViewModel(product.Id, product.Name, product.ProductImages.Take(1).FirstOrDefault() != null
+                                            ? _fileService.GetFileUrl(product.ProductImages.Take(1).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
+                                                : String.Empty, 1, product.Price, product.Price));
+                    }
+                    else
+                    {
+                        productCookieViewModel.Add
+                           (new BasketCookieViewModel(product.Id, product.Name, product.ProductImages.Take(1).FirstOrDefault() != null
+                              ? _fileService.GetFileUrl(product.ProductImages.Take(1).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
+                                  : String.Empty, 1, (decimal)product.DiscountPrice, (decimal)product.DiscountPrice));
+                    }
                 }
                 else
                 {
-                    cookieViewModel.Quantity += 1;
-                    cookieViewModel.Total = cookieViewModel.Quantity * cookieViewModel.Price;
+                    if (cookieViewModel.DisCountPrice == 0)
+                    {
+                        cookieViewModel.Quantity += 1;
+                        cookieViewModel.Total = cookieViewModel.Quantity * cookieViewModel.Price;
+                    }
+                    else
+                    {
+                        cookieViewModel.Quantity += 1;
+                        cookieViewModel.Total = cookieViewModel.Quantity * cookieViewModel.DisCountPrice;
+                    }
+                   
                 }
 
                 _httpContextAccessor.HttpContext.Response.Cookies.Append("products",JsonSerializer.Serialize(productCookieViewModel));

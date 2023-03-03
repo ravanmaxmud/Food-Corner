@@ -10,6 +10,7 @@
     <!-- <link rel="stylesheet" href="/assest/css/bootstrap.css"> -->
     <link rel="stylesheet" type="text/css" href="~/Client/assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="~/Client/assets/images/icons/favicon.png" />
+
     <!--===============================================================================================-->
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/Client/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -43,8 +44,6 @@
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/main.css">
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/style.css">
-
-    @RenderSection("link", required : false)
 </head>
 <body>
 
@@ -86,7 +85,7 @@
                                             <div class="cart-block header-cart-content flex-w js-pscroll">
                                                 @await Component.InvokeAsync(nameof(MiniBasket))
                                             </div>
-                                          
+
 
 
                                         </div>
@@ -217,7 +216,8 @@
                     <img src="~/Client/assets/images/icons/icon-close.png" alt="CLOSE">
                 </button>
 
-                <div class="product-details-modal row">
+                <div class="row product-details-modal">
+
 
                 </div>
             </div>
@@ -253,6 +253,7 @@
     <script src="~/Client/assets/vendor/daterangepicker/moment.min.js"></script>
     <script src="~/Client/assets/vendor/daterangepicker/daterangepicker.js"></script>
     <!--===============================================================================================-->
+    <script src="~/Client/assets/vendor/slick/"></script>
     <script src="~/Client/assets/vendor/slick/slick.min.js"></script>
     <script src="~/Client/assets/js/slick-custom.js"></script>
     <!--===============================================================================================-->
@@ -302,6 +303,5 @@
     <script src="~/Client/assets/js/app.js" asp-append-version="true"></script>
 
     <script src="~/Client/assets/js/shop.js"></script>
-    @RenderSection("script", required : false)
 </body>
 </html>

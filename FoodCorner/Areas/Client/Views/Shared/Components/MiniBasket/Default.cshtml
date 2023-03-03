@@ -1,6 +1,6 @@
 ﻿@using FoodCorner.Areas.Client.ViewModels.Basket;
 @model List<BasketCookieViewModel>
-
+    
 <ul class="header-cart-wrapitem w-full">
     @foreach (var item in Model)
     {
@@ -17,9 +17,19 @@
                     @item.Title
                 </a>
 
-                <span class="header-cart-item-info">
-                    @item.Quantity x ₼@item.Price
-                </span>
+
+                @if (item.DisCountPrice == 0)
+                {
+                    <span class="header-cart-item-info">
+                        @item.Quantity x ₼@item.Price
+                    </span>
+                }
+                else
+                {
+                    <span class="header-cart-item-info">
+                        @item.Quantity x ₼@item.DisCountPrice
+                    </span>
+                }
             </div>
         </li>
     }

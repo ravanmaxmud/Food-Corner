@@ -1,7 +1,9 @@
-﻿using FoodCorner.Areas.Client.ViewModels.Home;
+﻿using FoodCorner.Areas.Client.ViewCompanents;
+using FoodCorner.Areas.Client.ViewModels.Home;
 using FoodCorner.Areas.Client.ViewModels.Home.Modal;
 using FoodCorner.Contracts.File;
 using FoodCorner.Database;
+using FoodCorner.Database.Models;
 using FoodCorner.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -38,6 +40,8 @@ namespace FoodCorner.Areas.Client.Controllers
                 Categories = await _dataContext.Categories
                 .OrderByDescending(c=> c.Id).Take(3).Select(c => new CategoryViewModel(c.Id,c.Title,
                 _fileService.GetFileUrl(c.BackgroundİmageInFileSystem,UploadDirectory.Category))).ToListAsync(),
+
+                Stories = await _dataContext.Stories.Take(1).Select(S=> new StoryViewModel(S.Content)).ToListAsync()
             };
 
             return View(model);
@@ -65,7 +69,6 @@ namespace FoodCorner.Areas.Client.Controllers
                 _dataContext.ProductSizes.Include(ps => ps.Size).Where(ps => ps.ProductId == product.Id)
                 .Select(ps => new ModalViewModel.SizeViewModeL(ps.Size.PersonSize, ps.Size.Id)).ToList()
                 );
-
             return PartialView("~/Areas/Client/Views/Shared/_ProductModalPartial.cshtml", model);
         }
     }

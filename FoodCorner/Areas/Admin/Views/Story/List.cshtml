@@ -1,0 +1,30 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.Story
+@model List<ListItemViewModel>
+
+<div class="card-body">
+    <div class="table-responsive">
+        <a asp-route="admin-story-add" class="btn btn-secondary">Add new Story</a>
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>Story Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Content</td>
+                        <td class="text-end">
+                            <form method="POST" asp-route="admin-story-delete" asp-route-id="@item.Id" id="book-form-@item.Id"></form>
+                            <button style="background-color:none; border:none;" type="submit" form="book-form-@item.Id">
+                                <i class="las la-trash-alt text-secondary font-16"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table><!--end /table-->
+    </div><!--end /tableresponsive-->
+</div>

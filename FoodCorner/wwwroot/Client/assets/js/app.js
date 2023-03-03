@@ -227,6 +227,7 @@ $('.js-show-modal1').on('click',function(e){
     fetch(url)
         .then(response => response.text())
         .then(data => {
+            console.log(data);
             $('.product-details-modal').html(data);
 
         })

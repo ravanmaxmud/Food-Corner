@@ -11,14 +11,28 @@
             Price = price;
             Total = total;
         }
-
         public int Id { get; set; }
         public string? Title { get; set; }
         public string? ImageUrl { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
+        public int DisCountPrice { get; set; }
         public decimal Total { get; set; }
 
-        public BasketCookieViewModel(){}
+
+
+        public BasketCookieViewModel()
+        {
+
+        }
+        public BasketCookieViewModel(int id, string? title, string? imageUrl, int quantity, decimal total, int disCountPrice)
+        {
+            Id = id;
+            Title = title;
+            ImageUrl = imageUrl;
+            Quantity = quantity;
+            DisCountPrice = disCountPrice;
+            Total = total;
+        }
     }
 }
