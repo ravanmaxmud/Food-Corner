@@ -1,5 +1,6 @@
 ﻿using FoodCorner.Areas.Client.ViewCompanents;
 using FoodCorner.Areas.Client.ViewModels.Basket;
+using FoodCorner.Areas.Client.ViewModels.Home.Modal;
 using FoodCorner.Database;
 using FoodCorner.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
@@ -22,20 +23,40 @@ namespace FoodCorner.Areas.Client.Controllers
         }
 
         [HttpGet("add/{id}", Name = "client-basket-add")]
-        public async Task<IActionResult> AddProduct([FromRoute] int id)
+        public async Task<IActionResult> AddProduct([FromRoute] int id,ModalViewModel model)
         {
-            var product = await _dataContext.Products.Include(p => p.ProductImages).FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _dataContext.Products
+                .Include(p=> p.ProductSizes).Include(p => p.ProductImages).FirstOrDefaultAsync(p => p.Id == id);
             if (product is null)
             {
                 return NotFound();
             }
-            var productCookiViewModel = await _basketService.AddBasketProductAsync(product);
+            var productCookiViewModel = await _basketService.AddBasketProductAsync(product,model);
             if (productCookiViewModel.Any())
             {
                 return ViewComponent(nameof(MiniBasket), productCookiViewModel);
             }
             return ViewComponent(nameof(MiniBasket));
         }
+
+
+        [HttpPost("addModal/{id}", Name = "client-basket-addModal")]
+        public async Task<IActionResult> AddModalProduct([FromRoute] int id, ModalViewModel model)
+        {
+            var product = await _dataContext.Products
+                .Include(p => p.ProductSizes).Include(p => p.ProductImages).FirstOrDefaultAsync(p => p.Id == id);
+            if (product is null)
+            {
+                return NotFound();
+            }
+            var productCookiViewModel = await _basketService.AddBasketProductAsync(product, model);
+            if (productCookiViewModel.Any())
+            {
+                return ViewComponent(nameof(MiniBasket), productCookiViewModel);
+            }
+            return ViewComponent(nameof(MiniBasket));
+        }
+
 
         [HttpGet("basket-delete/{productId}", Name = "client-basket-delete")]
         public async Task<IActionResult> DeleteProduct([FromRoute] int productId)

@@ -10,6 +10,17 @@ btns.forEach(x => x.addEventListener("click", function (e) {
 }))
 
 
+$(document).on("click", ".add-product-to-basket-modal-btn", function (e) {
+    e.preventDefault();
+
+    fetch(e.target.href)
+        .then(response => response.text())
+        .then(data => {
+            $('.cart-block').html(data);
+        })
+})
+
+
 
 $(document).on("click", ".remove-product-to-basket-btn", function (e) {
     e.preventDefault();

@@ -37,6 +37,7 @@ namespace FoodCorner.Areas.Client.ViewCompanents
             //    return View(model);
             //}
 
+         
             if (viewModels is not null)
             {
                 return View(viewModels);

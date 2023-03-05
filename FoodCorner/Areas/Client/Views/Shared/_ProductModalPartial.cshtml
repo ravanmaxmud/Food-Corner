@@ -50,12 +50,15 @@
 
                 <div class="size-204 respon6-next">
                     <div class="rs1-select2 bor8 bg0">
-                        <select class="js-select2" name="time">
+                       @* <select class="js-select2" name="time">
                             <option>Choose an option</option>
                             <option>Size S</option>
                             <option>Size M</option>
                             <option>Size L</option>
                             <option>Size XL</option>
+                        </select>*@
+                        <select class="js-select2" asp-for="SizeId" asp-items="@(new SelectList(Model.Sizes, nameof(ModalViewModel.SizeViewModeL.Id), nameof(ModalViewModel.SizeViewModeL.Title)))">
+                          
                         </select>
                         <div class="dropDownSelect2"></div>
                     </div>
@@ -76,7 +79,7 @@
                         </div>
                     </div>
 
-                    <a href="" class="btn-add-cart flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                    <a asp-route="client-basket-addModal" asp-route-id="@Model.Id" class="add-product-to-basket-modal-btn   btn-add-cart flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                         Add to cart
                     </a>
                 </div>

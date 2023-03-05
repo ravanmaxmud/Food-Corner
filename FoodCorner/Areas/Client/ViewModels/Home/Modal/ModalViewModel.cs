@@ -12,12 +12,22 @@
             Sizes = sizes;
         }
 
+        public ModalViewModel(int? sizeId)
+        {
+            SizeId = sizeId;
+        }
+        public ModalViewModel()
+        {
+        }
+
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
         public List<Images> ImgUrl { get; set; }
+        public int? SizeId { get; set; }
         public List<SizeViewModeL> Sizes { get; set; }
+
 
 
 
