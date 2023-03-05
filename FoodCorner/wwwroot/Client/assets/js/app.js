@@ -224,6 +224,25 @@ $('.js-show-modal1').on('click',function(e){
     $('.js-modal1').addClass('show-modal1');
     var url = e.target.parentElement.href;
 
+
+    //$.ajax(
+    //    {
+    //        type: "GET",
+    //        url: url,
+    //        success: function (response) {
+
+    //            console.log(response)
+    //            $('.product-details-modal').html(response);
+
+
+    //        },
+    //        error: function (err) {
+    //            $(".product-details-modal").html(err.responseText);
+
+    //        }
+
+    //    });
+
     fetch(url)
         .then(response => response.text())
         .then(data => {

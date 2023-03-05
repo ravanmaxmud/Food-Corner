@@ -64,7 +64,7 @@ namespace FoodCorner.Areas.Client.Controllers
             }
 
             var model = new ModalViewModel(product.Id, product.Name, product.Description, product.Price,
-               product.ProductImages.Where(p=> p.IsPoster == true)
+               product.ProductImages
                 .Select(p => new ModalViewModel.Images(p.Id, _fileService.GetFileUrl(p.ImageNameFileSystem, UploadDirectory.Product))).ToList(),
 
                 _dataContext.ProductSizes.Include(ps => ps.Size).Where(ps => ps.ProductId == product.Id)

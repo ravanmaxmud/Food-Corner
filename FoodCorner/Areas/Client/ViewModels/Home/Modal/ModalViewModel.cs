@@ -2,7 +2,7 @@
 {
     public class ModalViewModel
     {
-        public ModalViewModel(int id, string title, string description, int price, List<Images> imgUrl, List<SizeViewModeL> sizes)
+        public ModalViewModel(int id, string title, string description, int price, List<Images>? imgUrl, List<SizeViewModeL>? sizes)
         {
             Id = id;
             Title = title;
@@ -12,9 +12,10 @@
             Sizes = sizes;
         }
 
-        public ModalViewModel(int? sizeId)
+        public ModalViewModel(int? sizeId,int? personSize)
         {
             SizeId = sizeId;
+            PersonSize = personSize;
         }
         public ModalViewModel()
         {
@@ -24,10 +25,10 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
-        public List<Images> ImgUrl { get; set; }
+        public List<Images>? ImgUrl { get; set; }
         public int? SizeId { get; set; }
         public int? PersonSize { get; set; }
-        public List<SizeViewModeL> Sizes { get; set; }
+        public List<SizeViewModeL>? Sizes { get; set; }
 
 
 
@@ -38,6 +39,10 @@
 
         public class Images 
         {
+            public Images()
+            {
+
+            }
             public Images(int id, string imageUrl)
             {
                 Id = id;
@@ -50,6 +55,10 @@
 
         public class SizeViewModeL
         {
+            public SizeViewModeL()
+            {
+
+            }
             public SizeViewModeL(int title, int id)
             {
                 Title = title;
