@@ -22,7 +22,7 @@ namespace FoodCorner.Areas.Client.Controllers
             _basketService = basketService;
         }
 
-        [HttpGet("add/{id}", Name = "client-basket-add")]
+        [HttpPost("add/{id}", Name = "client-basket-add")]
         public async Task<IActionResult> AddProduct([FromRoute] int id,ModalViewModel model)
         {
             var product = await _dataContext.Products
@@ -32,24 +32,6 @@ namespace FoodCorner.Areas.Client.Controllers
                 return NotFound();
             }
             var productCookiViewModel = await _basketService.AddBasketProductAsync(product,model);
-            if (productCookiViewModel.Any())
-            {
-                return ViewComponent(nameof(MiniBasket), productCookiViewModel);
-            }
-            return ViewComponent(nameof(MiniBasket));
-        }
-
-
-        [HttpPost("addModal/{id}", Name = "client-basket-addModal")]
-        public async Task<IActionResult> AddModalProduct([FromRoute] int id, ModalViewModel model)
-        {
-            var product = await _dataContext.Products
-                .Include(p => p.ProductSizes).Include(p => p.ProductImages).FirstOrDefaultAsync(p => p.Id == id);
-            if (product is null)
-            {
-                return NotFound();
-            }
-            var productCookiViewModel = await _basketService.AddBasketProductAsync(product, model);
             if (productCookiViewModel.Any())
             {
                 return ViewComponent(nameof(MiniBasket), productCookiViewModel);

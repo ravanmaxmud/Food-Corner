@@ -77,13 +77,13 @@ namespace FoodCorner.Services.Concretes
                     if (product.DiscountPrice is null)
                     {
                         productCookieViewModel.Add
-                                       (new BasketCookieViewModel(product.Id, product.Name, product.ProductImages.Take(1).FirstOrDefault() != null
-                                            ? _fileService.GetFileUrl(product.ProductImages.Take(1).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
-                                                : String.Empty, 1, product.Price, product.Price,
-                                                model.SizeId != null ? model.SizeId : _dataContext.Sizes.FirstOrDefault().Id,
-                                                 _dataContext.ProductSizes.Include(ps => ps.Size).Where(ps => ps.ProductId == product.Id)
-                                                       .Select(ps => new SizeListItemViewModel(ps.SizeId, ps.Size.PersonSize)).ToList(),
-                                                  _dataContext.Sizes.FirstOrDefault(s => s.Id == model.SizeId).PersonSize));
+                           (new BasketCookieViewModel(product.Id, product.Name, product.ProductImages.Take(1).FirstOrDefault() != null
+                              ? _fileService.GetFileUrl(product.ProductImages.Take(1).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
+                                  : String.Empty, 1, (decimal)product.Price, (decimal)product.Price,
+                                   model.SizeId != null ? model.SizeId : _dataContext.Sizes.FirstOrDefault().Id,
+                                      _dataContext.ProductSizes.Include(ps => ps.Size).Where(ps => ps.ProductId == product.Id)
+                                             .Select(ps => new SizeListItemViewModel(ps.SizeId, ps.Size.PersonSize)).ToList(),
+                                         model.SizeId != null ? model.PersonSize : _dataContext.Sizes.FirstOrDefault().PersonSize));
                     }
                     else
                     {
@@ -94,7 +94,7 @@ namespace FoodCorner.Services.Concretes
                                    model.SizeId != null ? model.SizeId : _dataContext.Sizes.FirstOrDefault().Id,
                                       _dataContext.ProductSizes.Include(ps => ps.Size).Where(ps => ps.ProductId == product.Id)
                                              .Select(ps => new SizeListItemViewModel(ps.SizeId, ps.Size.PersonSize)).ToList(),
-                                         model.SizeId != null ? model.SizeId : _dataContext.Sizes.FirstOrDefault().PersonSize));
+                                         model.SizeId != null ? model.PersonSize : _dataContext.Sizes.FirstOrDefault().PersonSize));
                     }
                 }
                 else

@@ -26,6 +26,7 @@
         public int Price { get; set; }
         public List<Images> ImgUrl { get; set; }
         public int? SizeId { get; set; }
+        public int? PersonSize { get; set; }
         public List<SizeViewModeL> Sizes { get; set; }
 
 
