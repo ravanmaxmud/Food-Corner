@@ -8,10 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\ViewCompanents\" />
-    <Folder Include="Areas\Client\ActionFilter\" />
-    <Folder Include="Exceptions\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Options\" />
     <Folder Include="wwwroot\Client\custom-files\sliders\" />
   </ItemGroup>
 

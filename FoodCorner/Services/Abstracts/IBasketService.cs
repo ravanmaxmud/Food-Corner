@@ -9,6 +9,5 @@ namespace FoodCorner.Services.Abstracts
     {
         Task<List<BasketCookieViewModel>> AddBasketProductAsync(Product product,ModalViewModel model);
 
-        Task DeleteBasket([FromRoute] int productId, [FromRoute] int sizeId);
     }
 }

@@ -28,6 +28,9 @@ namespace FoodCorner.Database
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketProduct> BasketProducts { get; set; }
         public DbSet<Story> Stories { get; set; }
+        public DbSet<User> Users  { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserActivation> UserActivations { get; set; }
 
 
 

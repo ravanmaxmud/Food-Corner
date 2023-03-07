@@ -44,6 +44,7 @@
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/main.css">
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/style.css">
+    <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/Login.css">
 </head>
 <body>
 
@@ -102,12 +103,13 @@
                                             <a class="border-0 user-close mb-1 text-right"><i class="fa-solid fa-xmark"></i></a>
                                             <h3><img src="~/Client/assets/images/Logo/logo-6nlpJWJn2-transformed.png" alt=""></h3>
                                             <a href="/login.html" class="user-btn">My Account</a>
-                                            <a href="/login.html" class="user-btn">Login</a>
+                                            <a asp-route="client-auth-login" class="user-btn">Login</a>
                                             <div class="log d-flex align-items-center">
                                                 <span>No account yet? </span>
-                                                <a class="register" href="">REGISTER HERE.</a>
+                                                <a class="register" asp-route="client-auth-register">REGISTER HERE.</a>
                                             </div>
                                         </div>
+                                    </button>
                                 </div>
                             </div>
                         </div>

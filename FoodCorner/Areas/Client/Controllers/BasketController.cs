@@ -74,7 +74,7 @@ namespace FoodCorner.Areas.Client.Controllers
 
             productCookieViewModel = JsonSerializer.Deserialize<List<BasketCookieViewModel>>(productCookieValue);
 
-            productCookieViewModel!.RemoveAll(pcvm => pcvm.Id == productId || pcvm.SizeId == sizeId);
+            productCookieViewModel!.RemoveAll(pcvm => pcvm.Id == productId && pcvm.SizeId == sizeId);
             HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productCookieViewModel));
 
 

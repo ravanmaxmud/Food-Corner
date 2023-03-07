@@ -50,14 +50,18 @@ $(document).on("click", ".add-product-to-basket-modal-btn", function (e) {
     let size = e.target.parentElement.parentElement.parentElement.firstElementChild.children[1].children[0].children[0];
     let SizeId = size.value;
 
-    console.log(SizeId)
-    console.log(size)
+
+    let quantity = e.target.parentElement.parentElement.firstElementChild.children[0].children[1];
+    let Quantity = quantity.value;
+    console.log(quantity)
+
     $.ajax(
         {
             type: "POST",
             url: aHref,
             data: {
-                SizeId : SizeId
+                SizeId: SizeId,
+                Quantity: Quantity
             },
             success: function (response) {
 
