@@ -2,6 +2,7 @@
 using FoodCorner.Database;
 using FoodCorner.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
 namespace FoodCorner.Areas.Client.ViewCompanents
@@ -11,33 +12,47 @@ namespace FoodCorner.Areas.Client.ViewCompanents
     {
 
         private readonly DataContext _dataContext;
-        //private readonly IUserService _userService;
+        private readonly IUserService _userService;
         private readonly IFileService _fileService;
 
-        public MiniBasket(DataContext dataContext, /*IUserService userService = null*/ IFileService fileService = null)
+        public MiniBasket(DataContext dataContext, IUserService userService = null, IFileService fileService = null)
         {
             _dataContext = dataContext;
-            //_userService = userService;
+            _userService = userService;
             _fileService = fileService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(List<BasketCookieViewModel>? viewModels = null)
         {
-            //if (_userService.IsAuthenticated)
-            //{
-            //    var model = await _dataContext.BasketProducts.Where(p => p.Basket.UserId == _userService.CurrentUser.Id)
-            //       .Select(p =>
-            //       new BasketCookieViewModel(p.ProductId, p.Product.Name,
-            //       p.Product.ProductImages.Take(1).FirstOrDefault()! != null
-            //       ? _fileService.GetFileUrl(p.Product.ProductImages.Take(1).FirstOrDefault().ImageNameInFileSystem, Contracts.File.UploadDirectory.Products)
-            //       : String.Empty,
-            //       p.Quantity, p.Product.Price, p.Product.Price * p.Quantity)).ToListAsync();
+            if (_userService.IsAuthenticated)
+            {
+                //var model = await _dataContext.BasketProducts.Where(p => p.Basket.UserId == _userService.CurrentUser.Id)
+                //   .Select(p =>
+                //   new BasketCookieViewModel(p.ProductId, p.Product.Name,
+                //   p.Product.ProductImages.Take(1).FirstOrDefault()! != null
+                //   ? _fileService.GetFileUrl(p.Product.ProductImages.Take(1).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
+                //   : String.Empty,
+                //   p.Quantity, p.Product.Price, p.Product.Price * p.Quantity)).ToListAsync();
+
+                var model = await _dataContext.BasketProducts.Where(p => p.Basket.UserId == _userService.CurrentUser.Id)
+                    .Select(p =>
+                    new BasketCookieViewModel(p.Product.Id, p.Product.Name, p.Product.ProductImages.Take(1).FirstOrDefault() != null
+                              ? _fileService.GetFileUrl(p.Product.ProductImages.Take(1).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
+                                  : String.Empty,
+                                       p.Quantity,
+                                       p.SizeId,
+                                      _dataContext.ProductSizes.Include(ps => ps.Size).Where(ps => ps.ProductId == p.Product.Id)
+                                             .Select(ps => new SizeListItemViewModel(ps.SizeId, ps.Size.PersonSize)).ToList(),
+                                         p.SizeId != null
+                                         ? _dataContext.Sizes.FirstOrDefault(s => s.Id == p.SizeId).PersonSize
+                                         : _dataContext.Sizes.FirstOrDefault().PersonSize,
+                                          p.Product.DiscountPrice == null ? (decimal)p.Product.Price : (decimal)p.Product.DiscountPrice,
+                                          p.Product.DiscountPrice == null ? (decimal)p.Product.Price * p.Quantity : (decimal)p.Product.DiscountPrice * p.Quantity)).ToListAsync();
+
+                return View(model);
+            }
 
 
-            //    return View(model);
-            //}
-
-         
             if (viewModels is not null)
             {
                 return View(viewModels);

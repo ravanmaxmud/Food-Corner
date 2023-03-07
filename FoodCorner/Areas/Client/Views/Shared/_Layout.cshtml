@@ -1,4 +1,7 @@
 ﻿@using FoodCorner.Areas.Client.ViewCompanents
+@using FoodCorner.Services.Abstracts
+@inject IUserService userService
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,12 +105,21 @@
                                         <div class="user-icon d-flex flex-column text-start">
                                             <a class="border-0 user-close mb-1 text-right"><i class="fa-solid fa-xmark"></i></a>
                                             <h3><img src="~/Client/assets/images/Logo/logo-6nlpJWJn2-transformed.png" alt=""></h3>
-                                            <a href="/login.html" class="user-btn">My Account</a>
-                                            <a asp-route="client-auth-login" class="user-btn">Login</a>
-                                            <div class="log d-flex align-items-center">
-                                                <span>No account yet? </span>
-                                                <a class="register" asp-route="client-auth-register">REGISTER HERE.</a>
-                                            </div>
+                                            @if (userService.IsAuthenticated)
+                                            {
+                                                <a href="/login.html" class="user-btn">My Account</a>
+                                                <div class="log d-flex align-items-center">
+                                                    <a href="#" class="register">@userService.CurrentUser.FirstName @userService.CurrentUser.LastName</a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <a asp-route="client-auth-login" class="user-btn">Login</a>
+                                                <div class="log d-flex align-items-center">
+                                                    <span>No account yet? </span>
+                                                    <a class="register" asp-route="client-auth-register">REGISTER HERE.</a>
+                                                </div>
+                                            }
                                         </div>
                                     </button>
                                 </div>
@@ -137,6 +149,8 @@
 
 
     @RenderBody()
+
+
 
 
     <footer id="footer" class="bg3 p-t-75 p-b-32">

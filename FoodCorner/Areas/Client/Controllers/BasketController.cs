@@ -15,11 +15,12 @@ namespace FoodCorner.Areas.Client.Controllers
     {
         private readonly DataContext _dataContext;
         private readonly IBasketService _basketService;
-        //private readonly IUserService _userService;
-        public BasketController(DataContext dataContext, IBasketService basketService)
+        private readonly IUserService _userService;
+        public BasketController(DataContext dataContext, IBasketService basketService, IUserService userService)
         {
             _dataContext = dataContext;
             _basketService = basketService;
+            _userService = userService;
         }
 
         [HttpPost("add/{id}", Name = "client-basket-add")]
@@ -45,37 +46,35 @@ namespace FoodCorner.Areas.Client.Controllers
         {
             var productCookieViewModel = new List<BasketCookieViewModel>();
 
-            //if (_userService.IsAuthenticated)
-            //{
-            //    var basketProduct = await _dataContext.BasketProducts
-            //       .Include(b => b.Basket).FirstOrDefaultAsync(bp => bp.Basket.UserId == _userService.CurrentUser.Id && bp.ProductId == productId);
-
-            //    if (basketProduct is null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    _dataContext.BasketProducts.Remove(basketProduct);
-            //}
-            //else
-            //{
-
-            //}
-
-            var product = await _dataContext.Products.Include(p=> p.ProductSizes).FirstOrDefaultAsync(p => p.Id == productId);
-            if (product is null)
+            if (_userService.IsAuthenticated)
             {
-                return NotFound();
+                var basketProduct = await _dataContext.BasketProducts
+                   .Include(b => b.Basket).FirstOrDefaultAsync(bp => bp.Basket.UserId == _userService.CurrentUser.Id && bp.ProductId == productId && bp.SizeId ==sizeId);
+
+                if (basketProduct is null)
+                {
+                    return NotFound();
+                }
+                _dataContext.BasketProducts.Remove(basketProduct);
             }
-            var productCookieValue = HttpContext.Request.Cookies["products"];
-            if (productCookieValue is null)
+            else
             {
-                return NotFound();
+                var product = await _dataContext.Products.Include(p => p.ProductSizes).FirstOrDefaultAsync(p => p.Id == productId);
+                if (product is null)
+                {
+                    return NotFound();
+                }
+                var productCookieValue = HttpContext.Request.Cookies["products"];
+                if (productCookieValue is null)
+                {
+                    return NotFound();
+                }
+
+                productCookieViewModel = JsonSerializer.Deserialize<List<BasketCookieViewModel>>(productCookieValue);
+
+                productCookieViewModel!.RemoveAll(pcvm => pcvm.Id == productId && pcvm.SizeId == sizeId);
+                HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productCookieViewModel));
             }
-
-            productCookieViewModel = JsonSerializer.Deserialize<List<BasketCookieViewModel>>(productCookieValue);
-
-            productCookieViewModel!.RemoveAll(pcvm => pcvm.Id == productId && pcvm.SizeId == sizeId);
-            HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productCookieViewModel));
 
 
             await _dataContext.SaveChangesAsync();

@@ -2,13 +2,9 @@
 @using FoodCorner.Areas.Client.ViewModels.Authentication
 @model RegisterViewModel
 
-@section link{
-    <link rel="stylesheet" asp-append-version="true" href="~/Client/assets/css/Login.css">
-}
-
-<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/assets/images/Product/SekaTort2.jpeg');   background-position: center; background-repeat: no-repeat; background-size: cover;">
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/Client/assets/images/Product/SekaTort2.jpeg');   background-position: center; background-repeat: no-repeat; background-size: cover;">
     <h2 class="ltext-105 cl0 txt-center">
-        Login
+        Register
     </h2>
 </section>
 
@@ -17,33 +13,39 @@
 <div class="mt-5 mb-5 login-register-area section-space-y-axis-100">
     <div class="container">
         <div class="d-flex justify-content-center align-items-center">
-            <div class="col-lg-6">
-                <form action="#">
+            <div class="col-lg-6 pt-5 pt-lg-0">
+                <form method="POST" asp-route="client-auth-register">
                     <div class="login-form">
-                        <h4 class="login-title">Login</h4>
+                        <h4 class="login-title">Register</h4>
                         <div class="row">
-                            <div class="col-lg-12">
-                                <label>Email Address*</label>
-                                <input type="email" placeholder="Email Address" />
+                            <div class="col-md-6 col-12">
+                                <label>First Name</label>
+                                <input asp-for="FirstName" type="text" placeholder="First Name" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-md-6 col-12">
+                                <label>Last Name</label>
+                                <input asp-for="LastName" type="text" placeholder="Last Name" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12">
+                                <label>Email Address</label>
+                                <input asp-for="Email" type="email" placeholder="Email Address" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
                                 <label>Password</label>
-                                <input type="password" placeholder="Password" />
+                                <input asp-for="Password" type="password" placeholder="Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
-                            <div class="col-md-8">
-                                <div class="check-box">
-                                    <input type="checkbox" id="remember_me" />
-                                    <label for="remember_me">Remember me</label>
-                                </div>
+                            <div class="col-md-6">
+                                <label>Confirm Password</label>
+                                <input asp-for="ConfirmPassword" type="password" placeholder="Confirm Password" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                             </div>
-                            <div class="col-md-4 pt-1 mt-md-0">
-                                <div class="forgotton-password_info">
-                                    <a href="#"> Forgotten pasward?</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 pt-5">
+                            <div class="col-12">
                                 <button class="btn btn-custom-size lg-size btn-pronia-primary">
-                                    Login
+                                    Register
                                 </button>
                             </div>
                         </div>

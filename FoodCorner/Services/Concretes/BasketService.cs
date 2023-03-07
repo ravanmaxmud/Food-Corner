@@ -17,14 +17,16 @@ namespace FoodCorner.Services.Concretes
         //private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IFileService _fileService;
+        private readonly IUserService _userService;
 
 
 
-        public BasketService(DataContext dataContext, IHttpContextAccessor httpContextAccessor, IFileService fileService)
+        public BasketService(DataContext dataContext, IHttpContextAccessor httpContextAccessor, IFileService fileService, IUserService userService)
         {
             _dataContext = dataContext;
             _httpContextAccessor = httpContextAccessor;
             _fileService = fileService;
+            _userService = userService;
         }
 
         public async Task<List<BasketCookieViewModel>> AddBasketProductAsync(Product product, ModalViewModel model)
@@ -34,40 +36,43 @@ namespace FoodCorner.Services.Concretes
                 SizeId = model.SizeId != null ? model.SizeId : _dataContext.Sizes.FirstOrDefault().Id,
                 Quantity = model.Quantity != null ? model.Quantity : 1
             };
-            //if (_userService.IsAuthenticated)
-            //{
-            //    await AddToDatabaseAsync();
-            //    return new List<BasketCookieViewModel>();
-            //}
+
+            if (_userService.IsAuthenticated)
+            {
+                await AddToDatabaseAsync();
+                return new List<BasketCookieViewModel>();
+            }
 
             return AddCookie();
 
 
-            //async Task AddToDatabaseAsync() 
-            //{
-            //    var basketProduct = await _dataContext.BasketProducts
-            //         .Include(b => b.Basket)
-            //         .FirstOrDefaultAsync(bp => bp.Basket.User.Id == _userService.CurrentUser.Id && bp.ProductId == product.Id);
+            async Task AddToDatabaseAsync()
+            {
+                var basketProduct = await _dataContext.BasketProducts
+                     .Include(b => b.Basket)
+                     .FirstOrDefaultAsync(bp => bp.Basket.User.Id == _userService.CurrentUser.Id && bp.ProductId == product.Id);
 
-            //    if (basketProduct is not null)
-            //    {
-            //        basketProduct.Quantity++;
-            //    }
-            //    else
-            //    {
-            //        var basket = await _dataContext.Baskets.FirstAsync(p =>p.UserId == _userService.CurrentUser.Id);
+                if (basketProduct is null || basketProduct.SizeId != model.SizeId)
+                {
+                    var basket = await _dataContext.Baskets.FirstAsync(p => p.UserId == _userService.CurrentUser.Id);
 
-            //        basketProduct = new BasketProduct 
-            //        {
-            //            Quantity =1,
-            //            BasketId = basket.Id,
-            //            ProductId = product.Id
-            //        };
+                    basketProduct = new BasketProduct
+                    {
+                        Quantity = model.Quantity != 0 ? model.Quantity : 1,
+                        BasketId = basket.Id,
+                        ProductId = product.Id,
+                        SizeId = model.SizeId,
+                    };
 
-            //        await _dataContext.BasketProducts.AddAsync(basketProduct);
-            //    }
-            //        await _dataContext.SaveChangesAsync();
-            //}
+                    await _dataContext.BasketProducts.AddAsync(basketProduct);
+                }
+                else
+                {
+                    basketProduct.Quantity++;
+                }
+                await _dataContext.SaveChangesAsync();
+            }
+
 
             List<BasketCookieViewModel> AddCookie()
             {

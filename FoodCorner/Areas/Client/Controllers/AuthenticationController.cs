@@ -5,6 +5,7 @@ using FoodCorner.Areas.Client.ViewModels.Authentication;
 using FoodCorner.Contracts.Identity;
 using FoodCorner.Database;
 using FoodCorner.Services.Abstracts;
+using FoodCorner.Areas.Admin.Controllers;
 
 namespace FoodCorner.Areas.Client.Controllers
 {
@@ -14,11 +15,12 @@ namespace FoodCorner.Areas.Client.Controllers
     {
         private readonly DataContext _dbContext;
         private readonly IUserService _userService;
-
-        public AuthenticationController(DataContext dbContext, IUserService userService)
+        private readonly ILogger<AuthenticationController> _logger;
+        public AuthenticationController(DataContext dbContext, IUserService userService, ILogger<AuthenticationController> logger)
         {
             _dbContext = dbContext;
             _userService = userService;
+            _logger = logger;
         }
 
 
@@ -59,7 +61,7 @@ namespace FoodCorner.Areas.Client.Controllers
 
 
         [HttpGet("register", Name = "client-auth-register")]
-        [ServiceFilter(typeof(ValidationCurrentUserAttribute))]
+        //[ServiceFilter(typeof(ValidationCurrentUserAttribute))]
         public async Task<IActionResult> Register()
         {
             return View();
@@ -68,8 +70,15 @@ namespace FoodCorner.Areas.Client.Controllers
         [HttpPost("register", Name = "client-auth-register")]
         public async Task<IActionResult> Register(RegisterViewModel model)  
         {
+            var users = await _dbContext.Users.ToListAsync();
             if (!ModelState.IsValid)
             {
+                return View(model);
+            }
+            if (await _dbContext.Users.AnyAsync(u=> u.Email == model.Email))
+            {
+                ModelState.AddModelError(string.Empty, "Email Address is already un use.");
+                _logger.LogWarning($"({model.Email}) This Email Address is already un use.");
                 return View(model);
             }
             var emails = new List<string>();
@@ -98,7 +107,7 @@ namespace FoodCorner.Areas.Client.Controllers
 
             if (userActivation is null)
             { 
-            return NotFound();
+               return NotFound();
             }  
 
             if (DateTime.Now > userActivation.ExpiredDate)
