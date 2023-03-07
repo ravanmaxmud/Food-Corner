@@ -6,6 +6,10 @@ btns.forEach(x => x.addEventListener("click", function (e) {
     let aHref = e.target.parentElement.href;
 
     
+    document.getElementById('toaster').style.opacity = '1'
+    setTimeout(() => {
+        document.getElementById('toaster').style.opacity = '0'
+    }, 1000);
 
     $.ajax(
         {
@@ -36,6 +40,11 @@ btns.forEach(x => x.addEventListener("click", function (e) {
 
 $(document).on("click", ".add-product-to-basket-modal-btn", function (e) {
     e.preventDefault();
+
+    document.getElementById('toaster').style.opacity = '1'
+    setTimeout(() => {
+        document.getElementById('toaster').style.opacity = '0'
+    }, 1000);
 
     let aHref = e.target.href;
     let size = e.target.parentElement.parentElement.parentElement.firstElementChild.children[1].children[0].children[0];

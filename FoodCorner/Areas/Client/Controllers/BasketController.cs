@@ -40,8 +40,8 @@ namespace FoodCorner.Areas.Client.Controllers
         }
 
 
-        [HttpGet("basket-delete/{productId}", Name = "client-basket-delete")]
-        public async Task<IActionResult> DeleteProduct([FromRoute] int productId)
+        [HttpGet("basket-delete/{productId}/{sizeId}", Name = "client-basket-delete")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] int productId, [FromRoute] int sizeId)
         {
             var productCookieViewModel = new List<BasketCookieViewModel>();
 
@@ -61,7 +61,7 @@ namespace FoodCorner.Areas.Client.Controllers
 
             //}
 
-            var product = await _dataContext.Products.FirstOrDefaultAsync(p => p.Id == productId);
+            var product = await _dataContext.Products.Include(p=> p.ProductSizes).FirstOrDefaultAsync(p => p.Id == productId);
             if (product is null)
             {
                 return NotFound();
@@ -74,7 +74,7 @@ namespace FoodCorner.Areas.Client.Controllers
 
             productCookieViewModel = JsonSerializer.Deserialize<List<BasketCookieViewModel>>(productCookieValue);
 
-            productCookieViewModel!.RemoveAll(pcvm => pcvm.Id == productId);
+            productCookieViewModel!.RemoveAll(pcvm => pcvm.Id == productId || pcvm.SizeId == sizeId);
             HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productCookieViewModel));
 
 

@@ -1,4 +1,4 @@
-﻿@*@using FoodCorner.Areas.Client.ViewModels.Basket;
+﻿@using FoodCorner.Areas.Client.ViewModels.Basket;
 @model List<BasketCookieViewModel>
     
 <ul class="header-cart-wrapitem w-full">
@@ -6,7 +6,7 @@
     {
         <li class="header-cart-item d-flex justify-content-between align-items-center flex-w flex-t m-b-12">
             <div class="remove-basket">
-                <a asp-route="client-basket-delete" asp-route-productId="@item.Id" class="remove-product-to-basket-btn"><i class="fa-solid fa-xmark"></i></a>
+                <a asp-route="client-basket-delete" asp-route-productId="@item.Id" asp-route-sizeId="@item.SizeId" class="remove-product-to-basket-btn"><i class="fa-solid fa-xmark"></i></a>
             </div>
             <div class="">
                 <img style="width:50px; height:50px; object-fit:cover;" src="~/@item.ImageUrl" alt="IMG">
@@ -48,4 +48,4 @@
             Check Out
         </a>
     </div>
-</div>*@
+</div>

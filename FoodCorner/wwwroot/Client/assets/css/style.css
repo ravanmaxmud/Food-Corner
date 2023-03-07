@@ -1706,3 +1706,17 @@ header {
     -o-object-fit: cover;
     object-fit: cover !important;
 }
+
+
+
+#toaster {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    border-radius: 10px;
+    color: blue;
+    padding: 10px 20px;
+    opacity: 0;
+    transition:0.5s;
+    z-index:99999;
+}

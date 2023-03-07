@@ -2,7 +2,7 @@
 {
     public class BasketCookieViewModel
     {
-        public BasketCookieViewModel(int id, string? title, string? imageUrl, int quantity, decimal price, decimal total,int? sizeId , List<SizeListItemViewModel> sizes, int? personSize)
+        public BasketCookieViewModel(int id, string? title, string? imageUrl, int quantity, int? sizeId, List<SizeListItemViewModel> sizes, int? personSize, decimal price, decimal total)
         {
             Id = id;
             Title = title;
@@ -30,9 +30,9 @@
         {
 
         }
-        public BasketCookieViewModel(int id, string? title, string? imageUrl, int quantity, decimal total, int disCountPrice,int? sizeId ,
-            List<SizeListItemViewModel> sizes, 
-            int? personSize)
+        public BasketCookieViewModel(int id, string? title, string? imageUrl, int quantity, int? sizeId,
+            List<SizeListItemViewModel> sizes,
+            int? personSize, int disCountPrice, decimal total)
         {
             Id = id;
             Title = title;

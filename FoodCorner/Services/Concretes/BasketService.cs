@@ -5,6 +5,9 @@ using FoodCorner.Database.Models;
 using FoodCorner.Services.Abstracts;
 using System.Text.Json;
 using FoodCorner.Areas.Client.ViewModels.Home.Modal;
+using Microsoft.AspNetCore.Mvc;
+using FoodCorner.Areas.Client.ViewCompanents;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FoodCorner.Services.Concretes
 {
@@ -26,6 +29,10 @@ namespace FoodCorner.Services.Concretes
 
         public async Task<List<BasketCookieViewModel>> AddBasketProductAsync(Product product, ModalViewModel model)
         {
+            model = new ModalViewModel
+            {
+                SizeId = model.SizeId != null ? model.SizeId : _dataContext.Sizes.FirstOrDefault().Id,
+            };
             //if (_userService.IsAuthenticated)
             //{
             //    await AddToDatabaseAsync();
@@ -33,8 +40,6 @@ namespace FoodCorner.Services.Concretes
             //}
 
             return AddCookie();
-
-
 
 
             //async Task AddToDatabaseAsync() 
@@ -72,18 +77,21 @@ namespace FoodCorner.Services.Concretes
                    : new List<BasketCookieViewModel> { };
 
                 var cookieViewModel = productCookieViewModel!.FirstOrDefault(pc => pc.Id == product.Id);
-                if (cookieViewModel is null)
+
+                if (cookieViewModel is null || cookieViewModel.SizeId != model.SizeId)
                 {
                     productCookieViewModel.Add
                            (new BasketCookieViewModel(product.Id, product.Name, product.ProductImages.Take(1).FirstOrDefault() != null
                               ? _fileService.GetFileUrl(product.ProductImages.Take(1).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
-                                  : String.Empty, 1, product.DiscountPrice == null ? (decimal)product.Price : (decimal)product.DiscountPrice, product.DiscountPrice == null ? (decimal)product.Price : (decimal)product.DiscountPrice,
+                                  : String.Empty, 1,
                                    model.SizeId != null ? model.SizeId : _dataContext.Sizes.FirstOrDefault().Id,
                                       _dataContext.ProductSizes.Include(ps => ps.Size).Where(ps => ps.ProductId == product.Id)
                                              .Select(ps => new SizeListItemViewModel(ps.SizeId, ps.Size.PersonSize)).ToList(),
                                          model.SizeId != null
                                          ? _dataContext.Sizes.FirstOrDefault(s => s.Id == model.SizeId).PersonSize
-                                         : _dataContext.Sizes.FirstOrDefault().PersonSize));
+                                         : _dataContext.Sizes.FirstOrDefault().PersonSize,
+                                          product.DiscountPrice == null ? (decimal)product.Price : (decimal)product.DiscountPrice, 
+                                          product.DiscountPrice == null ? (decimal)product.Price : (decimal)product.DiscountPrice));
                 }
                 else
                 {
@@ -106,6 +114,38 @@ namespace FoodCorner.Services.Concretes
 
                 return productCookieViewModel;
             };
+        }
+
+        public async Task DeleteBasket([FromRoute] int productId, [FromRoute] int sizeId)
+        {
+            var productCookieViewModel = new List<BasketCookieViewModel>();
+
+            //if (_userService.IsAuthenticated)
+            //{
+            //    var basketProduct = await _dataContext.BasketProducts
+            //       .Include(b => b.Basket).FirstOrDefaultAsync(bp => bp.Basket.UserId == _userService.CurrentUser.Id && bp.ProductId == productId);
+
+            //    if (basketProduct is null)
+            //    {
+            //        return NotFound();
+            //    }
+            //    _dataContext.BasketProducts.Remove(basketProduct);
+            //}
+            //else
+            //{
+
+            //}
+
+
+            var productCookieValue = _httpContextAccessor.HttpContext.Request.Cookies["products"];
+            if (productCookieValue is not null)
+            {
+                productCookieViewModel = JsonSerializer.Deserialize<List<BasketCookieViewModel>>(productCookieValue);
+
+                productCookieViewModel!.RemoveAll(pcvm => pcvm.Id == productId && pcvm.SizeId == sizeId);
+                _httpContextAccessor.HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productCookieViewModel));
+                await _dataContext.SaveChangesAsync();
+            }
         }
     }
 }
