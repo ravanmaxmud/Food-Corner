@@ -27,7 +27,8 @@
                         </div>
                         <div class="form-group">
                             <label>Urls</label>
-                            <select asp-for="ToURL" asp-items="@(new SelectList(Model.Urls, nameof(UpdateViewModel.UrlViewModel.Path), nameof(UpdateViewModel.UrlViewModel.Path)))" class="form-select">                            </select>
+                            <select asp-for="ToURL" asp-items="@(new SelectList(Model.Urls, nameof(UpdateViewModel.UrlViewModel.Path), nameof(UpdateViewModel.UrlViewModel.Path)))" class="form-select">   
+                            </select>
                             <span asp-validation-for="ToURL" class="text-danger"></span>
                         </div>
                         <div class="form-group">

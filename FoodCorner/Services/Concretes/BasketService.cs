@@ -34,7 +34,7 @@ namespace FoodCorner.Services.Concretes
             model = new ModalViewModel
             {
                 SizeId = model.SizeId != null ? model.SizeId : _dataContext.Sizes.FirstOrDefault().Id,
-                Quantity = model.Quantity != null ? model.Quantity : 1
+                Quantity = model.Quantity != 0 ? model.Quantity : 1,
             };
 
             if (_userService.IsAuthenticated)
@@ -50,7 +50,9 @@ namespace FoodCorner.Services.Concretes
             {
                 var basketProduct = await _dataContext.BasketProducts
                      .Include(b => b.Basket)
-                     .FirstOrDefaultAsync(bp => bp.Basket.User.Id == _userService.CurrentUser.Id && bp.ProductId == product.Id);
+                     .FirstOrDefaultAsync(bp => bp.Basket.User.Id == _userService.CurrentUser.Id &&
+                     bp.ProductId == product.Id &&
+                     bp.SizeId == model.SizeId);
 
                 if (basketProduct is null || basketProduct.SizeId != model.SizeId)
                 {
@@ -58,7 +60,7 @@ namespace FoodCorner.Services.Concretes
 
                     basketProduct = new BasketProduct
                     {
-                        Quantity = model.Quantity != 0 ? model.Quantity : 1,
+                        Quantity = model.Quantity,
                         BasketId = basket.Id,
                         ProductId = product.Id,
                         SizeId = model.SizeId,

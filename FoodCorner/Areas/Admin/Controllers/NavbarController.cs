@@ -122,6 +122,18 @@ namespace FoodCorner.Areas.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
+                 model = new UpdateViewModel
+                {
+                    Id = navItem.Id,
+                    Name = navItem.Name,
+                    ToURL = navItem.ToURL,
+                    Order = navItem.Order,
+                    IsViewHeader = navItem.IsViewHeader,
+                    IsViewFooter = navItem.IsViewFooter,
+                    Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
+               .Select(u => new UpdateViewModel.UrlViewModel(u!.AttributeRouteInfo.Template)).ToList()
+                };
+
                 return View(model);
             }
 
