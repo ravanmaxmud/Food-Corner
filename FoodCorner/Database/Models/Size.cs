@@ -7,6 +7,7 @@ namespace FoodCorner.Database.Models
         public int PersonSize { get; set; }
         public DateTime CreatedAt { get ; set; }
         public DateTime UpdateAt { get; set; }
+        public int? IncreasePercent { get; set; }
         public List<ProductSize>? ProductSizes { get; set; }
     }
 }

@@ -37,13 +37,21 @@ namespace FoodCorner.Services.Concretes
                 Quantity = model.Quantity != 0 ? model.Quantity : 1,
             };
 
+
+            var allSize = await _dataContext.Sizes.FirstOrDefaultAsync(s => s.Id == model.SizeId);
+            var increasePrice = (product.Price * allSize!.IncreasePercent) / 100;
+            var sizePrice = product.Price + increasePrice;
+
+            var increaseDiscountPrice = (product.DiscountPrice * allSize!.IncreasePercent) / 100;
+            var sizeDiscountPrice = product.DiscountPrice + increasePrice;
+
             if (_userService.IsAuthenticated)
             {
                 await AddToDatabaseAsync();
                 return new List<BasketCookieViewModel>();
             }
 
-            return AddCookie();
+            return await AddCookie();
 
 
             async Task AddToDatabaseAsync()
@@ -63,7 +71,7 @@ namespace FoodCorner.Services.Concretes
                         Quantity = model.Quantity,
                         BasketId = basket.Id,
                         ProductId = product.Id,
-                        SizeId = model.SizeId,
+                        SizeId = model.SizeId, 
                     };
 
                     await _dataContext.BasketProducts.AddAsync(basketProduct);
@@ -76,7 +84,7 @@ namespace FoodCorner.Services.Concretes
             }
 
 
-            List<BasketCookieViewModel> AddCookie()
+            async Task<List<BasketCookieViewModel>> AddCookie()
             {
                 var productCookieValue = _httpContextAccessor.HttpContext.Request.Cookies["products"];
 
@@ -88,19 +96,19 @@ namespace FoodCorner.Services.Concretes
 
                 if (cookieViewModel is null || cookieViewModel.SizeId != model.SizeId)
                 {
-                    productCookieViewModel.Add
-                           (new BasketCookieViewModel(product.Id, product.Name, product.ProductImages.Take(1).FirstOrDefault() != null
-                              ? _fileService.GetFileUrl(product.ProductImages.Take(1).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
+                    productCookieViewModel!.Add
+                           (new BasketCookieViewModel(product.Id, product.Name, product.ProductImages!.Take(1).FirstOrDefault() != null
+                              ? _fileService.GetFileUrl(product.ProductImages!.Take(1).FirstOrDefault()!.ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
                                   : String.Empty,
                                        model.Quantity,
                                        model.SizeId,
                                       _dataContext.ProductSizes.Include(ps => ps.Size).Where(ps => ps.ProductId == product.Id)
                                              .Select(ps => new SizeListItemViewModel(ps.SizeId, ps.Size.PersonSize)).ToList(),
                                          model.SizeId != null
-                                         ? _dataContext.Sizes.FirstOrDefault(s => s.Id == model.SizeId).PersonSize
-                                         : _dataContext.Sizes.FirstOrDefault().PersonSize,
-                                          product.DiscountPrice == null ? (decimal)product.Price : (decimal)product.DiscountPrice, 
-                                          product.DiscountPrice == null ? (decimal)product.Price * model.Quantity  : (decimal)product.DiscountPrice * model.Quantity));
+                                         ? _dataContext.Sizes.FirstOrDefault(s => s.Id == model.SizeId)!.PersonSize
+                                         : _dataContext.Sizes.FirstOrDefault()!.PersonSize,
+                                          product.DiscountPrice == null ? (decimal)sizePrice! : (decimal)sizeDiscountPrice!, 
+                                          product.DiscountPrice == null ? (decimal)sizePrice! * model.Quantity  : (decimal)sizeDiscountPrice! * model.Quantity));
                 }
                 else
                 {

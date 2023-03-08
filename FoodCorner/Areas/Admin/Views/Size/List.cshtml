@@ -1,0 +1,45 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.Size
+@model List<ListItemViewModel>
+
+<div class="col-lg-12">
+    <div class="row justify-content-end">
+        <div class="">
+            <a asp-controller="size" asp-action="add" class="btn btn-secondary">Add new Product Size</a>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Sizes</h4>
+        </div><!--end card-header-->
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>PersonSize</th>
+                            <th>IncreasePercent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var nav in Model)
+                        {
+                            <tr>
+                                <td>@nav.PersonSize</td>
+                                <td>@nav.IncreasePercent</td>
+                                <td class="text-end">
+                                    <a asp-route="admin-size-update" asp-route-Id="@nav.Id"><i class="las la-pen text-secondary font-16"></i></a>
+                                    <form method="POST" asp-route="admin-size-delete" asp-route-id="@nav.Id" id="book-form-@nav.Id"></form>
+                                    <button style="background-color:none; border:none;" type="submit" form="book-form-@nav.Id">
+                                        <i class="las la-trash-alt text-secondary font-16"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table><!--end /table-->
+            </div><!--end /tableresponsive-->
+        </div><!--end card-body-->
+    </div><!--end card-->
+</div>

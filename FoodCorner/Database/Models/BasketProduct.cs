@@ -4,6 +4,7 @@ namespace FoodCorner.Database.Models
 {
     public class BasketProduct : BaseEntity,IAuditable
     {
+        public int? CurrentPrice { get; set; }
         public int BasketId { get; set; }
         public Basket? Basket{ get; set; }
 
