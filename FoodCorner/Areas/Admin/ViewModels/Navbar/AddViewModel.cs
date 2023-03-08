@@ -11,6 +11,7 @@ namespace FoodCorner.Areas.Admin.ViewModels.Navbar
 
         public List<UrlViewModel>? Urls { get; set; }
 
+        [Required]
         public int Order { get; set; }
 
         [Required]

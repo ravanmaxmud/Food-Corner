@@ -2,48 +2,47 @@
 @model List<FoodCorner.Database.Models.Navbar>
 
 
-		<div class="col-lg-4 col-2">
-						<div class="header-left d-flex justify-content-start align-items-center">
-							<div class="header-bar d-flex justify-content-start align-items-center">
-								<nav>
-									<button class="menu-toggle-btn"
-											aria-targe="primary-navigation"
-											aria-expanded="false"
-											aria-controls="primary-navigation">
-										<span class="visually-hidden"></span>
-										<svg aria-hidden="true" height="35" width="35" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3H2" /><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 8H2" /><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 13H2" /></svg>
-									</button>
-									<ul data-state="closed" class="primary-navigation" id="primary-navigation">
-										@foreach (var item in Model)
-										{
-									    <li><a href="@item.ToURL">@item.Name</a></li>
-										
-										}
-									</ul>
-								</nav>
-							</div>
-							@foreach (var item in Model)
-							{
-								if (item.SubNavbars.Count != 0)
-								{
-									<div class="dropdown">
-										<a href="#" class="dropbtn">@item.Name</a>
-										<div class="dropdown-content">
-											@foreach (var subNav in item.SubNavbars )
-											{
-												<a href="@subNav.ToURL">@subNav.Name</a>
-											}		
-										</div>
-									</div>
-								}
-								else
-								{
-									<div class="dropdown">
-										<a href="@item.ToURL" class="dropbtn">@item.Name</a>
-									</div>
-								}
-								
-							}
-						</div>
-					</div>
+<div class="col-lg-4 col-2">
+    <div class="header-left d-flex justify-content-start align-items-center">
+        <div class="header-bar d-flex justify-content-start align-items-center">
+            <nav>
+                <button class="menu-toggle-btn"
+                        aria-targe="primary-navigation"
+                        aria-expanded="false"
+                        aria-controls="primary-navigation">
+                    <span class="visually-hidden"></span>
+                    <svg aria-hidden="true" height="35" width="35" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3H2" /><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 8H2" /><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 13H2" /></svg>
+                </button>
+                <ul data-state="closed" class="primary-navigation" id="primary-navigation">
+                    @foreach (var item in Model)
+                    {
+                        <li><a href="@item.ToURL">@item.Name</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
+        @foreach (var item in Model)
+        {
+            if (item.SubNavbars.Count != 0)
+            {
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">@item.Name</a>
+                    <div class="dropdown-content">
+                        @foreach (var subNav in item.SubNavbars)
+                        {
+                            <a href="@subNav.ToURL">@subNav.Name</a>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="dropdown">
+                    <a href="@item.ToURL" class="dropbtn">@item.Name</a>
+                </div>
+            }
+
+        }
+    </div>
+</div>
 

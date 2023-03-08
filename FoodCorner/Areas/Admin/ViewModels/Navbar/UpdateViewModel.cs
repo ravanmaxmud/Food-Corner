@@ -6,11 +6,10 @@ namespace FoodCorner.Areas.Admin.ViewModels.Navbar
     {
         public int Id { get; set; }
         [Required]
-        public string? Name { get; set; }
+        public string Name { get; set; }
         [Required]
-        public string? ToURL { get; set; }
+        public string ToURL { get; set; }
 
-        [Required]
         public List<UrlViewModel>? Urls { get; set; }
         [Required]
         public int Order { get; set; }
