@@ -37,7 +37,6 @@ namespace FoodCorner.Services.Concretes
                 Quantity = model.Quantity != 0 ? model.Quantity : 1,
             };
 
-
             var allSize = await _dataContext.Sizes.FirstOrDefaultAsync(s => s.Id == model.SizeId);
             var increasePrice = (product.Price * allSize!.IncreasePercent) / 100;
             var sizePrice = product.Price + increasePrice;
@@ -71,8 +70,13 @@ namespace FoodCorner.Services.Concretes
                         Quantity = model.Quantity,
                         BasketId = basket.Id,
                         ProductId = product.Id,
-                        SizeId = model.SizeId, 
+                        SizeId = model.SizeId,
+                        CurrentPrice = sizePrice,
+                        CurrentDiscountPrice =sizeDiscountPrice
+
                     };
+                    
+       
 
                     await _dataContext.BasketProducts.AddAsync(basketProduct);
                 }
@@ -96,6 +100,7 @@ namespace FoodCorner.Services.Concretes
 
                 if (cookieViewModel is null || cookieViewModel.SizeId != model.SizeId)
                 {
+
                     productCookieViewModel!.Add
                            (new BasketCookieViewModel(product.Id, product.Name, product.ProductImages!.Take(1).FirstOrDefault() != null
                               ? _fileService.GetFileUrl(product.ProductImages!.Take(1).FirstOrDefault()!.ImageNameFileSystem, Contracts.File.UploadDirectory.Product)

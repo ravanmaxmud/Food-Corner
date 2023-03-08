@@ -37,7 +37,7 @@ namespace FoodCorner.Areas.Client.Controllers
             {
                 return ViewComponent(nameof(MiniBasket), productCookiViewModel);
             }
-            return ViewComponent(nameof(MiniBasket));
+            return ViewComponent(nameof(MiniBasket), product);
         }
 
 

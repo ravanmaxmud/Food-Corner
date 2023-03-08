@@ -1,5 +1,8 @@
 ﻿using FoodCorner.Areas.Client.ViewModels.Basket;
+using FoodCorner.Areas.Client.ViewModels.Home.Modal;
 using FoodCorner.Database;
+using FoodCorner.Database.Models;
+using FoodCorner.Migrations;
 using FoodCorner.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,15 +27,9 @@ namespace FoodCorner.Areas.Client.ViewCompanents
 
         public async Task<IViewComponentResult> InvokeAsync(List<BasketCookieViewModel>? viewModels = null)
         {
+       
             if (_userService.IsAuthenticated)
-            {
-                //var model = await _dataContext.BasketProducts.Where(p => p.Basket.UserId == _userService.CurrentUser.Id)
-                //   .Select(p =>
-                //   new BasketCookieViewModel(p.ProductId, p.Product.Name,
-                //   p.Product.ProductImages.Take(1).FirstOrDefault()! != null
-                //   ? _fileService.GetFileUrl(p.Product.ProductImages.Take(1).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
-                //   : String.Empty,
-                //   p.Quantity, p.Product.Price, p.Product.Price * p.Quantity)).ToListAsync();
+            {     
 
                 var model = await _dataContext.BasketProducts.Where(p => p.Basket.UserId == _userService.CurrentUser.Id)
                     .Select(p =>
@@ -46,8 +43,8 @@ namespace FoodCorner.Areas.Client.ViewCompanents
                                          p.SizeId != null
                                          ? _dataContext.Sizes.FirstOrDefault(s => s.Id == p.SizeId).PersonSize
                                          : _dataContext.Sizes.FirstOrDefault().PersonSize,
-                                          p.Product.DiscountPrice == null ? (decimal)p.Product.Price : (decimal)p.Product.DiscountPrice,
-                                          p.Product.DiscountPrice == null ? (decimal)p.Product.Price * p.Quantity : (decimal)p.Product.DiscountPrice * p.Quantity)).ToListAsync();
+                                          p.Product.DiscountPrice == null ? (decimal)p.CurrentPrice : (decimal)p.CurrentDiscountPrice,
+                                          p.Product.DiscountPrice == null ? (decimal)p.CurrentPrice * p.Quantity : (decimal)p.CurrentDiscountPrice * p.Quantity)).ToListAsync();
 
                 return View(model);
             }
