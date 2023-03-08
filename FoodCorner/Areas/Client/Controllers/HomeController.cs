@@ -28,7 +28,7 @@ namespace FoodCorner.Areas.Client.Controllers
 
 
         [HttpGet("~/", Name = "client-home-index")]
-        [HttpGet("home-index")]
+        [HttpGet("index")]
         public async Task<IActionResult> Index()
         {
             var model = new IndexViewModel

@@ -24,11 +24,17 @@ namespace FoodCorner.Areas.Admin.ViewModels.Slider
 
         public class UrlViewModel
         {
-            public UrlViewModel(string? path)
+            public UrlViewModel(string? routeName, string? path)
             {
+                RouteName = routeName;
                 Path = path;
             }
+            public UrlViewModel()
+            {
 
+            }
+
+            public string? RouteName { get; set; }
             public string? Path { get; set; }
         }
     }

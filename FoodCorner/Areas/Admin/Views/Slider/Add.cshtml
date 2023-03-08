@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-4">
             <label asp-for="ButtonRedirectUrl" class="form-label"></label>
-            <select asp-for="ButtonRedirectUrl" asp-items="@(new SelectList(Model.Urls, nameof(AddViewModel.UrlViewModel.Path), nameof(AddViewModel.UrlViewModel.Path)))" class="form-select"></select>
+            <select asp-for="ButtonRedirectUrl" asp-items="@(new SelectList(Model.Urls, nameof(AddViewModel.UrlViewModel.RouteName), nameof(AddViewModel.UrlViewModel.Path)))" class="form-select"></select>
             <span asp-validation-for="ButtonRedirectUrl" class="text-danger"></span>
         </div>
         <div class="col-md-4">

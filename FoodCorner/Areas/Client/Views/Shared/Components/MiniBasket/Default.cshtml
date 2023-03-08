@@ -6,17 +6,17 @@
     {
         <li class="header-cart-item d-flex justify-content-between align-items-center flex-w flex-t m-b-12">
             <div class="remove-basket">
-                <a asp-route="client-basket-delete" asp-route-productId="@item.Id" asp-route-sizeId="@item.SizeId" class="remove-product-to-basket-btn"><i class="fa-solid fa-xmark"></i></a>
+                <a asp-route="client-basket-delete" asp-route-productId="@item.Id" asp-route-sizeId="@item.SizeId" class="remove-product-to-basket-btn" style="color:black;"><i class="fa-solid fa-xmark"></i></a>
             </div>
             <div class="">
-                <img style="width:50px; height:50px; object-fit:cover;" src="~/@item.ImageUrl" alt="IMG">
+                <img style="width:50px; height:70px; object-fit:cover;" src="~/@item.ImageUrl" alt="IMG">
             </div>
 
             <div class="header-cart-item-txt p-t-8">
                 <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                     @item.Title
                 </a>
-                  @item.PersonSize
+                <p>Person Size : @item.PersonSize</p>
                 @if (item.DisCountPrice == 0)
                 {
                     <span class="header-cart-item-info">

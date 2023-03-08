@@ -108,7 +108,7 @@
                                             @if (userService.IsAuthenticated)
                                             {
                                                 <a href="/login.html" class="user-btn">My Account</a>
-                                                <div class="log align-items-center">
+                                                <div class="log d-flex flex-column-reverse align-items-center">
                                                     <a href="#" class="register">@userService.CurrentUser.FirstName @userService.CurrentUser.LastName</a>
                                                     <a asp-route="client-auth-logout" class="register mt-2 mb-2">Logout</a>
                                                 </div>
@@ -116,7 +116,7 @@
                                             else
                                             {
                                                 <a asp-route="client-auth-login" class="user-btn">Login</a>
-                                                <div class="log d-flex align-items-center">
+                                                <div class="log d-flex  align-items-center">
                                                     <span>No account yet? </span>
                                                     <a class="register" asp-route="client-auth-register">REGISTER HERE.</a>
                                                 </div>

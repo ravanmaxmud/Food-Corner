@@ -14,11 +14,13 @@ namespace FoodCorner.Areas.Admin.Controllers
     {
         private readonly IActionDescriptorCollectionProvider _provider;
         private readonly DataContext _dataContext;
+        private readonly ILogger<NavbarController> _logger;
 
-        public NavbarController(DataContext dataContext, IActionDescriptorCollectionProvider provider)
+        public NavbarController(DataContext dataContext, IActionDescriptorCollectionProvider provider, ILogger<NavbarController> logger)
         {
             _dataContext = dataContext;
             _provider = provider;
+            _logger = logger;
         }
         #region List
 
@@ -42,31 +44,31 @@ namespace FoodCorner.Areas.Admin.Controllers
         [HttpGet("add", Name = "admin-nav-add")]
         public IActionResult Add()
         {
+    
             var model = new AddViewModel
             {
                 Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
-                .Select(u => new AddViewModel.UrlViewModel(u!.AttributeRouteInfo.Template)).ToList()
+                .Select(u => new AddViewModel.UrlViewModel(u.AttributeRouteInfo.Name, u!.AttributeRouteInfo.Template))
+                .ToList()
             };
+     
             return View(model);
         }
 
         [HttpPost("add", Name = "admin-nav-add")]
         public async Task<IActionResult> Add(AddViewModel model)
         {
+
             if (!ModelState.IsValid)
             {
-                model = new AddViewModel
-                {
-                    Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
-                  .Select(u => new AddViewModel.UrlViewModel(u!.AttributeRouteInfo.Template)).ToList()
-                };
-                return View(model);
+                return GetView(model);
             }
 
             if (_dataContext.Navbars.Any(a => a.Order == model.Order))
             {
                 ModelState.AddModelError(String.Empty, "Order is not be the same");
-                return View(model);
+                _logger.LogWarning($"({model.Order}) This Order  is already in use.");
+                return GetView(model);
             }
 
             var navBar = new Navbar
@@ -82,6 +84,16 @@ namespace FoodCorner.Areas.Admin.Controllers
             await _dataContext.Navbars.AddAsync(navBar);
             await _dataContext.SaveChangesAsync();
             return RedirectToRoute("admin-nav-list");
+
+            IActionResult GetView(AddViewModel model) 
+            {
+                model = new AddViewModel
+                {
+                    Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
+                  .Select(u => new AddViewModel.UrlViewModel(u.AttributeRouteInfo.Name, u!.AttributeRouteInfo.Template)).ToList()
+                };
+                return View(model);
+            }
         }
 
         #endregion
@@ -106,7 +118,7 @@ namespace FoodCorner.Areas.Admin.Controllers
                 IsViewHeader = navItem.IsViewHeader,
                 IsViewFooter = navItem.IsViewFooter,
                 Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
-                .Select(u => new UpdateViewModel.UrlViewModel(u!.AttributeRouteInfo.Template)).ToList()
+                .Select(u => new UpdateViewModel.UrlViewModel(u.AttributeRouteInfo.Name, u!.AttributeRouteInfo.Template)).ToList()
             };
             return View(model);
         }
@@ -122,19 +134,7 @@ namespace FoodCorner.Areas.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                 model = new UpdateViewModel
-                {
-                    Id = navItem.Id,
-                    Name = navItem.Name,
-                    ToURL = navItem.ToURL,
-                    Order = navItem.Order,
-                    IsViewHeader = navItem.IsViewHeader,
-                    IsViewFooter = navItem.IsViewFooter,
-                    Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
-               .Select(u => new UpdateViewModel.UrlViewModel(u!.AttributeRouteInfo.Template)).ToList()
-                };
-
-                return View(model);
+                return GetView(model); 
             }
 
 
@@ -147,6 +147,23 @@ namespace FoodCorner.Areas.Admin.Controllers
 
             await _dataContext.SaveChangesAsync();
             return RedirectToRoute("admin-nav-list");
+
+
+            IActionResult GetView(UpdateViewModel model)
+            {
+                model = new UpdateViewModel
+                {
+                    Id = navItem.Id,
+                    Name = navItem.Name,
+                    ToURL = navItem.ToURL,
+                    Order = navItem.Order,
+                    IsViewHeader = navItem.IsViewHeader,
+                    IsViewFooter = navItem.IsViewFooter,
+                    Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
+               .Select(u => new UpdateViewModel.UrlViewModel(u.AttributeRouteInfo.Name, u!.AttributeRouteInfo.Template)).ToList()
+                };
+                return View(model);
+            }
         }
 
         #endregion

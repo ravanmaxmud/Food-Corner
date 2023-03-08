@@ -45,6 +45,7 @@ namespace FoodCorner.Areas.Client.Controllers
             if (!await _userService.CheckPasswordAsync(model!.Email, model!.Password))
             {
                 ModelState.AddModelError(String.Empty, "Email or password is not correct");
+                _logger.LogWarning($"({model.Email}{model.Password}) This Email and Password  is not correct.");
                 return View(model);
             }
             if (await _dbContext.Users.AnyAsync(u=> u.Email == model.Email && u.Roles.Name == RoleNames.ADMIN))

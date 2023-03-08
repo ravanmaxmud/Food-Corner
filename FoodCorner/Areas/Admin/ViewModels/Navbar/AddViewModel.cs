@@ -22,11 +22,17 @@ namespace FoodCorner.Areas.Admin.ViewModels.Navbar
 
         public class UrlViewModel
         {
-            public UrlViewModel(string? path)
+            public UrlViewModel(string? routName,string? path)
             {
+                RoutName = routName;
                 Path = path;
             }
+            public UrlViewModel()
+            {
 
+            }
+
+            public string? RoutName { get; set; }
             public string? Path { get; set; }
         }
     }
