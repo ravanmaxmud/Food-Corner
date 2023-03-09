@@ -6,7 +6,7 @@
 {
     <div data-aos="fade-up" class="cart-img">
         <div class="c-img-c">
-            <a href="~/Client/assets/singleProduct.html">
+            <a asp-route="client-single-index" asp-route-id="@item.Id">
                 <img class="pamada"
                  src="~/@item.MainImgUrl"
                  alt="">
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="cart-text text-start mt-3">
-            <a href="~/Client/assets/singleProduct.html">@item.Name</a>
+            <a asp-route="client-single-index">@item.Name</a>
             <div class="price">
                 @if (item.DiscountPrice != null)
                 {

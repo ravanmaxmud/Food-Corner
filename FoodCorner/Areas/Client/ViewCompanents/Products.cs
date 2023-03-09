@@ -21,12 +21,14 @@ namespace FoodCorner.Areas.Client.ViewCompanents
 
         public async Task<IViewComponentResult> InvokeAsync(string? slide = null)
         {
-            var productsQuery = _dataContext.Products.AsQueryable();
+            var productsQuery = _dataContext.Products.Include(p=> p.ProductCatagories).AsQueryable();
+
+
             if (slide == "NewProduct")
             {
                 productsQuery = productsQuery.OrderByDescending(p => p.CreatedAt).Take(4);
             }
-            //else if (slide == "BestProducts")
+            //else if (slide == "Best")
             //{
             //    var productsBestQuery =
             //        await _dataContext.OrderProducts
@@ -48,7 +50,6 @@ namespace FoodCorner.Areas.Client.ViewCompanents
                  p.ProductImages!.Where(p=> p.IsPoster == true).FirstOrDefault() != null
                  ? _fileService.GetFileUrl(p.ProductImages.Where(p => p.IsPoster == true).FirstOrDefault()!.ImageNameFileSystem, UploadDirectory.Product)
                  : String.Empty)).ToListAsync();
-
 
             return View(model);
         }

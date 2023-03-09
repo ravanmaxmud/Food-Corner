@@ -44,7 +44,7 @@ namespace FoodCorner.Areas.Client.ViewCompanents
                                          ? _dataContext.Sizes.FirstOrDefault(s => s.Id == p.SizeId).PersonSize
                                          : _dataContext.Sizes.FirstOrDefault().PersonSize,
                                           p.Product.DiscountPrice == null ? (decimal)p.CurrentPrice : (decimal)p.CurrentDiscountPrice,
-                                          p.Product.DiscountPrice == null ? (decimal)p.CurrentPrice * p.Quantity : (decimal)p.CurrentDiscountPrice * p.Quantity)).ToListAsync();
+                                          p.Product.DiscountPrice == null ? (int)p.CurrentPrice * p.Quantity : (int)p.CurrentDiscountPrice * p.Quantity)).ToListAsync();
 
                 return View(model);
             }

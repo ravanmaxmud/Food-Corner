@@ -14,7 +14,6 @@ namespace FoodCorner.Services.Concretes
     public class BasketService : IBasketService
     {
         private readonly DataContext _dataContext;
-        //private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IFileService _fileService;
         private readonly IUserService _userService;
@@ -38,6 +37,7 @@ namespace FoodCorner.Services.Concretes
             };
 
             var allSize = await _dataContext.Sizes.FirstOrDefaultAsync(s => s.Id == model.SizeId);
+
             var increasePrice = (product.Price * allSize!.IncreasePercent) / 100;
             var sizePrice = product.Price + increasePrice;
 

@@ -2,18 +2,13 @@
 @using FoodCorner.Areas.Client.ViewModels.Home.Modal
 @model ModalViewModel
 
+    <div class="col-md-6 col-lg-7 p-b-30">
+        <div class="p-l-25 p-r-30 p-lr-0-lg">
+            <div class="wrap-slick3 flex-sb flex-w">
+                <div class="wrap-slick3-dots"></div>
+                <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
-@section link{
-    <link rel="stylesheet" type="text/css" href="~/Client/assets/vendor/select2/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="~/Client/assets/vendor/MagnificPopup/magnific-popup.css">
-}
-<div class="col-md-6 col-lg-7 p-b-30">
-    <div class="p-l-25 p-r-30 p-lr-0-lg">
-        <div class="wrap-slick3 flex-sb flex-w">
-            <div class="wrap-slick3-dots"></div>
-            <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
-            <div class="slick3 gallery-lb">
+                <div class="slick3 gallery-lb">
                 @foreach (var item in Model.ImgUrl)
                 {
                     <div class="item-slick3" data-thumb="/@item.ImageUrl">
@@ -38,7 +33,14 @@
         </h4>
 
         <span class="mtext-106 cl2">
-            ₼@Model.Price
+            @if (Model.DiscountPrice != null)
+            {
+                <span class="newprice">₼@Model.DiscountPrice</span>
+            }
+            else
+            {
+                <span class="newprice">₼@Model.Price</span>
+            }
         </span>
 
         <p class="stext-102 cl3 p-t-23">
@@ -54,15 +56,7 @@
 
                 <div class="size-204 respon6-next">
                     <div class="rs1-select2 bor8 bg0">
-                       @* <select class="js-select2" name="time">
-                            <option>Choose an option</option>
-                            <option>Size S</option>
-                            <option>Size M</option>
-                            <option>Size L</option>
-                            <option>Size XL</option>
-                        </select>*@
                         <select class="js-select2" asp-for="SizeId" asp-items="@(new SelectList(Model.Sizes, nameof(ModalViewModel.SizeViewModeL.Id), nameof(ModalViewModel.SizeViewModeL.Title)))">
-                          
                         </select>
                         <div class="dropDownSelect2"></div>
                     </div>
@@ -93,33 +87,4 @@
 </div>
 
 
-@section scripts{
-
-@*    <script src="~/Client/assets/vendor/select2/select2.min.js"></script>
-    <script>
-        $(".js-select2").each(function () {
-            $(this).select2({
-                minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2')
-            });
-        })
-    </script>
-
-
-    <script src="~/Client/assets/vendor/bootstrap/js/popper.js"></script>
-    <script src="~/Client/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-      <script src="~/Client/assets/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-    <script>
-        $('.gallery-lb').each(function () { // the containers for all your galleries
-            $(this).magnificPopup({
-                delegate: 'a', // the selector for gallery item
-                type: 'image',
-                gallery: {
-                    enabled: true
-                },
-                mainClass: 'mfp-fade'
-            });
-        });
-    </script>*@
-}
 
