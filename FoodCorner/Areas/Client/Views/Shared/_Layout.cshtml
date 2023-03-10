@@ -51,6 +51,7 @@
 
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/blog.css">
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/shoppingCart.css">
+    <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/wishList.css">
 </head>
 <body>
 
@@ -99,7 +100,7 @@
                                     </div>
 
                                     <button class="header-ico-btn basket-btn icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                                        <a style="color: #0F4438;" href=""><i class="fa-solid fa-heart"></i></a>
+                                        <a asp-route="client-wishlist-index" style="color: #0F4438;"><i class="fa-solid fa-heart"></i></a>
                                         <span class="model-count">5</span>
                                     </button>
 

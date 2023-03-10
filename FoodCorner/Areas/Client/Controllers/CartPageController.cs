@@ -135,16 +135,19 @@ namespace FoodCorner.Areas.Client.Controllers
 
                 foreach (var cookieItem in productCookieViewModel)
                 {
-                    if (cookieItem.Quantity > 1)
+                    if (cookieItem.Id == productId && cookieItem.SizeId == sizeId)
                     {
-                        cookieItem.Quantity -= 1;
-                        cookieItem.Total = cookieItem.Quantity * cookieItem.Price;
-                    }
-                    else
-                    {
-                        productCookieViewModel.RemoveAll(p => p.Id == productId && p.SizeId == sizeId);
-                        break;
-                    }
+                        if (cookieItem.Quantity > 1)
+                        {
+                            cookieItem.Quantity -= 1;
+                            cookieItem.Total = cookieItem.Quantity * cookieItem.Price;
+                        }
+                        else
+                        {
+                            productCookieViewModel.RemoveAll(p => p.Id == productId && p.SizeId == sizeId);
+                            break;
+                        }
+                    }                   
                 }
                 HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productCookieViewModel));
             }
