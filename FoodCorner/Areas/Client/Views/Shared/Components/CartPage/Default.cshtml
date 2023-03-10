@@ -45,15 +45,17 @@
 						</td>
 						<td class="column-4">
 							<div class="wrap-num-product flex-w m-l-auto m-r-0">
-								<div class="btn-num-product-down btn-minus cl8 hov-btn3 trans-04 flex-c-m">
-									<i class="fs-16 zmdi zmdi-minus"></i>
-								</div>
+								<a asp-route="client-individual-basket-delete" asp-route-productId="@item.Id" asp-route-sizeId="@item.SizeId" class="minus-btn btn-num-product-down btn-minus cl8 hov-btn3 trans-04 flex-c-m">
+									-
+								</a>
 
 								<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="@item.Quantity">
 
-								<div class="btn-num-product-up btn-plus cl8 hov-btn3 trans-04 flex-c-m">
-									<i class="fs-16 zmdi zmdi-plus"></i>
-								</div>
+								<a asp-route="client-cart-add" asp-route-id="@item.Id" class="plus-btn btn-num-product-up btn-plus cl8 hov-btn3 trans-04 flex-c-m">
+									+
+								</a>
+								<a asp-route="client-cart-update" class="cart-update"></a>
+								<input type="hidden" value="@item.SizeId"/>
 							</div>
 						</td>
 						<td class="column-5">₼@item.Total</td>

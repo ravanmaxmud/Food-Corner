@@ -1,4 +1,5 @@
-﻿using FoodCorner.Services.Abstracts;
+﻿using FoodCorner.Areas.Client.ActionFilter;
+using FoodCorner.Services.Abstracts;
 using FoodCorner.Services.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,7 @@ namespace FoodCorner.Infrastructure.Configurations
             services.AddScoped<IUserActivationService, UserActivationService>();
             services.AddScoped<IBasketService, BasketService>();
             //services.AddScoped<IOrderService, OrderService>();
-            //services.AddScoped<ValidationCurrentUserAttribute>();
+            services.AddScoped<ValidationCurrentUserAttribute>();
         }
     }
 }

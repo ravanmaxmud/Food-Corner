@@ -160,15 +160,108 @@ $(document).on("click", ".remove-product-to-basket-page", function (e) {
         .then(data => {
             $('.basket-block').html(data);
 
-            console.log(e.target.parentElement.nextElementSibling.href)
 
-            //fetch(e.target.parentElement.nextElementSibling.href)
-            //    .then(response => response.text())
-            //    .then(data => {
-            //        $('.basket-block').html(data);
-
-
+            fetch(e.target.parentElement.nextElementSibling.href)
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data)
+                    $('.cart-block').html(data);
                 })
-
         })
+})
+
+
+$(document).on("click", ".plus-btn", function (e) {
+    e.preventDefault();
+
+    var aHref = e.target.href;
+
+    let size = e.target.nextElementSibling.nextElementSibling;
+    let SizeId = size.value;
+
+    let updateHref = e.target.nextElementSibling.href;
+    $.ajax(
+        {
+            type: "POST",
+            url: aHref,
+            data: {
+                SizeId: SizeId,
+            },
+            success: function (response) {
+
+                $('.basket-block').html(response);
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: updateHref,
+                        success: function (response) {
+
+                            $('.cart-block').html(response);
+
+
+                        },
+                        error: function (err) {
+                            $(".product-details-modal").html(err.responseText);
+
+                        }
+
+                    });
+
+            },
+            error: function (err) {
+                $(".product-details-modal").html(err.responseText);
+
+            }
+
+        });
+    
+})
+
+
+$(document).on("click", ".minus-btn", function (e) {
+    e.preventDefault();
+
+    var aHref = e.target.href;
+
+    let size = e.target.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
+    let SizeId = size.value;
+
+    let updateHref = e.target.nextElementSibling.nextElementSibling.nextElementSibling.href;
+    $.ajax(
+        {
+            type: "GET",
+            url: aHref,
+            data: {
+                SizeId: SizeId,
+            },
+            success: function (response) {
+
+                $('.basket-block').html(response);
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: updateHref,
+                        success: function (response) {
+
+                            $('.cart-block').html(response);
+
+
+                        },
+                        error: function (err) {
+                            $(".product-details-modal").html(err.responseText);
+
+                        }
+
+                    });
+
+            },
+            error: function (err) {
+                $(".product-details-modal").html(err.responseText);
+
+            }
+
+        });
+
 })
