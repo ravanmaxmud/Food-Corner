@@ -138,6 +138,7 @@ $(document).on("click", ".add-product-to-basket-single-btn", function (e) {
 
 
 
+
 $(document).on("click", ".remove-product-to-basket-btn", function (e) {
     e.preventDefault();
 
@@ -147,5 +148,27 @@ $(document).on("click", ".remove-product-to-basket-btn", function (e) {
         .then(data => {
             console.log(data)
             $('.cart-block').html(data);
+        })
+})
+
+$(document).on("click", ".remove-product-to-basket-page", function (e) {
+    e.preventDefault();
+
+    console.log(e.target.parentElement.href)
+    fetch(e.target.parentElement.href)
+        .then(response => response.text())
+        .then(data => {
+            $('.basket-block').html(data);
+
+            console.log(e.target.parentElement.nextElementSibling.href)
+
+            //fetch(e.target.parentElement.nextElementSibling.href)
+            //    .then(response => response.text())
+            //    .then(data => {
+            //        $('.basket-block').html(data);
+
+
+                })
+
         })
 })
