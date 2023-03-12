@@ -5,6 +5,8 @@ using FoodCorner.Areas.Admin.ViewModels.Order;
 using FoodCorner.Contracts.Email;
 using FoodCorner.Database;
 using FoodCorner.Services.Abstracts;
+using FoodCorner.Contracts.File;
+using FoodCorner.Services.Concretes;
 
 namespace FoodCorner.Areas.Admin.Controllers
 {
@@ -60,6 +62,13 @@ namespace FoodCorner.Areas.Admin.Controllers
 
             var stausMessageDto = PrepareStausMessage(order.User.Email);
             _emailService.Send(stausMessageDto);
+
+            if (order.Status == Database.Models.Enums.OrderStatus.Completed || order.Status == Database.Models.Enums.OrderStatus.Rejected)
+            {
+                _dataContext.Orders.Remove(order);
+                await _dataContext.SaveChangesAsync();
+                return RedirectToRoute("admin-order-list");
+            }
             await _dataContext.SaveChangesAsync();
 
             return RedirectToRoute("admin-order-list");
@@ -73,5 +82,17 @@ namespace FoodCorner.Areas.Admin.Controllers
             }
         }
 
+        [HttpPost("delete/{id}", Name = "admin-order-delete")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] string id)
+        {
+            var orders = await _dataContext.Orders.Include(p=> p.OrderProducts).FirstOrDefaultAsync(p => p.Id == id);
+            if (orders is null)
+            {
+                return NotFound();
+            }
+            _dataContext.Orders.Remove(orders);
+            await _dataContext.SaveChangesAsync();
+            return RedirectToRoute("admin-order-list");
+        }
     }
 }
