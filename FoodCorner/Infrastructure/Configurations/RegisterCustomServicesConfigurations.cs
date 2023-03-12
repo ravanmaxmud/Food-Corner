@@ -17,6 +17,7 @@ namespace FoodCorner.Infrastructure.Configurations
             services.AddScoped<IBasketService, BasketService>();
             //services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ValidationCurrentUserAttribute>();
+            services.AddScoped<IWishListService, WishListService>();
         }
     }
 }

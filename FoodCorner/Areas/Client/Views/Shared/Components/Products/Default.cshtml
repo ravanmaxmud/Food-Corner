@@ -25,7 +25,7 @@
                     <a asp-route="Product-GetModel" asp-route-id="@item.Id" class="js-show-modal1"><i class="fa-solid fa-eye"></i></a>
                 </div>
                 <div class="add-cart-text">
-                    <a href=""><i class="fa-solid fa-heart"></i></a>
+                    <a asp-route="client-wishlist-add" asp-route-id="@item.Id" class="add-product-to-wishlist"><i class="fa-solid fa-heart"></i></a>
                 </div>
             </div>
         </div>

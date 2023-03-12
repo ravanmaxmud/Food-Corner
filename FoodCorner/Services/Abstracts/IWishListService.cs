@@ -1,11 +1,10 @@
-﻿using FoodCorner.Areas.Client.ViewModels.Basket;
-using FoodCorner.Areas.Client.ViewModels.Home.Modal;
+﻿using FoodCorner.Areas.Client.ViewModels.Wishlist;
 using FoodCorner.Database.Models;
 
 namespace FoodCorner.Services.Abstracts
 {
     public interface IWishListService
     {
-        Task<List<BasketCookieViewModel>> AddBasketProductAsync(Product product, ModalViewModel model);
+        Task<List<WishlistCookieViewModel>> AddBasketProductAsync(Product product);
     }
 }

@@ -1,4 +1,6 @@
-﻿ <!-- Title page -->
+﻿@using FoodCorner.Areas.Client.ViewModels.Wishlist
+@model List<WishlistCookieViewModel>
+<!-- Title page -->
 <section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/Client/assets/images/Product/SekaTort2.jpeg');   background-position: center; background-repeat: no-repeat; background-size: cover;">
     <h2 class="ltext-105 cl0 txt-center">
         Wish List
@@ -26,26 +28,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="product_remove">
-                                            <a href="#">
-                                                <i class="fa-regular fa-circle-xmark"></i>
-                                            </a>
-                                        </td>
-                                        <td class="product-thumbnail">
-                                            <a href="#">
-                                                <img src="~/Client/assets/images/Product/SekaTort2.jpeg"
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="product_remove">
+                                                <a asp-route="client-wishlist-delete" asp-route-productId="@item.Id">
+                                                    <i class="fa-regular fa-circle-xmark"></i>
+                                                </a>
+                                            </td>
+                                            <td class="product-thumbnail">
+                                                <a asp-route="client-single-index" asp-route-id="@item.Id">
+                                                    <img src="~/@item.ImageUrl"
                                                      alt="Wishlist Thumbnail" />
-                                            </a>
-                                        </td>
-                                        <td class="product-name">
-                                            <a href="#">American Marigold</a>
-                                        </td>
-                                        <td class="product-price">
-                                            <span class="amount">$23.45</span>
-                                        </td>
-                                        <td class="cart_btn"><a href="#" class="btn-save">add to cart</a></td>
-                                    </tr>
+                                                </a>
+                                            </td>
+                                            <td class="product-name">
+                                                <a href="#">@item.Title</a>
+                                            </td>
+                                            <td class="product-price">
+                                                <span class="amount">₼@item.Price</span>
+                                            </td>
+                                            <td class="cart_btn"><a asp-route="client-basket-add" asp-route-id="@item.Id" class="add-basket-to-wish btn-save">add to cart</a></td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>

@@ -135,7 +135,43 @@ $(document).on("click", ".add-product-to-basket-single-btn", function (e) {
     //    })
 })
 
+$(document).on("click", ".add-basket-to-wish", function (e) {
+    e.preventDefault();
 
+    let aHref = e.target.href;
+
+    document.getElementById('toaster').style.opacity = '1'
+    setTimeout(() => {
+        document.getElementById('toaster').style.opacity = '0'
+    }, 1000);
+
+
+    $.ajax(
+        {
+            type: "POST",
+            url: aHref,
+            success: function (response) {
+
+                $('.cart-block').html(response);
+
+
+            },
+            error: function (err) {
+                $(".product-details-modal").html(err.responseText);
+
+            }
+
+        });
+
+
+    //fetch(e.target.href, {
+    //    method:"POST"
+    //})
+    //    .then(response => response.text())
+    //    .then(data => {
+    //        $('.cart-block').html(data);
+    //    })
+})
 
 
 
@@ -265,3 +301,16 @@ $(document).on("click", ".minus-btn", function (e) {
         });
 
 })
+
+
+//$(document).on("click", ".add-product-to-wishlist", function (e) {
+//    e.preventDefault();
+
+//    console.log(e.target.parentElement.href)
+//    fetch(e.target.parentElement.href)
+//        .then(response => response.text())
+//        .then(data => {
+//            console.log(data)
+//            $('.wish-block').html(data);
+//        })
+//})
