@@ -259,3 +259,8 @@ $('.js-hide-modal1').on('click',function(){
 
 
 
+$('.myaccount-tab-menu a').filter(function () {
+    return this.href === location.href;
+}).addClass('active');
+
+

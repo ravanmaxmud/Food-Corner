@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<!-- Title page -->
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/Client/assets/images/Product/SekaTort2.jpeg');   background-position: center; background-repeat: no-repeat; background-size: cover;">
+    <h2 class="ltext-105 cl0 txt-center">
+        My Account
+    </h2>
+</section>
+
+
+
+<section class="dashboard-tab mt-5 mb-5">
+    <div class="page-section inner-page-sec-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <!-- My Account Tab Menu Start -->
+                        <div class="col-lg-3 col-12">
+                            <div class="myaccount-tab-menu nav" role="tablist">
+                                <a asp-route="client-account-dashboard" class="" >
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    Dashboard
+                                </a>
+
+                                <a asp-route="client-account-order" class="" ><i class="fa fa-cart-arrow-down"></i> Orders</a>
+                                <a asp-route="client-account-specialOrder" class=""><i class="fa fa-cart-arrow-down"></i> Special Order</a>
+                                <a href="#payment-method" class="" >
+                                    <i class="fa fa-credit-card"></i>
+                                    Payment
+                                    Method
+                                </a>
+                                <a asp-route="client-account-address" class="">
+                                    <i class="fa fa-map-marker"></i>
+                                    address
+                                </a>
+                                <a asp-route="client-account-details" class="">
+                                    <i class="fa fa-user"></i> Account
+                                    Details
+                                </a>
+                                <a asp-route="client-auth-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </div>
+                        </div>
+                        <!-- My Account Tab Menu End -->
+                        <!-- My Account Tab Content Start -->
+
+                        <div class="col-lg-9 col-12 mt--30 mt-lg--0">
+                            <div class="tab-content" id="myaccountContent">
+                                <!-- Single Tab Content Start -->
+                                @RenderBody()
+                                <!-- Single Tab Content End -->
+                            </div>
+                        </div>
+
+
+                        <!-- My Account Tab Content End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

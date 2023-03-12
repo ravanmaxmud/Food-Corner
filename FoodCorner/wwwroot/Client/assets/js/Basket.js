@@ -302,15 +302,3 @@ $(document).on("click", ".minus-btn", function (e) {
 
 })
 
-
-//$(document).on("click", ".add-product-to-wishlist", function (e) {
-//    e.preventDefault();
-
-//    console.log(e.target.parentElement.href)
-//    fetch(e.target.parentElement.href)
-//        .then(response => response.text())
-//        .then(data => {
-//            console.log(data)
-//            $('.wish-block').html(data);
-//        })
-//})

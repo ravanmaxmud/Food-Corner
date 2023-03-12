@@ -52,6 +52,7 @@
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/blog.css">
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/shoppingCart.css">
     <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/wishList.css">
+    <link asp-append-version="true" rel="stylesheet" href="~/Client/assets/css/MyAccount.css">
 </head>
 <body>
 
@@ -101,7 +102,6 @@
 
                                     <button class="header-ico-btn basket-btn icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                                         <a asp-route="client-wishlist-index" style="color: #0F4438;"><i class="fa-solid fa-heart"></i></a>
-                                        <span class="model-count">5</span>
                                     </button>
 
                                     <button class="header-ico-btn border-0 user-icon-btn">
@@ -111,9 +111,9 @@
                                             <h3><img src="~/Client/assets/images/Logo/logo-6nlpJWJn2-transformed.png" alt=""></h3>
                                             @if (userService.IsAuthenticated)
                                             {
-                                                <a href="/login.html" class="user-btn">My Account</a>
+                                                <a asp-route="client-account-dashboard" class="user-btn">My Account</a>
                                                 <div class="log d-flex flex-column-reverse align-items-center">
-                                                    <a href="#" class="register">@userService.CurrentUser.FirstName @userService.CurrentUser.LastName</a>
+                                                    <a asp-route="client-account-dashboard" class="register">@userService.CurrentUser.FirstName @userService.CurrentUser.LastName</a>
                                                     <a asp-route="client-auth-logout" class="register mt-2 mb-2">Logout</a>
                                                 </div>
                                             }
