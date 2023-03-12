@@ -15,7 +15,7 @@ namespace FoodCorner.Infrastructure.Configurations
             services.AddScoped<IEmailService, SMTPService>();
             services.AddScoped<IUserActivationService, UserActivationService>();
             services.AddScoped<IBasketService, BasketService>();
-            //services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ValidationCurrentUserAttribute>();
             services.AddScoped<IWishListService, WishListService>();
         }

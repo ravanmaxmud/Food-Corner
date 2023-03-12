@@ -1,15 +1,18 @@
-﻿<div class="" id="address-edit">
+﻿@using FoodCorner.Areas.Client.ViewModels.Account
+@model AddressListViewModel
+
+<div class="" id="address-edit">
 	<div class="myaccount-content">
 		<h3>Billing Address</h3>
 		<address>
-			<p><strong>Alex Tuntuni</strong></p>
+			<p><strong>@Model.User</strong></p>
 			<p>
-				1355 Market St, Suite 900 <br>
-				San Francisco, CA 94103
+				 @Model.Street <br>
+				 @Model.City
 			</p>
-			<p>Mobile: (123) 456-7890</p>
+			<p>Mobile: @Model.PhoneNumber</p>
 		</address>
-		<a href="#" class="btn btn-save">
+		<a asp-route="client-account-edit-address" class="btn btn-save">
 			<i class="fa fa-edit"></i>Edit
 			Address
 		</a>

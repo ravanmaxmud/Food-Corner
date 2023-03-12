@@ -4,6 +4,7 @@ using FoodCorner.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodCorner.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230312170022_Address")]
+    partial class Address
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,8 +56,7 @@ namespace FoodCorner.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Address", (string)null);
                 });
@@ -197,71 +199,6 @@ namespace FoodCorner.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Navbars", (string)null);
-                });
-
-            modelBuilder.Entity("FoodCorner.Database.Models.Order", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("SumTotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders", (string)null);
-                });
-
-            modelBuilder.Entity("FoodCorner.Database.Models.OrderProduct", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OrderId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderProducts", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.Product", b =>
@@ -662,8 +599,8 @@ namespace FoodCorner.Migrations
             modelBuilder.Entity("FoodCorner.Database.Models.Addres", b =>
                 {
                     b.HasOne("FoodCorner.Database.Models.User", "User")
-                        .WithOne("Address")
-                        .HasForeignKey("FoodCorner.Database.Models.Addres", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -713,34 +650,6 @@ namespace FoodCorner.Migrations
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("FoodCorner.Database.Models.Order", b =>
-                {
-                    b.HasOne("FoodCorner.Database.Models.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FoodCorner.Database.Models.OrderProduct", b =>
-                {
-                    b.HasOne("FoodCorner.Database.Models.Order", "Order")
-                        .WithMany("OrderProducts")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("FoodCorner.Database.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.ProductCatagory", b =>
@@ -859,11 +768,6 @@ namespace FoodCorner.Migrations
                     b.Navigation("SubNavbars");
                 });
 
-            modelBuilder.Entity("FoodCorner.Database.Models.Order", b =>
-                {
-                    b.Navigation("OrderProducts");
-                });
-
             modelBuilder.Entity("FoodCorner.Database.Models.Product", b =>
                 {
                     b.Navigation("BasketProducts");
@@ -894,11 +798,7 @@ namespace FoodCorner.Migrations
 
             modelBuilder.Entity("FoodCorner.Database.Models.User", b =>
                 {
-                    b.Navigation("Address");
-
                     b.Navigation("Basket");
-
-                    b.Navigation("Orders");
 
                     b.Navigation("UserActivation");
                 });

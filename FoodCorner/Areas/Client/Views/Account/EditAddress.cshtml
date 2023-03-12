@@ -1,0 +1,31 @@
+﻿@using FoodCorner.Areas.Client.ViewModels.Account
+@model EditAddressViewModel
+
+<div class="" id="account-info">
+	<div class="myaccount-content">
+		<h3>Address Details</h3>
+		<div class="account-details-form">
+			<form method="post" asp-route="client-account-edit-address">
+				<div class="row">
+					<div class="col-lg-6 col-12  mb-2">
+						<input asp-for="City" id="first-name" placeholder="City" type="text">
+						<span asp-validation-for="City" class="text-danger"></span>
+					</div>
+					<div class="col-lg-6 col-12  mb-2">
+						<input asp-for="Street" id="last-name" placeholder="Street" type="text">
+						<span asp-validation-for="Street" class="text-danger"></span>
+					</div>
+					<div class="col-12  mb-2">
+						<input asp-for="PhoneNumber" id="display-name" placeholder="Phone Number"
+							   type="text">
+						<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-save">
+					<i class="fa fa-edit"></i>Submit
+					Address
+				</button>
+			</form>
+		</div>
+	</div>
+</div>

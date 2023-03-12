@@ -4,15 +4,18 @@ using FoodCorner.Database;
 using FoodCorner.Database.Models;
 using FoodCorner.Migrations;
 using FoodCorner.Services.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using Product = FoodCorner.Database.Models.Product;
 
 namespace FoodCorner.Areas.Admin.Controllers
 {
     [Area("admin")]
     [Route("admin/product")]
+    [Authorize(Roles = "admin")]
     public class ProductController : Controller
     {
         private readonly IActionDescriptorCollectionProvider _provider;

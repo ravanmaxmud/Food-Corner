@@ -3,14 +3,17 @@ using FoodCorner.Contracts.File;
 using FoodCorner.Database;
 using FoodCorner.Database.Models;
 using FoodCorner.Services.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace FoodCorner.Areas.Admin.Controllers
 {
     [Area("admin")]
     [Route("admin/slider")]
+    [Authorize(Roles = "admin")]
     public class SliderController : Controller
     {
         private readonly IActionDescriptorCollectionProvider _provider;

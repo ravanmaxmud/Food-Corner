@@ -4,6 +4,7 @@ using FoodCorner.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodCorner.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230312173154_Orderss")]
+    partial class Orderss
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,8 +56,7 @@ namespace FoodCorner.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Address", (string)null);
                 });
@@ -662,8 +664,8 @@ namespace FoodCorner.Migrations
             modelBuilder.Entity("FoodCorner.Database.Models.Addres", b =>
                 {
                     b.HasOne("FoodCorner.Database.Models.User", "User")
-                        .WithOne("Address")
-                        .HasForeignKey("FoodCorner.Database.Models.Addres", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -718,7 +720,7 @@ namespace FoodCorner.Migrations
             modelBuilder.Entity("FoodCorner.Database.Models.Order", b =>
                 {
                     b.HasOne("FoodCorner.Database.Models.User", "User")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -894,11 +896,7 @@ namespace FoodCorner.Migrations
 
             modelBuilder.Entity("FoodCorner.Database.Models.User", b =>
                 {
-                    b.Navigation("Address");
-
                     b.Navigation("Basket");
-
-                    b.Navigation("Orders");
 
                     b.Navigation("UserActivation");
                 });

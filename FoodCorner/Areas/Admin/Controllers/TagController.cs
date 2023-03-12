@@ -1,13 +1,16 @@
 ﻿using FoodCorner.Areas.Admin.ViewModels.Tag;
 using FoodCorner.Database;
 using FoodCorner.Database.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace FoodCorner.Areas.Admin.Controllers
 {
     [Area("admin")]
     [Route("admin/tag")]
+    [Authorize(Roles = "admin")]
     public class TagController : Controller
     {
 

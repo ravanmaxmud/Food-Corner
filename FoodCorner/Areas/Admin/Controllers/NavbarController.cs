@@ -1,15 +1,18 @@
 ﻿using FoodCorner.Areas.Admin.ViewModels.Navbar;
 using FoodCorner.Database;
 using FoodCorner.Database.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Security.Policy;
 
 namespace FoodCorner.Areas.Admin.Controllers
 {
     [Area("admin")]
     [Route("admin/nav")]
+    [Authorize(Roles = "admin")]
     public class NavbarController : Controller
     {
         private readonly IActionDescriptorCollectionProvider _provider;

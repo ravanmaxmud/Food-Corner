@@ -11,6 +11,7 @@ namespace FoodCorner.Areas.Admin.Controllers
 {
     [Area("admin")]
     [Route("admin/subnav")]
+    [Authorize(Roles = "admin")]
 
     public class SubNavbarController : Controller
     {

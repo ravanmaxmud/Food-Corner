@@ -31,6 +31,9 @@ namespace FoodCorner.Database
         public DbSet<User> Users  { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserActivation> UserActivations { get; set; }
+        public DbSet<Addres> Address { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
 
 
 

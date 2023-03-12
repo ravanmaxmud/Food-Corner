@@ -4,14 +4,17 @@ using FoodCorner.Database;
 using FoodCorner.Database.Models;
 using FoodCorner.Migrations;
 using FoodCorner.Services.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using Category = FoodCorner.Database.Models.Category;
 
 namespace FoodCorner.Areas.Admin.Controllers
 {
     [Area("admin")]
     [Route("admin/category")]
+    [Authorize(Roles = "admin")]
     public class CategoryController : Controller
     {
         private readonly DataContext _dataContext;
