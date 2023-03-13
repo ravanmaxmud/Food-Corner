@@ -3,7 +3,7 @@
 btns.forEach(x => x.addEventListener("click", function (e) {
     e.preventDefault()
 
-    let aHref = e.target.parentElement.href;
+     let aHref = e.target.parentElement.href;
 
     
     document.getElementById('toaster').style.opacity = '1'

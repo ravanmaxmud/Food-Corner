@@ -11,6 +11,9 @@ namespace FoodCorner.Database.Models
         public Product? Product { get; set; }
         public string? OrderId { get; set; }
         public Order? Order { get; set; }
+
+        public int? SizeId { get; set; }
+        public Size? Size { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdateAt { get; set; }
     }

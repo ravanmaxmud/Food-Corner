@@ -93,6 +93,8 @@ namespace FoodCorner.Areas.Client.Controllers
                         Price = item.Product.Price,
                         Quantity = item.Quantity,
                         Total = item.Product.Price * item.Quantity,
+                        SizeId = item.SizeId
+                        
                     };
                     await _dbContext.OrderProducts.AddAsync(orderProduct);
                 }

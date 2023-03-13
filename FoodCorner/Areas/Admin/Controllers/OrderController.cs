@@ -17,12 +17,14 @@ namespace FoodCorner.Areas.Admin.Controllers
     {
         private readonly DataContext _dataContext;
         private readonly IUserService _userService;
+        private readonly IFileService _fileService;
         public IEmailService _emailService { get; set; }
-        public OrderController(DataContext dataContext, IUserService userService, IEmailService emailService)
+        public OrderController(DataContext dataContext, IUserService userService, IEmailService emailService, IFileService fileService)
         {
             _dataContext = dataContext;
             _userService = userService;
             _emailService = emailService;
+            _fileService = fileService;
         }
 
         [HttpGet("list",Name ="admin-order-list")]
@@ -63,12 +65,12 @@ namespace FoodCorner.Areas.Admin.Controllers
             var stausMessageDto = PrepareStausMessage(order.User.Email);
             _emailService.Send(stausMessageDto);
 
-            if (order.Status == Database.Models.Enums.OrderStatus.Completed || order.Status == Database.Models.Enums.OrderStatus.Rejected)
-            {
-                _dataContext.Orders.Remove(order);
-                await _dataContext.SaveChangesAsync();
-                return RedirectToRoute("admin-order-list");
-            }
+            //if (order.Status == Database.Models.Enums.OrderStatus.Completed || order.Status == Database.Models.Enums.OrderStatus.Rejected)
+            //{
+            //    _dataContext.Orders.Remove(order);
+            //    await _dataContext.SaveChangesAsync();
+            //    return RedirectToRoute("admin-order-list");
+            //}
             await _dataContext.SaveChangesAsync();
 
             return RedirectToRoute("admin-order-list");
@@ -85,7 +87,7 @@ namespace FoodCorner.Areas.Admin.Controllers
         [HttpPost("delete/{id}", Name = "admin-order-delete")]
         public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
-            var orders = await _dataContext.Orders.Include(p=> p.OrderProducts).FirstOrDefaultAsync(p => p.Id == id);
+            var orders = await _dataContext.Orders.Include(p => p.OrderProducts).FirstOrDefaultAsync(p => p.Id == id);
             if (orders is null)
             {
                 return NotFound();
@@ -93,6 +95,25 @@ namespace FoodCorner.Areas.Admin.Controllers
             _dataContext.Orders.Remove(orders);
             await _dataContext.SaveChangesAsync();
             return RedirectToRoute("admin-order-list");
+        }
+        [HttpGet("list/{id}", Name = "admin-orderProduct-list")]
+        public async Task<IActionResult> OrderProductList(string id)
+        {
+            var order = await _dataContext.Orders.FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order is null)
+            {
+                return NotFound();
+            }
+
+            var model = await _dataContext.OrderProducts.Where(o=> o.OrderId == order.Id)
+                .Select(op => new OrderProductListItemViewModel(op.Id, op.Product.ProductImages
+                .Where(p => p.IsPoster == true).FirstOrDefault() != null
+              ? _fileService.GetFileUrl(op.Product.ProductImages.Where(p => p.IsPoster == true).FirstOrDefault().ImageNameFileSystem, UploadDirectory.Product)
+              : String.Empty, op.Product.Name, op.Size.PersonSize, op.Quantity, (int)op.Total)).ToListAsync();
+
+
+            return View(model);
         }
     }
 }

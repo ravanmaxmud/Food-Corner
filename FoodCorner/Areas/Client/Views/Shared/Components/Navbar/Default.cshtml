@@ -1,48 +1,124 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using FoodCorner.Areas.Client.ViewCompanents
+@using FoodCorner.Services.Abstracts
+@inject IUserService userService
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model List<FoodCorner.Database.Models.Navbar>
 
 
-<div class="col-lg-4 col-2">
-    <div class="header-left d-flex justify-content-start align-items-center">
-        <div class="header-bar d-flex justify-content-start align-items-center">
-            <nav>
-                <button class="menu-toggle-btn"
-                        aria-targe="primary-navigation"
-                        aria-expanded="false"
-                        aria-controls="primary-navigation">
-                    <span class="visually-hidden"></span>
-                    <svg aria-hidden="true" height="35" width="35" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3H2" /><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 8H2" /><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 13H2" /></svg>
-                </button>
-                <ul data-state="closed" class="primary-navigation" id="primary-navigation">
-                    @foreach (var item in Model)
+<div class="row">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="col-lg-4 col-2">
+            <div class="header-left d-flex justify-content-start align-items-center">
+                <div class="header-bar d-flex justify-content-start align-items-center">
+                    <nav>
+                        <button class="menu-toggle-btn"
+                                aria-targe="primary-navigation"
+                                aria-expanded="false"
+                                aria-controls="primary-navigation">
+                            <span class="visually-hidden"></span>
+                            <svg aria-hidden="true" height="35" width="35" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3H2" /><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 8H2" /><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 13H2" /></svg>
+                        </button>
+                        <ul data-state="closed" class="primary-navigation" id="primary-navigation">
+                            @foreach (var item in Model)
+                            {
+                                <li><a asp-route="@item.ToURL">@item.Name</a></li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+                @foreach (var item in Model)
+                {
+                    if (item.SubNavbars.Count != 0)
                     {
-                        <li><a asp-route="@item.ToURL">@item.Name</a></li>
+                        <div class="dropdown">
+                            <a href="#" class="dropbtn">@item.Name</a>
+                            <div class="dropdown-content">
+                                @foreach (var subNav in item.SubNavbars)
+                                {
+                                    <a asp-route="@subNav.ToURL">@subNav.Name</a>
+                                }
+                            </div>
+                        </div>
                     }
-                </ul>
-            </nav>
-        </div>
-        @foreach (var item in Model)
-        {
-            if (item.SubNavbars.Count != 0)
-            {
-                <div class="dropdown">
-                    <a href="#" class="dropbtn">@item.Name</a>
-                    <div class="dropdown-content">
-                        @foreach (var subNav in item.SubNavbars)
-                        {
-                            <a asp-route="@subNav.ToURL">@subNav.Name</a>
-                        }
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="dropdown">
-                    <a asp-route="@item.ToURL" class="dropbtn">@item.Name</a>
-                </div>
-            }
+                    else
+                    {
+                        <div class="dropdown">
+                            <a asp-route="@item.ToURL" class="dropbtn">@item.Name</a>
+                        </div>
+                    }
 
-        }
+                }
+            </div>
+        </div>
+
+
+        <div class="header-mid col-lg-4 col-8">
+            <a href=""><img src="~/Client/assets/images/Logo/Logo-edit-transformed.png" alt=""></a>
+        </div>
+        <div class="col-lg-4 col-2">
+            <div class="header-right d-flex justify-content-end align-items-center">
+                <div class="header-icon d-flex justify-content-between align-items-center">
+                    <button class="header-ico-btn  search-btn-index border-0" href=""><i class="fa-solid fa-magnifying-glass"></i></button>
+
+
+                    <button class="header-ico-btn basket-btn icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+
+                    <div class="wrap-header-cart js-panel-cart">
+                        <div class="s-full js-hide-cart"></div>
+
+                        <div class="header-cart flex-col-l p-l-65 p-r-25">
+                            <div class="header-cart-title flex-w flex-sb-m p-b-8">
+                                <span class="cl2">
+                                    Your Cart
+                                </span>
+
+                                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+                                    <i class="zmdi zmdi-close"></i>
+                                </div>
+                            </div>
+
+
+                            <div class="cart-block header-cart-content flex-w js-pscroll">
+                                @await Component.InvokeAsync(nameof(MiniBasket))
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <button class="header-ico-btn basket-btn icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                        <a asp-route="client-wishlist-index" style="color: #0F4438;"><i class="fa-solid fa-heart"></i></a>
+                    </button>
+
+                    <button class="header-ico-btn border-0 user-icon-btn">
+                        <i class="fa-solid fa-user"></i>
+                        <div class="user-icon d-flex flex-column text-start">
+                            <a class="border-0 user-close mb-1 text-right"><i class="fa-solid fa-xmark"></i></a>
+                            <h3><img src="~/Client/assets/images/Logo/logo-6nlpJWJn2-transformed.png" alt=""></h3>
+                            @if (userService.IsAuthenticated)
+                            {
+                                <a asp-route="client-account-dashboard" class="user-btn">My Account</a>
+                                <div class="log d-flex flex-column-reverse align-items-center">
+                                    <a asp-route="client-account-dashboard" class="register">@userService.CurrentUser.FirstName @userService.CurrentUser.LastName</a>
+                                    <a asp-route="client-auth-logout" class="register mt-2 mb-2">Logout</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <a asp-route="client-auth-login" class="user-btn">Login</a>
+                                <div class="log d-flex  align-items-center">
+                                    <span>No account yet? </span>
+                                    <a class="register" asp-route="client-auth-register">REGISTER HERE.</a>
+                                </div>
+                            }
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

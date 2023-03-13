@@ -54,6 +54,17 @@ namespace FoodCorner.Services.Concretes
             _emailService.Send(activationMessageDto);
         }
 
+        public async Task SendChangePasswordUrlAsync(string email)
+        {
+            ArgumentNullException.ThrowIfNull(email);
+
+            var token = GenerateActivationToken();
+            var activationUrl = GenerateUrl(token, EMAIL_CONFIRMATION_ROUTE_NAME);
+            var activationMessageDto = PrepareChangePasswordMessage(email!, activationUrl);
+
+            _emailService.Send(activationMessageDto);
+        }
+
 
         private string GenerateActivationToken()
         {
@@ -87,6 +98,16 @@ namespace FoodCorner.Services.Concretes
                 .Replace(EmailMessageKeyword.ACTIVATION_URL, activationUrl);
 
             string subject = EmailMessages.Subject.ACTIVATION_MESSAGE;
+
+            return new MessageDto(email, subject, body);
+        }
+
+        private MessageDto PrepareChangePasswordMessage(string email, string activationUrl)
+        {
+            string body = EmailMessages.Body.CHANGEPASSWORD_MESSAGE
+                .Replace(EmailMessageKeyword.CHANGEPASSWORD_URL, activationUrl);
+
+            string subject = EmailMessages.Subject.CHANGEPASSWORD_MESSAGE;
 
             return new MessageDto(email, subject, body);
         }

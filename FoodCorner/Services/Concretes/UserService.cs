@@ -45,7 +45,7 @@ namespace FoodCorner.Services.Concretes
                 {
                     throw new IdentityCookieException("Identity cookie not found");
                 }
-                _currentUser = _dataContext.Users.First(u => u.Id == int.Parse(idClaim.Value));
+                _currentUser = _dataContext.Users.Include(u=>u.Basket).First(u => u.Id == int.Parse(idClaim.Value));
 
                 return _currentUser;
             }
@@ -138,12 +138,16 @@ namespace FoodCorner.Services.Concretes
                 foreach (var cookieViewModel in productsCookieViewModel)
                 {
                     var product = await _dataContext.Products.FirstOrDefaultAsync(p => p.Id == cookieViewModel.Id);
-
+                    //product.ProductSizes.FirstOrDefault(p => p.SizeId == cookieViewModel.SizeId);
+                    
                     var basketProduct = new BasketProduct
                     {
                         Basket = basket,
                         ProductId = product.Id,
-                        Quantity = cookieViewModel.Quantity
+                        SizeId = cookieViewModel.SizeId,
+                        Quantity = cookieViewModel.Quantity,
+                        CurrentPrice = (int)cookieViewModel.Price,
+                        CurrentDiscountPrice = cookieViewModel.DisCountPrice
                     };
 
                     await _dataContext.BasketProducts.AddAsync(basketProduct);

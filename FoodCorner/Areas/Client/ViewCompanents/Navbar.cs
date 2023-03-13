@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FoodCorner.Database;
+using FoodCorner.Services.Abstracts;
 
 namespace FoodCorner.Areas.Client.ViewCompanents
 {
@@ -9,10 +10,11 @@ namespace FoodCorner.Areas.Client.ViewCompanents
     {
 
         private readonly DataContext _dataContext;
-
-        public Navbar(DataContext dataContext)
+        private readonly IUserService _userService;
+        public Navbar(DataContext dataContext, IUserService userService)
         {
             _dataContext = dataContext;
+            _userService = userService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()

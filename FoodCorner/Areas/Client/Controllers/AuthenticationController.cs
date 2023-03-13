@@ -6,6 +6,7 @@ using FoodCorner.Contracts.Identity;
 using FoodCorner.Database;
 using FoodCorner.Services.Abstracts;
 using FoodCorner.Areas.Admin.Controllers;
+using FoodCorner.Services.Concretes;
 
 namespace FoodCorner.Areas.Client.Controllers
 {
@@ -15,12 +16,14 @@ namespace FoodCorner.Areas.Client.Controllers
     {
         private readonly DataContext _dbContext;
         private readonly IUserService _userService;
+        private readonly IUserActivationService _userActivationService;
         private readonly ILogger<AuthenticationController> _logger;
-        public AuthenticationController(DataContext dbContext, IUserService userService, ILogger<AuthenticationController> logger)
+        public AuthenticationController(DataContext dbContext, IUserService userService, ILogger<AuthenticationController> logger, IUserActivationService userActivationService)
         {
             _dbContext = dbContext;
             _userService = userService;
             _logger = logger;
+            _userActivationService = userActivationService;
         }
 
 
@@ -55,6 +58,27 @@ namespace FoodCorner.Areas.Client.Controllers
             }
 
             await _userService.SignInAsync(model!.Email, model!.Password);
+
+            return RedirectToRoute("client-home-index");
+        }
+
+        [HttpGet("forgetPassword", Name = "client-auth-forgetPassword")]
+        public async Task<IActionResult> ForgetPassword()
+        {            
+            return View();
+        }
+
+        [HttpPost("forgetPassword", Name = "client-auth-forgetPassword")]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            //var emails = new List<string>();
+            //emails.Add(model.Email);
+
+            await _userActivationService.SendChangePasswordUrlAsync(model.Email);
 
             return RedirectToRoute("client-home-index");
         }
