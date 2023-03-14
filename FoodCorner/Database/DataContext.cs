@@ -34,6 +34,7 @@ namespace FoodCorner.Database
         public DbSet<Addres> Address { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<PasswordForget>PasswordForgets { get; set; }
 
 
 

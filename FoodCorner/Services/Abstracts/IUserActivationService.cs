@@ -5,6 +5,6 @@ namespace FoodCorner.Services.Abstracts
     public interface IUserActivationService
     {
         Task SendActivationUrlAsync(User user);
-        Task SendChangePasswordUrlAsync(string email);
+        Task SendChangePasswordUrlAsync(User user);
     }
 }

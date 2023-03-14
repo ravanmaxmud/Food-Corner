@@ -18,6 +18,7 @@ namespace FoodCorner.Database.Models
         public UserActivation? UserActivation { get; set; }
         public Basket? Basket { get; set; }
         public Addres? Address { get; set; }
+        public List<PasswordForget>? PasswordForget { get; set; }
 
         public List<Order> Orders { get; set; }
     }

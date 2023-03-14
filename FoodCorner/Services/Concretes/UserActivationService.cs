@@ -3,12 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using FoodCorner.Database;
 using FoodCorner.Database.Models;
 using FoodCorner.Services.Abstracts;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
-using System.Security.Claims;
-using System.Text.Json;
 
 namespace FoodCorner.Services.Concretes
 {
@@ -20,6 +14,7 @@ namespace FoodCorner.Services.Concretes
         private readonly IUrlHelper _urlHelper;
         private readonly DateTime _activationExpireDate;
         private const string EMAIL_CONFIRMATION_ROUTE_NAME = "client-auth-activate";
+        private const string PASSWORD_CHANGE_TOKEN = "client-auth-forgetPasswordToken";
 
 
         public UserActivationService(
@@ -54,13 +49,14 @@ namespace FoodCorner.Services.Concretes
             _emailService.Send(activationMessageDto);
         }
 
-        public async Task SendChangePasswordUrlAsync(string email)
+        public async Task SendChangePasswordUrlAsync(User user)
         {
-            ArgumentNullException.ThrowIfNull(email);
+            ArgumentNullException.ThrowIfNull(user);
 
             var token = GenerateActivationToken();
-            var activationUrl = GenerateUrl(token, EMAIL_CONFIRMATION_ROUTE_NAME);
-            var activationMessageDto = PrepareChangePasswordMessage(email!, activationUrl);
+            var activationUrl = GenerateUrl(token, PASSWORD_CHANGE_TOKEN);
+            await CreatePasswordForgetAsync(user, token, activationUrl, _activationExpireDate);
+            var activationMessageDto = PrepareChangePasswordMessage(user.Email!, activationUrl);
 
             _emailService.Send(activationMessageDto);
         }
@@ -91,6 +87,23 @@ namespace FoodCorner.Services.Concretes
 
             return userActivation;
         }
+
+        private async Task<PasswordForget> CreatePasswordForgetAsync(User user, string token, string activationUrL, DateTime expireDate)
+        {
+            var passwordForget = new PasswordForget
+            {
+                User = user,
+                ActivationToken = token,
+                ActivationUrl = activationUrL,
+                ExpiredDate = expireDate,
+            };
+
+            await _dataContext.PasswordForgets.AddAsync(passwordForget);
+
+            return passwordForget;
+        }
+
+
 
         private MessageDto PrepareActivationMessage(string email, string activationUrl)
         {

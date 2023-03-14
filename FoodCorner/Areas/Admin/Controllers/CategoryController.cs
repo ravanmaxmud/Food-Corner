@@ -32,7 +32,7 @@ namespace FoodCorner.Areas.Admin.Controllers
         [HttpGet("list",Name ="admin-cate-list")]
         public async Task<IActionResult> List()
         {
-            var model = await _dataContext.Categories.Select(c => new ListItemViewModel(c.Id, c.Title,c.Parent.Title, 
+            var model = await _dataContext.Categories.Select(c => new ListItemViewModel(c.Id, c.Title, c.Parent.Title,
                 _fileService.GetFileUrl(c.BackgroundİmageInFileSystem, UploadDirectory.Category)))
                 .ToListAsync();
             return View(model);

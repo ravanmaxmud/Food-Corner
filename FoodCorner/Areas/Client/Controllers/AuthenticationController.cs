@@ -7,6 +7,8 @@ using FoodCorner.Database;
 using FoodCorner.Services.Abstracts;
 using FoodCorner.Areas.Admin.Controllers;
 using FoodCorner.Services.Concretes;
+using FoodCorner.Database.Models;
+using NuGet.Common;
 
 namespace FoodCorner.Areas.Client.Controllers
 {
@@ -71,14 +73,22 @@ namespace FoodCorner.Areas.Client.Controllers
         [HttpPost("forgetPassword", Name = "client-auth-forgetPassword")]
         public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel model)
         {
+
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            //var emails = new List<string>();
-            //emails.Add(model.Email);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
 
-            await _userActivationService.SendChangePasswordUrlAsync(model.Email);
+            if (user is null)
+            {
+                ModelState.AddModelError(String.Empty, "Email is not correct");
+                _logger.LogWarning($"({model.Email}) This Email is not correct.");
+                return View(model);
+            }
+
+            await _userActivationService.SendChangePasswordUrlAsync(user);
+            await _dbContext.SaveChangesAsync();
 
             return RedirectToRoute("client-home-index");
         }
@@ -141,6 +151,59 @@ namespace FoodCorner.Areas.Client.Controllers
             }
 
             userActivation.User.IsActive = true;
+
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToRoute("client-auth-login");
+        }
+
+        [HttpGet("forgetPasswordToken/{token}", Name = "client-auth-forgetPasswordToken")]
+        public async Task<IActionResult> ForgetPasswordToken([FromRoute] string token)
+        {
+            var forgetPassword = await _dbContext.PasswordForgets.Include(u => u.User)
+                .FirstOrDefaultAsync(u =>  u.ActivationToken == token);
+
+            if (forgetPassword is null)
+            {
+                return NotFound();
+            }
+
+            if (DateTime.Now > forgetPassword.ExpiredDate)
+            {
+                return Ok("Token expired olub teessufler");
+            }
+
+
+            return RedirectToRoute("client-auth-changePassword", new { token = token });
+        }
+
+        [HttpGet("changePassword", Name = "client-auth-changePassword")]
+        public async Task<IActionResult> ChangePassword(string token)
+        {
+            var model = new ChangePasswordViewModel
+            {
+                Token = token
+            };
+            return View(model);
+        }
+        [HttpPost("changePassword", Name = "client-auth-changePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            var forgetPassword = await _dbContext.PasswordForgets.Include(u => u.User)
+             .FirstOrDefaultAsync(u => u.ActivationToken == model.Token);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u=> u.Id == forgetPassword.UserId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
             await _dbContext.SaveChangesAsync();
 
