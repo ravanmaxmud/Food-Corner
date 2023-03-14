@@ -17,11 +17,13 @@ namespace FoodCorner.Areas.Client.Controllers
     {
         private readonly DataContext _dataContext;
         private readonly IUserService _userService;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(DataContext dataContext, IUserService userService)
+        public AccountController(DataContext dataContext, IUserService userService, ILogger<AccountController> logger)
         {
             _dataContext = dataContext;
             _userService = userService;
+            _logger = logger;
         }
 
         [HttpGet("dashboard", Name = "client-account-dashboard")]
@@ -140,7 +142,46 @@ namespace FoodCorner.Areas.Client.Controllers
         [HttpGet("details", Name = "client-account-details")]
         public IActionResult Details()
         {
-            return View();
+            var model = new DetailsViewModel
+            {
+                FirstName = _userService.CurrentUser.FirstName,
+                LastName = _userService.CurrentUser.LastName,
+                Email = _userService.CurrentUser.Email,
+            };
+            return View(model);
+        }
+        [HttpPost("details", Name = "client-account-details")]
+        public async  Task<IActionResult> Details(DetailsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (!await _userService.CheckPasswordAsync(model!.Email, model!.Password))
+            {
+                ModelState.AddModelError(String.Empty, "Email or password is not correct");
+                _logger.LogWarning($"({model.Email}{model.Password}) This Email and Password  is not correct.");
+                return View(model);
+            }
+            if (model.Password == model.NewPassword)
+            {
+                ModelState.AddModelError(String.Empty, "Password and NewPassword is not thseme");
+                _logger.LogWarning($"({model.Email}{model.Password}) This Email and Password  is not correct.");
+                return View(model);
+            }
+            var user = await _dataContext.Users.FirstOrDefaultAsync(u=> u.Email == model.Email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Password = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
+
+            await _dataContext.SaveChangesAsync();
+
+
+            return RedirectToRoute("client-account-details");
         }
     }
 }

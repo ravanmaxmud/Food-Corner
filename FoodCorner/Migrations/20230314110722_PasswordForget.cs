@@ -5,7 +5,7 @@
 namespace FoodCorner.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangePasswor : Migration
+    public partial class PasswordForget : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

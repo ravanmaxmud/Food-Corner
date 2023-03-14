@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodCorner.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230313221434_ChangePasswor")]
-    partial class ChangePasswor
+    [Migration("20230314110722_PasswordForget")]
+    partial class PasswordForget
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

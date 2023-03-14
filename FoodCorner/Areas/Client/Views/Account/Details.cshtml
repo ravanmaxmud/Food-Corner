@@ -1,36 +1,42 @@
-﻿<div class="" id="account-info">
+﻿@using FoodCorner.Areas.Client.ViewModels.Account
+@model DetailsViewModel
+
+<div class="" id="account-info">
 	<div class="myaccount-content">
 		<h3>Account Details</h3>
+		<div class="text-danger" asp-validation-summary="ModelOnly"></div>
 		<div class="account-details-form">
-			<form action="#">
+			<form method="POST" asp-route="client-account-details">
 				<div class="row">
 					<div class="col-lg-6 col-12  mb-2">
-						<input id="first-name" placeholder="First Name" type="text">
+						<input asp-for="FirstName" id="first-name" placeholder="First Name" type="text">
+						<span asp-validation-for="FirstName" class="text-danger"></span>
 					</div>
 					<div class="col-lg-6 col-12  mb-2">
-						<input id="last-name" placeholder="Last Name" type="text">
+						<input  asp-for="LastName" id="last-name" placeholder="Last Name" type="text">
+						<span asp-validation-for="LastName" class="text-danger"></span>
 					</div>
 					<div class="col-12  mb-2">
-						<input id="display-name" placeholder="Display Name"
-							   type="text">
-					</div>
-					<div class="col-12  mb-2">
-						<input id="email" placeholder="Email Address" type="email">
+						<input asp-for="Email" readonly id="email" placeholder="Email Address" type="email">
+						<span asp-validation-for="Email" class="text-danger"></span>
 					</div>
 					<div class="col-12  mb-2">
 						<h4>Password change</h4>
 					</div>
 					<div class="col-12  mb-2">
-						<input id="current-pwd" placeholder="Current Password"
+						<input asp-for="Password" id="current-pwd" placeholder="Current Password"
 							   type="password">
+						<span asp-validation-for="Password" class="text-danger"></span>
 					</div>
 					<div class="col-lg-6 col-12  mb-2">
-						<input id="new-pwd" placeholder="New Password"
+						<input asp-for="NewPassword" id="new-pwd" placeholder="New Password"
 							   type="password">
+						<span asp-validation-for="NewPassword" class="text-danger"></span>
 					</div>
 					<div class="col-lg-6 col-12  mb-2">
-						<input id="confirm-pwd" placeholder="Confirm Password"
+						<input asp-for="ConfirimNewPassword" id="confirm-pwd" placeholder="Confirm Password"
 							   type="password">
+						<span asp-validation-for="ConfirimNewPassword" class="text-danger"></span>
 					</div>
 					<div class="col-12">
 						<button class="btn btn-save">Save Changes</button>

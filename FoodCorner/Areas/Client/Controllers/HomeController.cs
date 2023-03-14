@@ -42,7 +42,11 @@ namespace FoodCorner.Areas.Client.Controllers
                 _fileService.GetFileUrl(c.BackgroundİmageInFileSystem,UploadDirectory.Category))).ToListAsync(),
 
                 Stories = await _dataContext.Stories.Take(1).Select(S=> new StoryViewModel(S.Content)).ToListAsync()
+
+                
             };
+
+           
 
             return View(model);
         }
