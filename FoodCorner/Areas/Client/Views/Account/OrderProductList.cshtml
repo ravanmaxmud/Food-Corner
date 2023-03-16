@@ -1,29 +1,31 @@
-﻿@using FoodCorner.Areas.Client.ViewModels.Account
-@model List<OrderViewModel>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using FoodCorner.Areas.Admin.ViewModels.Order
+@model List<OrderProductListItemViewModel>
+
 
 <div class="" id="orders">
     <div class="myaccount-content">
-        <h3>Orders</h3>
+        <h3>Order Products</h3>
         <div class="myaccount-table table-responsive text-center">
             <table class="table table-bordered">
                 <thead class="thead-light">
                     <tr>
-                        <th>No</th>
-                        <th>Date</th>
-                        <th>Status</th>
+                        <th>Img</th>
+                        <th>Name</th>
+                        <th>PersonSize</th>
                         <th>Total</th>
-                        <th>Action</th>
+                        <th>Quantity</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.Id</td>
-                            <td>@item.CreatAt</td>
-                            <td>@item.Status</td>
+                            <td class="special-img"><img src="~/@item.ImgURl" /></td>
+                            <td>@item.ProductName</td>
+                            <td>@item.PersonSize</td>
+                            <td>@item.Quantity</td>
                             <td>₼@item.Total</td>
-                            <td><a asp-route="client-orderProduct-list" asp-route-id="@item.Id" class="btn btn-save">View</a></td>
                         </tr>
                     }
                 </tbody>

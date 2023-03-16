@@ -5,8 +5,9 @@ using FoodCorner.Services.Abstracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FoodCorner.Areas.Client.ViewModels.Account;
-using System.IO;
+using FoodCorner.Areas.Admin.ViewModels.Order;
+using FoodCorner.Contracts.File;
+using FoodCorner.Services.Concretes;
 
 namespace FoodCorner.Areas.Client.Controllers
 {
@@ -18,12 +19,14 @@ namespace FoodCorner.Areas.Client.Controllers
         private readonly DataContext _dataContext;
         private readonly IUserService _userService;
         private readonly ILogger<AccountController> _logger;
+        private readonly IFileService _fileService;
 
-        public AccountController(DataContext dataContext, IUserService userService, ILogger<AccountController> logger)
+        public AccountController(DataContext dataContext, IUserService userService, ILogger<AccountController> logger, IFileService fileService)
         {
             _dataContext = dataContext;
             _userService = userService;
             _logger = logger;
+            _fileService = fileService;
         }
 
         [HttpGet("dashboard", Name = "client-account-dashboard")]
@@ -38,6 +41,26 @@ namespace FoodCorner.Areas.Client.Controllers
             var model = await _dataContext.Orders.Where(o => o.UserId == _userService.CurrentUser.Id)
                   .Select(b => new OrderViewModel(b.Id, b.CreatedAt, b.Status, b.SumTotalPrice))
                   .ToListAsync();
+
+
+            return View(model);
+        }
+
+        [HttpGet("list/{id}", Name = "client-orderProduct-list")]
+        public async Task<IActionResult> OrderProductList(string id)
+        {
+            var order = await _dataContext.Orders.FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order is null)
+            {
+                return NotFound();
+            }
+
+            var model = await _dataContext.OrderProducts.Where(o => o.OrderId == order.Id)
+                .Select(op => new OrderProductListItemViewModel(op.Id, op.Product.ProductImages
+                .Where(p => p.IsPoster == true).FirstOrDefault() != null
+              ? _fileService.GetFileUrl(op.Product.ProductImages.Where(p => p.IsPoster == true).FirstOrDefault().ImageNameFileSystem, UploadDirectory.Product)
+              : String.Empty, op.Product.Name, op.Size.PersonSize, op.Quantity, (int)op.Total)).ToListAsync();
 
 
             return View(model);
