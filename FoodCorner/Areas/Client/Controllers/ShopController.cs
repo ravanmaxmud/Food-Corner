@@ -32,10 +32,13 @@ namespace FoodCorner.Areas.Client.Controllers
 
             return View(model);
         }
+
         [HttpGet("sort",Name ="client-shop-sort")]
-		public async Task<IActionResult> Sort(int? sort=null)
+		public async Task<IActionResult> Sort([FromQuery] int? sort=null , [FromQuery] int? categoryId = null,
+            int? minPrice = null ,
+            int? maxPrice = null)
 		{
-			return ViewComponent(nameof(Products), new { sort=sort });
+			return ViewComponent(nameof(ShopPageProduct), new { sort=sort , categoryId = categoryId , minPrice = minPrice , maxPrice = maxPrice });
 		}
 	}
 }

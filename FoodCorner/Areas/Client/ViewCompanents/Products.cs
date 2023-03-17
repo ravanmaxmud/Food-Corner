@@ -19,7 +19,7 @@ namespace FoodCorner.Areas.Client.ViewCompanents
             _fileService = fileService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string? slide = null, int? sort = null)
+        public async Task<IViewComponentResult> InvokeAsync(string? slide = null)
         {
             var productsQuery = _dataContext.Products.Include(p=> p.ProductCatagories).AsQueryable();
 
@@ -38,28 +38,6 @@ namespace FoodCorner.Areas.Client.ViewCompanents
                     .ToListAsync();
 
                 productsQuery = productsQuery.Where(p => productsBestQuery.Contains(p.Id));
-            }
-            else if (sort is not null)
-            {
-                switch (sort)
-                {
-                    case 1:
-                        productsQuery = productsQuery.OrderBy(p => p.Name);
-						break;
-
-                    case 2:
-						productsQuery = productsQuery.OrderByDescending(p => p.Name);
-						break;
-                    case 3:
-						productsQuery = productsQuery.OrderBy(p => p.CreatedAt);
-						break;
-                    case 4:
-						productsQuery = productsQuery.OrderBy(p => p.Price);
-						break;
-					case 5:
-						productsQuery = productsQuery.OrderByDescending(p => p.Price);
-						break;
-				}
             }
             else
             {

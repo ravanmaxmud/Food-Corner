@@ -301,26 +301,3 @@ $(document).on("click", ".minus-btn", function (e) {
         });
 
 })
-
-
-$(document).on("click", ".sort-product", function (e) {
-    e.preventDefault();
-
-
-    let aHref = e.target.href;
-
-    $.ajax(
-        {
-            type: "GET",
-            url: aHref,
-            success: function (response) {
-                $('.shopPageProduct').html(response);
-            },
-            error: function (err) {
-                $(".product-details-modal").html(err.responseText);
-
-            }
-
-        });
-
-})

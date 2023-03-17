@@ -232,7 +232,8 @@
             });
         });
     </script>
-    <!--===============================================================================================-->
+
+
     <script src="~/Client/assets/vendor/isotope/isotope.pkgd.min.js"></script>
     <!--===============================================================================================-->
     <script src="~/Client/assets/vendor/sweetalert/sweetalert.min.js"></script>
@@ -254,11 +255,12 @@
         });
     </script>
     <!--===============================================================================================-->
-    <script src="~/Client/assets/js/main.js"></script>
-    <script src="~/Client/assets/js/Basket.js" asp-append-version="true"></script>
+    <script asp-append-version="true" src="~/Client/assets/js/main.js"></script>
 
     <script src="~/Client/assets/js/app.js" asp-append-version="true"></script>
 
-    <script src="~/Client/assets/js/shop.js"></script>
+    <script asp-append-version="true" src="~/Client/assets/js/shop.js"></script>
+    @RenderSection("sripts",required:false)
+    <script src="~/Client/assets/js/Basket.js" asp-append-version="true"></script>
 </body>
 </html>
