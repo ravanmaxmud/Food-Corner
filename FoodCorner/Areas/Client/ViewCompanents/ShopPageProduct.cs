@@ -18,7 +18,7 @@ namespace FoodCorner.Areas.Client.ViewCompanents
 			_fileService = fileService;
 		}
 
-		public async Task<IViewComponentResult> InvokeAsync([FromQuery] int? sort = null, [FromQuery] int? categoryId = null,int? minPrice =null , int? maxPrice=null)
+		public async Task<IViewComponentResult> InvokeAsync([FromQuery] int? sort = null, [FromQuery] int? categoryId = null,int? minPrice =null , int? maxPrice = null, [FromQuery] int? tagId = null)
 		{
 			var productsQuery = _dataContext.Products.Include(p => p.ProductCatagories).AsQueryable();
 
@@ -44,10 +44,11 @@ namespace FoodCorner.Areas.Client.ViewCompanents
 						break;
 				}
 			}
-			else if (categoryId is not null)
+			else if (categoryId is not null || tagId is not null)
 			{
-				productsQuery = productsQuery.Include(p => p.ProductCatagories)
-					.Where(p => categoryId == null || p.ProductCatagories!.Any(pc => pc.CatagoryId == categoryId));
+				productsQuery = productsQuery.Include(p => p.ProductCatagories).Include(p=> p.ProductTags)
+					.Where(p => categoryId == null || p.ProductCatagories!.Any(pc => pc.CatagoryId == categoryId))
+					.Where(p=> tagId == null || p.ProductTags!.Any(pt=> pt.TagId == tagId));
 			}
             else if (minPrice is not null && maxPrice is not null)
             {

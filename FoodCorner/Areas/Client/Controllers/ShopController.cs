@@ -36,9 +36,10 @@ namespace FoodCorner.Areas.Client.Controllers
         [HttpGet("sort",Name ="client-shop-sort")]
 		public async Task<IActionResult> Sort([FromQuery] int? sort=null , [FromQuery] int? categoryId = null,
             int? minPrice = null ,
-            int? maxPrice = null)
+            int? maxPrice = null,
+            [FromQuery] int? tagId = null)
 		{
-			return ViewComponent(nameof(ShopPageProduct), new { sort=sort , categoryId = categoryId , minPrice = minPrice , maxPrice = maxPrice });
+			return ViewComponent(nameof(ShopPageProduct), new { sort=sort , categoryId = categoryId , minPrice = minPrice , maxPrice = maxPrice , tagId = tagId });
 		}
 	}
 }
