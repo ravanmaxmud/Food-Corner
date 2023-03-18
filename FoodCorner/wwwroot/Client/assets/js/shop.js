@@ -1,4 +1,4 @@
- var isotopeButton = $('.filter-tope-group a');
+﻿ var isotopeButton = $('.filter-tope-group a');
 
     $(isotopeButton).each(function(){
         $(this).on('click', function(e){
@@ -23,10 +23,10 @@
         if( slide1 > slide2 ){ let tmp = slide2; slide2 = slide1; slide1 = tmp; }
         
         let displayElement = parent.getElementsByClassName("rangeValues1")[0];
-            displayElement.innerHTML = "$" + slide1
+        displayElement.innerHTML = "₼" + slide1
 
             let displayElement2 = parent.getElementsByClassName("rangeValues2")[0];
-            displayElement2.innerHTML ="$" + slide2;
+        displayElement2.innerHTML ="₼" + slide2;
 
       }
       

@@ -44,7 +44,16 @@
 						<i class="zmdi zmdi-search"></i>
 					</button>
 
-					<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+					@using (Html.BeginForm("Search", "Home", FormMethod.Get))
+					{
+						<div class="d-none">
+							<b>Search By :</b>
+							@Html.RadioButton("searchBy","Name",true)<text>Name</text>
+							<br />
+						</div>
+						@Html.TextBox("search",null, new { @placeholder = "Search..." ,@class="mtext-107 cl2 size-114 plh2 p-r-15",@name="search-product"})
+					}
+					@*<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">*@
 				</div>
 			</div>
 			<!-- Filter -->
@@ -99,8 +108,8 @@
 								<span class="rangeValues1"></span>
 								<span class="rangeValues2"></span>
 							</div>
-							<input class="searchproductPrice" value="1" min="1" max="1000" step="1" type="range">
-							<input class="searchproductPrice2" value="1000" min="1" max="1000" step="1" type="range">
+							<input class="searchproductPrice" value="1" min="1" max="500" step="1" type="range">
+							<input class="searchproductPrice2" value="500" min="1" max="500" step="1" type="range">
 
 							<a class="shoppage-url" asp-route="client-shop-sort">
 							</a>
@@ -149,7 +158,7 @@
 
 		<div class="ps-carts">
 			<div class="cart-box d-flex flex-wrap justify-content-between align-items-center shopPageProduct">
-				@await Component.InvokeAsync(nameof(ShopPageProduct))
+				@await Component.InvokeAsync(nameof(ShopPageProduct),new { searchBy = ViewBag.SearchBy, search = ViewBag.Search , categoryId = ViewBag.CategoryId })
 			</div>
 			<div class=" mt-5 mb-5 flex-l-m flex-w w-full p-t-10 m-lr--7">
 				<a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1">

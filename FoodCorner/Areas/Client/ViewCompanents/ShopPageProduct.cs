@@ -18,11 +18,16 @@ namespace FoodCorner.Areas.Client.ViewCompanents
 			_fileService = fileService;
 		}
 
-		public async Task<IViewComponentResult> InvokeAsync([FromQuery] int? sort = null, [FromQuery] int? categoryId = null,int? minPrice =null , int? maxPrice = null, [FromQuery] int? tagId = null)
+		public async Task<IViewComponentResult> InvokeAsync(string? searchBy = null,
+			string? search = null, [FromQuery] int? sort = null, [FromQuery] int? categoryId = null,int? minPrice =null , int? maxPrice = null, [FromQuery] int? tagId = null)
 		{
 			var productsQuery = _dataContext.Products.Include(p => p.ProductCatagories).AsQueryable();
 
-			if (sort is not null)
+			if (searchBy == "Name")
+			{
+				productsQuery = productsQuery.Where(p => p.Name.StartsWith(search) || Convert.ToString(p.Price).StartsWith(search) || Convert.ToString((decimal)p.DiscountPrice!).StartsWith(search) || search == null);
+			}
+			else if (sort is not null)
 			{
 				switch (sort)
 				{

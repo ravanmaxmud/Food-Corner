@@ -82,5 +82,13 @@ namespace FoodCorner.Areas.Client.Controllers
                 );
             return PartialView("~/Areas/Client/Views/Shared/_ProductModalPartial.cshtml", model);
         }
+
+        [HttpGet("indexsearch", Name = "client-homesearch-index")]
+        public async Task<IActionResult> Search(string searchBy, string search,int? categoryId = null)
+        {
+
+            return RedirectToRoute("client-shop-index", new { searchBy = searchBy, search = search , categoryId = categoryId});
+
+        }
     }
 }

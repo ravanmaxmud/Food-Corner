@@ -21,8 +21,12 @@ namespace FoodCorner.Areas.Client.Controllers
         }
 
         [HttpGet("index",Name ="client-shop-index")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchBy, string search,int? categoryId = null)
         {
+            ViewBag.SearchBy = searchBy;
+            ViewBag.Search = search;
+            ViewBag.CategoryId = categoryId;
+
             var model = new IndexViewModel
             {
                 Categories = await _dataContext.Categories.Select(c=> new CategoryViewModel(c.Id,c.Title)).ToListAsync(),
@@ -34,12 +38,12 @@ namespace FoodCorner.Areas.Client.Controllers
         }
 
         [HttpGet("sort",Name ="client-shop-sort")]
-		public async Task<IActionResult> Sort([FromQuery] int? sort=null , [FromQuery] int? categoryId = null,
+		public async Task<IActionResult> Sort(string? searchBy , string? search,[FromQuery] int? sort=null , [FromQuery] int? categoryId = null,
             int? minPrice = null ,
             int? maxPrice = null,
             [FromQuery] int? tagId = null)
 		{
-			return ViewComponent(nameof(ShopPageProduct), new { sort=sort , categoryId = categoryId , minPrice = minPrice , maxPrice = maxPrice , tagId = tagId });
+			return ViewComponent(nameof(ShopPageProduct), new {searchBy = searchBy , search =search ,sort=sort , categoryId = categoryId , minPrice = minPrice , maxPrice = maxPrice , tagId = tagId });
 		}
 	}
 }

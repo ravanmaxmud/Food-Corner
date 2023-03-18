@@ -75,9 +75,15 @@
                     <i class="fa-solid fa-xmark"></i>
                 </button>
 
-                <form>
-                    <input class="search-box" type="text" name="search" placeholder="Search...">
-                </form>
+                @using(Html.BeginForm("Search","Home",FormMethod.Get))
+                {
+                    <div class="d-none">
+                        <b>Search By :</b>
+                        @Html.RadioButton("searchBy","Name",true)<text>Name</text>
+                        <br />
+                    </div>
+                    @Html.TextBox("search",null, new { @placeholder = "Search..." ,@class="search-box"})  
+                }
             </div>
         </div>
     </div>
