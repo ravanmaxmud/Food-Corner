@@ -620,6 +620,50 @@ namespace FoodCorner.Migrations
                     b.ToTable("Tags", (string)null);
                 });
 
+            modelBuilder.Entity("FoodCorner.Database.Models.TeamMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FaceBookUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InistagramUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkEdinUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MemberImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MemberİmageInFileSystem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeamMembers", (string)null);
+                });
+
             modelBuilder.Entity("FoodCorner.Database.Models.User", b =>
                 {
                     b.Property<int>("Id")

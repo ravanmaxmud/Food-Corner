@@ -1,0 +1,40 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.About
+@model List<TeamListViewModel>
+
+
+<div class="card-body">
+    <div class="table-responsive">
+        <a asp-route="admin-team-add" class="btn btn-secondary">Add new Team Member</a>
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>MemberImg</th>
+                    <th>FullName</th>
+                    <th>Inistagram</th>
+                    <th>LinkEdin</th>
+                    <th>FaceBook</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><img style="width:60px; height:50px; object-fit:cover;" src="~/@item.MemberImageUrl" /></td>
+                        <td>@item.FullName</td>
+                        <td>@item.Inistagram</td>
+                        <td>@item.LinkEdin</td>
+                        <td>@item.FaceBook</td>
+                        <td class="text-end">
+                            <a asp-route="admin-team-update" asp-route-id="@item.Id"><i class="las la-pen text-secondary font-16"></i></a>
+                            <form method="POST" asp-route="admin-team-delete" asp-route-id="@item.Id" id="book-form-@item.Id"></form>
+                            <button style="background-color:none; border:none;" type="submit" form="book-form-@item.Id">
+                                <i class="las la-trash-alt text-secondary font-16"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table><!--end /table-->
+    </div><!--end /tableresponsive-->
+</div>

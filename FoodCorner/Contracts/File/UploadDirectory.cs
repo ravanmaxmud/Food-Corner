@@ -5,6 +5,7 @@
          Slider = 1,
         Product = 2,
         Category = 4,
+        TeamMembers = 16,
 
     }
 }
