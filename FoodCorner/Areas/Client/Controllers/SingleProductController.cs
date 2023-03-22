@@ -72,11 +72,6 @@ namespace FoodCorner.Areas.Client.Controllers
              
             return View(model);
         }
-        [HttpGet("commentList", Name = "client-single-commentList")]
-        public async Task<IActionResult> CommentList()
-        {
-            return View();
-        }
 
         [HttpPost("comment/{productId}", Name = "client-single-comment")]
         public async Task<IActionResult> Comment(int productId, ModalViewModel model) 
