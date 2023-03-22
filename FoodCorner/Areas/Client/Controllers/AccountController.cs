@@ -130,7 +130,7 @@ namespace FoodCorner.Areas.Client.Controllers
             {
                 return View(model);
             }
-             
+
             var user = _userService.CurrentUser;
 
             var address = await _dataContext.Address.FirstOrDefaultAsync(a => a.UserId == user.Id);
@@ -173,8 +173,10 @@ namespace FoodCorner.Areas.Client.Controllers
             };
             return View(model);
         }
+
+
         [HttpPost("details", Name = "client-account-details")]
-        public async  Task<IActionResult> Details(DetailsViewModel model)
+        public async Task<IActionResult> Details(DetailsViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -192,7 +194,7 @@ namespace FoodCorner.Areas.Client.Controllers
                 _logger.LogWarning($"({model.Email}{model.Password}) This Email and Password  is not correct.");
                 return View(model);
             }
-            var user = await _dataContext.Users.FirstOrDefaultAsync(u=> u.Email == model.Email);
+            var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
             if (user == null)
             {
                 return NotFound();
@@ -200,7 +202,6 @@ namespace FoodCorner.Areas.Client.Controllers
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Password = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
-
             await _dataContext.SaveChangesAsync();
 
 

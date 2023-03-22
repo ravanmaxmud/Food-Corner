@@ -86,5 +86,74 @@ namespace FoodCorner.Areas.Admin.Controllers
 
             return RedirectToRoute("admin-team-list");
         }
-    }
+
+
+
+		[HttpGet("TeamUpdate/{id}", Name = "admin-team-update")]
+		public async Task<IActionResult> TeamUpdate([FromRoute] int id)
+		{
+            var team = await _dataContext.TeamMembers.FirstOrDefaultAsync(t=> t.Id == id);
+            if (team is null) { return NotFound(); }
+
+            var model = new TeamUpdateViewModel
+            {
+                Id = team.Id,
+                Name = team.Name,
+                LastName = team.LastName,
+                Instagram = team.InistagramUrl,
+                LinkEdin = team.LinkEdinUrl,
+                Facebook = team.FaceBookUrl,
+                MembersImageUrl = _fileService.GetFileUrl(team.MemberİmageInFileSystem, UploadDirectory.TeamMembers),
+
+            };
+ 
+			return View(model);
+		}
+		[HttpPost("TeamUpdate/{id}", Name = "admin-team-update")]
+		public async Task<IActionResult> TeamUpdate(TeamUpdateViewModel model)
+		{
+            var team = await _dataContext.TeamMembers.FirstOrDefaultAsync(t=> t.Id == model.Id);
+            if (team is null)
+            {
+                return NotFound();
+            }
+			if (!ModelState.IsValid) 
+            {
+			     model = new TeamUpdateViewModel
+				{
+					Id = team.Id,
+					Name = team.Name,
+					LastName = team.LastName,
+					Instagram = team.InistagramUrl,
+					LinkEdin = team.LinkEdinUrl,
+					Facebook = team.FaceBookUrl,
+					MembersImageUrl = _fileService.GetFileUrl(team.MemberİmageInFileSystem, UploadDirectory.TeamMembers),
+
+				};
+
+				return View(model);
+			}
+
+
+			var imageNameInSystem = await _fileService.UploadAsync(model.MembersImage, UploadDirectory.TeamMembers);
+
+			UpdateMembers(model.MembersImage.FileName, imageNameInSystem);
+
+			await _dataContext.SaveChangesAsync();
+
+			return RedirectToRoute("admin-team-list");
+
+			async void UpdateMembers(string imageName, string imageNameInSystem)
+			{
+                team.Name = model.Name;
+                team.LastName = model.LastName;
+                team.InistagramUrl = model.Instagram;
+                team.LinkEdinUrl = model.LinkEdin;
+                team.FaceBookUrl = model.Facebook;
+                team.MemberImage = imageName;
+                team.MemberİmageInFileSystem = imageNameInSystem;
+                team.UpdateAt = DateTime.Now;
+			}
+		}
+	}
 }

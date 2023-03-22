@@ -20,7 +20,11 @@
 			</div>
 			<div class="col-lg-12 col-12">
 				<div class="story-content text-center">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic dolorum est voluptas asperiores, facere rem dolores esse itaque. Reiciendis labore asperiores est exercitationem. Sint iure ex, dolorem aspernatur cum quod. Ab quia animi, iste rem cupiditate, laudantium culpa quo ea suscipit, maxime porro. Facere quos libero doloremque nulla cumque ab.</p>
+					@foreach (var item in Model.Stories)
+					{
+						<p>@item.Contetn</p>
+					}
+					
 				</div>
 			</div>
 		</div>

@@ -1,0 +1,42 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.About
+@model TeamUpdateViewModel
+
+<div class="card-body">
+    <form method="POST" asp-route="admin-team-update" enctype="multipart/form-data" class="row g-3 needs-validation">
+        <div class="col-md-4">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="LastName" class="form-label"></label>
+            <input asp-for="LastName" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Instagram" class="form-label"></label>
+            <input asp-for="Instagram" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="Instagram" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="LinkEdin" class="form-label"></label>
+            <input asp-for="LinkEdin" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="LinkEdin" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Facebook" class="form-label"></label>
+            <input asp-for="Facebook" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="Facebook" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="MembersImage" class="form-label"></label>
+            <input asp-for="MembersImage" class="form-control" id="validationCustom01">
+            <span asp-validation-for="MembersImage" class="text-danger"></span>
+            <img width="50px" height="60px" src="~/@Model.MembersImageUrl"/>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form><!--end form-->
+</div>

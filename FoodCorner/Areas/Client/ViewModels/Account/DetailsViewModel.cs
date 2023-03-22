@@ -19,7 +19,6 @@ namespace FoodCorner.Areas.Client.ViewModels.Account
         [Required(ErrorMessage = "Password is required")]
         public string NewPassword { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
         [Compare(nameof(NewPassword), ErrorMessage = "Password and confirm password is not same")]
         public string ConfirimNewPassword { get; set; }
     }

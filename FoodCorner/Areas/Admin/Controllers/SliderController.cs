@@ -123,52 +123,52 @@ namespace FoodCorner.Areas.Admin.Controllers
         public async Task<IActionResult> Update(UpdateViewModel model)
         {
 
-            var slider = await _dataContext.Sliders.FirstOrDefaultAsync(s => s.Id == model.Id);
-            if (slider is null)
-            {
-                return NotFound();
-            }
-
-
-            if (!ModelState.IsValid)
-            {
-                model = new UpdateViewModel
+                var slider = await _dataContext.Sliders.FirstOrDefaultAsync(s => s.Id == model.Id);
+                if (slider is null)
                 {
-                    Id = slider.Id,
-                    HeaderTitle = slider.HeaderTitle,
-                    MainTitle = slider.MainTitle,
-                    BackgroundİmageUrl = _fileService.GetFileUrl(slider.BackgroundİmageInFileSystem, UploadDirectory.Slider),
-                    Button = slider.Button,
-                    ButtonRedirectUrl = slider.ButtonRedirectUrl,
-                    Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
-                .Select(u => new UpdateViewModel.UrlViewModel(u.AttributeRouteInfo.Name, u!.AttributeRouteInfo.Template)).ToList()
-                };
-
-                return View(model);
-            }
-
-            await _fileService.DeleteAsync(model.Backgroundİmage.FileName, UploadDirectory.Slider);
-
-            var backGroundImageFileSystem = await _fileService.UploadAsync(model.Backgroundİmage, UploadDirectory.Slider);
+                    return NotFound();
+                }
 
 
-            await UpdateSliderImage(model.Backgroundİmage.FileName, backGroundImageFileSystem);
+                if (!ModelState.IsValid)
+                {
+                    model = new UpdateViewModel
+                    {
+                        Id = slider.Id,
+                        HeaderTitle = slider.HeaderTitle,
+                        MainTitle = slider.MainTitle,
+                        BackgroundİmageUrl = _fileService.GetFileUrl(slider.BackgroundİmageInFileSystem, UploadDirectory.Slider),
+                        Button = slider.Button,
+                        ButtonRedirectUrl = slider.ButtonRedirectUrl,
+                        Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
+                    .Select(u => new UpdateViewModel.UrlViewModel(u.AttributeRouteInfo.Name, u!.AttributeRouteInfo.Template)).ToList()
+                    };
 
-            return RedirectToRoute("admin-slider-list");
+                    return View(model);
+                }
+
+                await _fileService.DeleteAsync(model.Backgroundİmage.FileName, UploadDirectory.Slider);
+
+                var backGroundImageFileSystem = await _fileService.UploadAsync(model.Backgroundİmage, UploadDirectory.Slider);
 
 
-            async Task UpdateSliderImage(string imageName, string imageNameInSystem)
-            {
-                slider.HeaderTitle = model.HeaderTitle;
-                slider.MainTitle = model.MainTitle;
-                slider.Backgroundİmage = imageName;
-                slider.BackgroundİmageInFileSystem = imageNameInSystem;
-                slider.Button = model.Button;
-                slider.ButtonRedirectUrl = model.ButtonRedirectUrl;
-                slider.UpdateAt = DateTime.Now;
+                await UpdateSliderImage(model.Backgroundİmage.FileName, backGroundImageFileSystem);
 
-                await _dataContext.SaveChangesAsync();
-            }
+                return RedirectToRoute("admin-slider-list");
+
+
+                async Task UpdateSliderImage(string imageName, string imageNameInSystem)
+                {
+                    slider.HeaderTitle = model.HeaderTitle;
+                    slider.MainTitle = model.MainTitle;
+                    slider.Backgroundİmage = imageName;
+                    slider.BackgroundİmageInFileSystem = imageNameInSystem;
+                    slider.Button = model.Button;
+                    slider.ButtonRedirectUrl = model.ButtonRedirectUrl;
+                    slider.UpdateAt = DateTime.Now;
+
+                    await _dataContext.SaveChangesAsync();
+                }
         }
 
         #endregion
