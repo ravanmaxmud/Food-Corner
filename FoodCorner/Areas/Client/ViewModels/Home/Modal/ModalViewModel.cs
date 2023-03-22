@@ -15,6 +15,20 @@
             Categories = categories;
             Tags = tags;
         }
+        public ModalViewModel(int id, string title, string description, int price, int? discountPrice, List<Images>? imgUrl, List<SizeViewModeL>? sizes, int quantity, List<CategoryViewModel>? categories, List<TagViewModeL>? tags, List<CommentViewModel>? comments)
+        {
+            Id = id;
+            Title = title;
+            Description = description;
+            Price = price;
+            DiscountPrice = discountPrice;
+            ImgUrl = imgUrl;
+            Sizes = sizes;
+            Quantity = quantity;
+            Categories = categories;
+            Tags = tags;
+            Comments = comments;
+        }
 
         public ModalViewModel(int? sizeId,int? personSize)
         {
@@ -41,6 +55,8 @@
         public List<TagViewModeL>? Tags { get; set; }
         public List<ProductListItemViewModel> Products { get; set; }
 
+        public List<CommentViewModel>? Comments { get; set; }
+        public AddCommentViewModel AddComments { get; set; }
 
 
 
@@ -48,6 +64,12 @@
 
 
 
+        public class AddCommentViewModel
+        {
+            public int UserId { get; set; }
+            public int ProductId { get; set; }
+            public string Content { get; set; }
+        }
 
         public class Images 
         {
@@ -112,6 +134,23 @@
 
             public int Id { get; set; }
             public string Title { get; set; }
+        }
+        public class CommentViewModel
+        {
+            public CommentViewModel(int id, string content, string userFullName)
+            {
+                Id = id;
+                Content = content;
+                UserFullName = userFullName;
+            }
+            public CommentViewModel()
+            {
+                
+            }
+
+            public int Id { get; set; }
+            public string Content { get; set; }
+            public string UserFullName { get; set; }
         }
     }
 }

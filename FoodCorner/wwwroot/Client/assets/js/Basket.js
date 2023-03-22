@@ -175,6 +175,7 @@ $(document).on("click", ".add-basket-to-wish", function (e) {
 
 
 
+
 $(document).on("click", ".remove-product-to-basket-btn", function (e) {
     e.preventDefault();
 

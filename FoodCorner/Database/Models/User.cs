@@ -21,5 +21,6 @@ namespace FoodCorner.Database.Models
         public List<PasswordForget>? PasswordForget { get; set; }
 
         public List<Order> Orders { get; set; }
+        public List<Comment>? Comments { get; set; }
     }
 }
