@@ -34,9 +34,9 @@ namespace FoodCorner.Areas.Admin.Controllers
         }
 
         [HttpGet("list", Name = "admin-product-list")]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(string? search = null, string? searchBy = null)
         {
-            return View(await _productService.GetAllProduct());
+            return View(await _productService.GetAllProduct(search,searchBy));
         }
 
 
@@ -206,6 +206,37 @@ namespace FoodCorner.Areas.Admin.Controllers
             _dataContext.Products.Remove(products);
             await _dataContext.SaveChangesAsync();
             return RedirectToRoute("admin-product-list");
+        }
+        #endregion
+
+        #region ProductComments
+
+        [HttpGet("commentList/{id}", Name = "admin-product-commentList")]
+        public async Task<IActionResult> CommentList([FromRoute] int id)
+        {
+            var product = await _dataContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (product is null) { return NotFound();}
+
+            var model = await _dataContext.Comments.Where(pc=> pc.ProductId ==product.Id)
+                .Select(pc=> new ProductCommentList(pc.Id,pc.Content,$"{pc.User.FirstName} {pc.User.LastName}")).ToListAsync();
+
+            return View(model);
+        }
+
+        [HttpPost("deleteComment/{commentId}", Name = "admin-product-deleteComment")]
+        public async Task<IActionResult> DeleteComment([FromRoute] int commentId)
+        {
+
+            var comment = await _dataContext.Comments.FirstOrDefaultAsync(c=> c.Id == commentId);
+            if (comment is null)
+            {
+                return NotFound();
+            }
+
+            _dataContext.Comments.Remove(comment);
+            await _dataContext.SaveChangesAsync();
+
+            return RedirectToRoute("admin-product-commentList", new { id = comment.ProductId });
         }
         #endregion
     }

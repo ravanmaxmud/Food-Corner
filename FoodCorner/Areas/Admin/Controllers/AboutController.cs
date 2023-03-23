@@ -87,8 +87,6 @@ namespace FoodCorner.Areas.Admin.Controllers
             return RedirectToRoute("admin-team-list");
         }
 
-
-
 		[HttpGet("TeamUpdate/{id}", Name = "admin-team-update")]
 		public async Task<IActionResult> TeamUpdate([FromRoute] int id)
 		{
@@ -155,5 +153,12 @@ namespace FoodCorner.Areas.Admin.Controllers
                 team.UpdateAt = DateTime.Now;
 			}
 		}
-	}
+
+        //[HttpGet("AboutVidio", Name = "admin-team-aboutVidio")]
+        //public async Task<IActionResult> AboutVidio() 
+        //{
+            
+        //}
+
+    }
 }

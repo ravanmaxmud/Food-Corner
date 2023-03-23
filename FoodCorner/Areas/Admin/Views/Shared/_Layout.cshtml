@@ -420,10 +420,15 @@
                     </button>
                 </li>
                 <li class="hide-phone app-search">
-                    <form role="search" action="#" method="get">
-                        <input type="search" name="search" class="form-control top-search mb-0" placeholder="Type text...">
-                        <button type="submit"><i class="ti ti-search"></i></button>
-                    </form>
+                    @using (Html.BeginForm("List", "Product", FormMethod.Get))
+                    {
+                        <div class="d-none">
+                            <b>Search By :</b>
+                            @Html.RadioButton("searchBy","Name",true)<text>Name</text>
+                            <br />
+                        </div>
+                        @Html.TextBox("search",null, new { @placeholder = "Search..." ,@class="form-control top-search mb-0"})
+                    }
                 </li>
             </ul>
         </nav>

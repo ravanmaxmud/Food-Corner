@@ -31,9 +31,19 @@ namespace FoodCorner.Services.Concretes
             _contextAccessor = contextAccessor;
         }
 
-        public async Task<List<ListItemViewModel>> GetAllProduct()
+        public async Task<List<ListItemViewModel>> GetAllProduct(string? search = null ,string? searchBy = null)
         {
-            var model = await _dataContext.Products
+            var productsQuery = _dataContext.Products.Include(p => p.ProductImages).Include(p => p.ProductCatagories).AsQueryable();
+
+            if (searchBy == "Name")
+            {
+                productsQuery = productsQuery.Where(p => p.Name.StartsWith(search) || Convert.ToString(p.Price).StartsWith(search) || Convert.ToString((decimal)p.DiscountPrice!).StartsWith(search) || search == null);
+            }
+            else
+            {
+                productsQuery = productsQuery.OrderBy(p => p.Price);
+            }
+            var model = await productsQuery
               .Include(p => p.ProductImages).OrderByDescending(p => p.CreatedAt)
               .Select(p => new ListItemViewModel(p.Id, p.Name, p.Description, p.Price,
               p.ProductImages.Where(p => p.IsPoster == true).FirstOrDefault() != null

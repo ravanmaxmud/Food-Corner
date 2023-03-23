@@ -34,11 +34,12 @@
                                 <div class="meta-box">
                                     <div class="media">
                                         <div class="media-body align-self-center text-truncate">
-                                            <h6 class="m-0 text-dark">@item.Price</h6>
+                                            <h6 class="m-0 text-dark">₼@item.Price</h6>
                                         </div><!--end media-body-->
                                     </div>
-                                </div><!--end meta-box-->
+                                </div><!--end meta-box-->   
                                 <div class="d-flex justify-content-between aligin-items-center">
+                                    <a class="btn btn-info" asp-route="admin-product-commentList" asp-route-id="@item.Id"><i class="fa-regular fa-comment"></i></a>
                                     <a class="btn btn-success" asp-route="admin-product-update" asp-route-Id="@item.Id"><i class="las la-pen text-dark font-16"></i></a>
                                     <form method="POST" asp-route="admin-product-delete" asp-route-id="@item.Id" id="book-form-@item.Id"></form>
                                     <button class="btn btn-danger" type="submit" form="book-form-@item.Id">

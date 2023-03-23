@@ -28,15 +28,16 @@ namespace FoodCorner.Database
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketProduct> BasketProducts { get; set; }
         public DbSet<Story> Stories { get; set; }
-        public DbSet<User> Users  { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserActivation> UserActivations { get; set; }
         public DbSet<Addres> Address { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
-        public DbSet<PasswordForget>PasswordForgets { get; set; }
+        public DbSet<PasswordForget> PasswordForgets { get; set; }
         public DbSet<TeamMember> TeamMembers { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<AboutVidio> Vidios { get; set; }
 
 
 
