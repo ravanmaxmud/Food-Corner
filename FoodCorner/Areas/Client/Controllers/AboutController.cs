@@ -31,7 +31,8 @@ namespace FoodCorner.Areas.Client.Controllers
 				Teams = await _dataContext.TeamMembers.Select(t => new TeamViewModel($"{t.Name} {t.LastName}", t.CreatedAt, t.InistagramUrl, t.LinkEdinUrl, t.FaceBookUrl,
 				_fileService.GetFileUrl(t.MemberİmageInFileSystem, Contracts.File.UploadDirectory.TeamMembers))).ToListAsync(),
 
-				Stories = await _dataContext.Stories.Take(1).Select(S => new StoryViewModel(S.Content)).ToListAsync()
+				Stories = await _dataContext.Stories.Take(1).Select(S => new StoryViewModel(S.Content)).ToListAsync(),
+				Vidios = await _dataContext.Vidios.OrderBy(v=> v.CreatedAt).Take(1).Select(v=> new VidioListViewModel(_fileService.GetFileUrl(v.VidoInFileSystem,Contracts.File.UploadDirectory.Vidios))).ToListAsync(),
 			};
 			return View(model);
 		}

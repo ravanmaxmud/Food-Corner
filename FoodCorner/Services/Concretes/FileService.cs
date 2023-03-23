@@ -59,6 +59,8 @@ namespace FoodCorner.Services.Concretes
                     return $"{initialSegment}/category/{fileName}";
                 case UploadDirectory.TeamMembers:
                     return $"{initialSegment}/teamMembers/{fileName}";
+                case UploadDirectory.Vidios:
+                    return $"{initialSegment}/vidios/{fileName}";
                 default:
                     throw new Exception("Something went wrong");
             }
@@ -83,6 +85,8 @@ namespace FoodCorner.Services.Concretes
                     return Path.Combine(startPath, "category");
                 case UploadDirectory.TeamMembers:
                     return Path.Combine(startPath, "teamMembers");
+                case UploadDirectory.Vidios:
+                    return Path.Combine(startPath, "vidios");
                 default:
                     throw new Exception("Something went wrong");
             }

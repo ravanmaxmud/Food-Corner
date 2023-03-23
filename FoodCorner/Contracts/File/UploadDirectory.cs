@@ -6,6 +6,7 @@
         Product = 2,
         Category = 4,
         TeamMembers = 16,
+        Vidios = 32,
 
     }
 }

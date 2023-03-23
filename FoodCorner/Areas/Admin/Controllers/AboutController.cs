@@ -154,11 +154,58 @@ namespace FoodCorner.Areas.Admin.Controllers
 			}
 		}
 
-        //[HttpGet("AboutVidio", Name = "admin-team-aboutVidio")]
-        //public async Task<IActionResult> AboutVidio() 
-        //{
-            
-        //}
+        [HttpGet("AboutVidioList", Name = "admin-team-aboutVidioList")]
+        public async Task<IActionResult> AboutVidioList()
+        {
+            var model = await _dataContext.Vidios
+                .Select(v=> new VidioListViewModel(v.Id,_fileService.GetFileUrl(v.VidoInFileSystem,UploadDirectory.Vidios))).ToListAsync();
+            return View(model);
+        }
+        [HttpGet("AboutVidioAdd", Name = "admin-team-aboutVidioAdd")]
+        public async Task<IActionResult> AboutVidioAdd()
+        {
+            return View();
+        }
+
+        [HttpPost("AboutVidioAdd", Name = "admin-team-aboutVidioAdd")]
+        public async Task<IActionResult> AboutVidioAdd(VidioAddViewModel model)
+        {
+            if (!ModelState.IsValid) { return View(model); }
+
+            var imageNameInSystem = await _fileService.UploadAsync(model.Vidio, UploadDirectory.Vidios);
+
+            AddVidio(model.Vidio.FileName, imageNameInSystem);
+            await _dataContext.SaveChangesAsync();
+            return RedirectToRoute("admin-team-aboutVidioList");
+
+
+            async void AddVidio(string imageName, string imageNameInSystem)
+            {
+                var vidio = new AboutVidio
+                {
+                    Vidio = imageName,
+                    VidoInFileSystem = imageNameInSystem,
+                    CreatedAt = DateTime.Now,
+                    UpdateAt = DateTime.Now,
+                };
+
+                await _dataContext.Vidios.AddAsync(vidio);
+            }
+        }
+
+        [HttpPost("AboutVidioDelete/{id}", Name = "admin-team-aboutVidioDelete")]
+        public async Task<IActionResult> AboutVidioDelete([FromRoute] int id)
+        {
+            var vidio = await _dataContext.Vidios.FirstOrDefaultAsync(V=> V.Id ==id);
+            if (vidio is null) { return NotFound(); }
+
+            await _fileService.DeleteAsync(vidio.VidoInFileSystem, UploadDirectory.Vidios);
+            _dataContext.Vidios.Remove(vidio);
+            await _dataContext.SaveChangesAsync();
+
+            return RedirectToRoute("admin-team-aboutVidioList");
+
+        }
 
     }
 }

@@ -1,0 +1,31 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.About
+@model List<VidioListViewModel>
+
+
+<div class="card-body">
+    <div class="table-responsive">
+        <a asp-route="admin-team-aboutVidioAdd" class="btn btn-secondary">Add new Vidio</a>
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>Vidio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><video style="width:60px; height:50px; object-fit:cover;" src="~/@item.VidioUrl" /></td>
+                        <td class="text-end">
+                            <form method="POST" asp-route="admin-team-aboutVidioDelete" asp-route-id="@item.Id" id="book-form-@item.Id"></form>
+                            <button style="background-color:none; border:none;" type="submit" form="book-form-@item.Id">
+                                <i class="las la-trash-alt text-secondary font-16"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table><!--end /table-->
+    </div><!--end /tableresponsive-->
+</div>

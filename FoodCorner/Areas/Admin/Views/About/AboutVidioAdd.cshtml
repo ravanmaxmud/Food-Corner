@@ -1,0 +1,16 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.About
+@model VidioAddViewModel
+
+<div class="card-body">
+    <form method="POST" asp-route="admin-team-aboutVidioAdd" enctype="multipart/form-data" class="row g-3 needs-validation">
+        <div class="col-md-4">
+            <label asp-for="Vidio" class="form-label"></label>
+            <input asp-for="Vidio" class="form-control" id="validationCustom01">
+            <span asp-validation-for="Vidio" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form><!--end form-->
+</div>
