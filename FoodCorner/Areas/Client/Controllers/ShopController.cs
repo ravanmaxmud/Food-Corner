@@ -38,11 +38,12 @@ namespace FoodCorner.Areas.Client.Controllers
         }
 
         [HttpGet("sort",Name ="client-shop-sort")]
-		public async Task<IActionResult> Sort(string? searchBy , string? search,[FromQuery] int? sort=null , [FromQuery] int? categoryId = null,
+		public async Task<IActionResult> Sort(string? searchBy , string? search,  [FromQuery] int? sort=null , [FromQuery] int? categoryId = null,
             int? minPrice = null ,
             int? maxPrice = null,
             [FromQuery] int? tagId = null)
 		{
+
 			return ViewComponent(nameof(ShopPageProduct), new {searchBy = searchBy , search =search ,sort=sort , categoryId = categoryId , minPrice = minPrice , maxPrice = maxPrice , tagId = tagId });
 		}
 	}

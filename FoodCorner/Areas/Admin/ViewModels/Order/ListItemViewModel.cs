@@ -8,13 +8,17 @@ namespace FoodCorner.Areas.Admin.ViewModels.Order
         public DateTime CreatAt { get; set; }
         public OrderStatus Status { get; set; }
         public decimal Total { get; set; }
-        public ListItemViewModel(string id, DateTime creatAt, OrderStatus status, decimal total)
-        {
-            Id = id;
-            CreatAt = creatAt;
-            Status = status;
-            Total = total;
-        }
+        public string UserEmail { get; set; }
+        public string UserAddress { get; set; }
+		public ListItemViewModel(string id, DateTime creatAt, OrderStatus status, decimal total, string userEmail, string userAddress)
+		{
+			Id = id;
+			CreatAt = creatAt;
+			Status = status;
+			Total = total;
+			UserEmail = userEmail;
+			UserAddress = userAddress;
+		}
 
-    }
+	}
 }

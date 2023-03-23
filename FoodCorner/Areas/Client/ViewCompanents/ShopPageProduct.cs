@@ -71,7 +71,10 @@ namespace FoodCorner.Areas.Client.ViewCompanents
 				 ? _fileService.GetFileUrl(p.ProductImages.Where(p => p.IsPoster == true).FirstOrDefault()!.ImageNameFileSystem, UploadDirectory.Product)
 				 : String.Empty)).ToListAsync();
 
-			return View(model);
+            //ViewBag.CurrentPage = page;
+            //ViewBag.TotalPage = Math.Ceiling((decimal)_dataContext.Products.Count() / 4);
+
+            return View(model);
 		}
 	}
 }

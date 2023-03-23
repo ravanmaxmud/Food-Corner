@@ -22,6 +22,8 @@
                             <th>ID</th>
                             <th>Total</th>
                             <th>Order Status</th>
+                             <th>User Email</th>
+                            <th>User Address</th>
                             <th>Created at</th>
                             <th class="text-end">Actions</th>
                         </tr>
@@ -33,6 +35,8 @@
                                 <td>@slider.Id</td>
                                 <td>@slider.Total</td>
                                 <td>@slider.Status</td>
+                                 <td>@slider.UserEmail</td>
+                                <td>@slider.UserAddress</td>
                                 <td>@slider.CreatAt.ToString("dd/MM/yyyy")</td>
                                 <td class="text-end d-flex mt-3">
                                     <a asp-route="admin-order-update" asp-route-id="@slider.Id"><i class="las la-pen text-secondary font-16"></i></a>

@@ -30,8 +30,8 @@ namespace FoodCorner.Areas.Admin.Controllers
         [HttpGet("list",Name ="admin-order-list")]
         public async Task<IActionResult> List()
         {
-            var model = await _dataContext.Orders
-               .Select(b => new ListItemViewModel(b.Id, b.CreatedAt, b.Status, b.SumTotalPrice))
+            var model = await _dataContext.Orders.Include(o=> o.User)
+               .Select(b => new ListItemViewModel(b.Id, b.CreatedAt, b.Status, b.SumTotalPrice, b.User.Email,$"{b.User.Address.City} {b.User.Address.Street} {b.User.Address.PhoneNum}"))
                .ToListAsync();
 
             return View(model);
