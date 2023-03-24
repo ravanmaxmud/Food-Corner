@@ -1,0 +1,53 @@
+﻿@using FoodCorner.Areas.Client.ViewModels.Home
+@model List<BlogViewModel>
+
+
+@foreach (var item in Model)
+{
+	<div class="col-sm-6 col-md-4 p-b-40">
+		<div class="blog-item">
+			<div class="hov-img0">
+				<a href="blog-detail.html">
+					<img class="blog-img" src="~/@item.BlogFiles" alt="IMG-BLOG">
+				</a>
+			</div>
+
+			<div class="p-t-15" style="box-sizing:border-box;">
+				<div class="stext-107 flex-w p-b-14">
+					<span class="m-r-3">
+						<span class="cl4">
+							By
+						</span>
+
+						<span class="cl5">
+							Admin
+						</span>
+					</span>
+
+					<span>
+						<span class="cl4">
+							on
+						</span>
+
+						<span class="cl5">
+							@item.CreatedAt.ToString("MMMM/dd/yyyy")
+						</span>
+					</span>
+				</div>
+
+				<h4 class="p-b-12">
+					<a href="blog-detail.html" style="word-break: break-all;" class="mtext-101 cl2 hov-cl1 trans-04">
+						@item.Title 
+					</a>
+				</h4>
+
+
+				<p style="word-break: break-all;">
+					@item.Content
+				</p>
+				
+			</div>
+		</div>
+	</div>
+
+}

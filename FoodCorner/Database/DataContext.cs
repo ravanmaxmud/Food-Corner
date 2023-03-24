@@ -38,12 +38,18 @@ namespace FoodCorner.Database
         public DbSet<TeamMember> TeamMembers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<AboutVidio> Vidios { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<BlogCategory> BlogCategories { get; set; }
+		public DbSet<BlogTag> BlogTags { get; set; }
+		public DbSet<BlogAndBlogCategory> BlogAndBlogCategories { get; set; }
+		public DbSet<BlogAndBlogTag> BlogAndBlogTags { get; set; }
+
+		public DbSet<BlogFile> BlogFiles { get; set; }
 
 
 
 
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly<Program>();
         }

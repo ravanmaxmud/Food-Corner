@@ -1,0 +1,58 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.Blog
+@model List<ListItemViewModel>
+
+
+<div class="container-fluid">
+    <!-- Page-Title -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-title-box">
+                <div class="float-start">
+                </div>
+                <h4 class="page-title">Blogs</h4>
+            </div>
+            <!--end page-title-box-->
+        </div>
+        <a asp-route="admin-blog-add" class="btn btn-secondary">Add new Blog</a>
+        <!--end col-->
+    </div>
+    <!-- end page title end breadcrumb -->
+    <div class="row mt-5" style="flex-wrap:wrap;">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="blog-card">                          
+                            <h4 class="my-3">
+                                <a href="" class="">@item.Title</a>
+                            </h4>
+                            <p class="text-muted" style="height:200px; max-height:max-content;">@item.Content</p>
+                            <hr class="hr-dashed">
+                            <div class="d-flex justify-content-between">
+                                <div class="meta-box">
+                                    <div class="media">
+                                        <div class="media-body align-self-center text-truncate">
+                                            <h6 class="m-0 text-dark">@string.Join(", ", item.Categories.Select(c => $"{c.Title}->{c.ParentTitle}"))</h6>
+                                            <span>@item.CreatedAt.ToString("dd/MM/yyyy")</span>
+                                        </div><!--end media-body-->
+                                    </div>
+                                </div><!--end meta-box-->
+                            </div>
+                            <div class="d-flex">
+                                <a class="btn btn-success" asp-route="admin-blog-update" asp-route-id="@item.Id">Update Blog</a>
+                                <form method="POST" asp-route="admin-blog-delete" asp-route-id="@item.Id" id="book-form-@item.Id"></form>
+                                <button class="btn btn-danger" type="submit" form="book-form-@item.Id">
+                                    Delete Blog
+                                </button>
+                                <a class="btn btn-primary" asp-route="admin-blogimage-list" asp-route-blogId="@item.Id">Blog Image List</a>
+                            </div>
+                        </div><!--end blog-card-->
+
+                    </div><!--end card-body-->
+                </div><!--end card-->
+            </div> <!--end col-->
+        }
+    </div><!--end row-->
+
+</div>
