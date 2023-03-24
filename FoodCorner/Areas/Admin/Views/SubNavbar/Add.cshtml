@@ -15,7 +15,7 @@
         </div>
         <div class="col-md-4">
             <label asp-for="ToURL" class="form-label"></label>
-            <select asp-for="ToURL" asp-items="@(new SelectList(Model.Urls, nameof(AddViewModel.UrlViewModel.Path), nameof(AddViewModel.UrlViewModel.Path)))" class="form-select"></select>
+            <select asp-for="ToURL" asp-items="@(new SelectList(Model.Urls, nameof(AddViewModel.UrlViewModel.RoutName), nameof(AddViewModel.UrlViewModel.Path)))" class="form-select"></select>
             <span asp-validation-for="ToURL" class="text-danger"></span>
         </div>
         <div class="col-md-4">

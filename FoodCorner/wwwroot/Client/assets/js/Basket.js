@@ -302,3 +302,77 @@ $(document).on("click", ".minus-btn", function (e) {
         });
 
 })
+
+
+$(document).on("click", '.select-blog-category', function (e) {
+    e.preventDefault();
+    let aHref = e.target.href;
+    let category = e.target.previousElementSibling;
+    let CategoryId = category.value;
+
+
+    console.log(CategoryId)
+
+    console.log(aHref)
+
+
+
+    $.ajax(
+        {
+            type: "GET",
+            url: aHref,
+
+            data: {
+                CategoryId: CategoryId
+            },
+
+            success: function (response) {
+                console.log(response)
+                $('.blog-pro').html(response);
+
+            },
+            error: function (err) {
+                $(".product-details-modal").html(err.responseText);
+
+            }
+
+        });
+
+})
+
+
+$(document).on("click", '.select-blog-tag', function (e) {
+    e.preventDefault();
+    let aHref = e.target.href;
+    let tag = e.target.previousElementSibling
+    let TagId = tag.value;
+
+
+    console.log(TagId)
+
+    console.log(aHref)
+
+
+
+    $.ajax(
+        {
+            type: "GET",
+            url: aHref,
+
+            data: {
+                TagId: TagId
+            },
+
+            success: function (response) {
+                console.log(response)
+                $('.blog-pro').html(response);
+
+            },
+            error: function (err) {
+                $(".product-details-modal").html(err.responseText);
+
+            }
+
+        });
+
+})

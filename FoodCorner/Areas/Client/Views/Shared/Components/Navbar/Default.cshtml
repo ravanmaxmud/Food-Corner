@@ -33,7 +33,7 @@
                         <div class="dropdown">
                             <a href="#" class="dropbtn">@item.Name</a>
                             <div class="dropdown-content">
-                                @foreach (var subNav in item.SubNavbars)
+                                @foreach (var subNav in item.SubNavbars.Where(s=> s.NavbarId == item.Id))
                                 {
                                     <a asp-route="@subNav.ToURL">@subNav.Name</a>
                                 }

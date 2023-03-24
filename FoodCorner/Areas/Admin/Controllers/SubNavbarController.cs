@@ -46,7 +46,7 @@ namespace FoodCorner.Areas.Admin.Controllers
             {
                 Navbar = await _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Name)).ToListAsync(),
                 Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
-                .Select(u => new AddViewModel.UrlViewModel(u!.AttributeRouteInfo.Template)).ToList()
+                .Select(u => new AddViewModel.UrlViewModel(u.AttributeRouteInfo.Name, u!.AttributeRouteInfo.Template)).ToList()
             };
             return View(model);
         }
@@ -61,7 +61,7 @@ namespace FoodCorner.Areas.Admin.Controllers
                 {
                     Navbar = await _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Name)).ToListAsync(),
                     Urls = _provider.ActionDescriptors.Items.Where(u => u.RouteValues["Area"] != "admin")
-                  .Select(u => new AddViewModel.UrlViewModel(u!.AttributeRouteInfo.Template)).ToList()
+                  .Select(u => new AddViewModel.UrlViewModel(u.AttributeRouteInfo.Name, u!.AttributeRouteInfo.Template)).ToList()
                 };
                 return View(model);
             }

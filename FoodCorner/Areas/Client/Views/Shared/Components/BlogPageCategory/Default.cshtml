@@ -1,0 +1,20 @@
+﻿@using FoodCorner.Areas.Client.ViewModels.Blog
+@model List<CategoryListItemViewModel>
+
+<div class="p-t-55">
+	<h4 class="mtext-112 cl2 p-b-33">
+		Categories
+	</h4>
+
+	<ul>
+		@foreach (var item in Model)
+		{
+			<li class="bor18">
+				<input type="hidden" value="@item.Id" />
+                <a asp-route="client-blog-filter" class="select-blog-category dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
+                    @item.Title
+				</a>
+			</li>
+		}
+	</ul>
+</div>
