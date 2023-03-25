@@ -33,7 +33,12 @@
         }
         public class CategoryViewModeL
         {
-            public CategoryViewModeL(string title, string parentTitle)
+			public CategoryViewModeL(string title)
+			{
+				Title = title;
+			}
+
+			public CategoryViewModeL(string title, string parentTitle)
             {
                 Title = title;
                 ParentTitle = parentTitle;
