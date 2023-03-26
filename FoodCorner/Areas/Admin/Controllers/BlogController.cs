@@ -6,6 +6,7 @@ using FoodCorner.Database;
 using FoodCorner.Database.Models;
 using FoodCorner.Services.Abstracts;
 using FoodCorner.Contracts.File;
+using FoodCorner.Migrations;
 
 namespace FoodCorner.Areas.Admin.Controllers
 {
@@ -154,6 +155,106 @@ namespace FoodCorner.Areas.Admin.Controllers
 
         #endregion
 
+        #region Update
+        [HttpGet("update/{id}", Name = "admin-blog-update")]
+        public async Task<IActionResult> Update([FromRoute] int id)
+        {
+            var blog = await _dataContext.Blogs
+                .Include(b=> b.BlogCategories)
+                .Include(b=>b.BlogTags)
+                .FirstOrDefaultAsync(b=> b.Id == id);
+            if (blog == null) { return NotFound(); }
+
+            var model = new UpdateViewModel
+            {
+                Id = blog.Id,
+                Title = blog.Title,
+                Content = blog.Content,
+                Categorys = await _dataContext.BlogCategories
+                    .Select(c => new BlogCategoryViewModel(c.Id, c.Title))
+                    .ToListAsync(),
+                CategoryIds = blog.BlogCategories.Select(bc=> bc.BlogCategoryId).ToList(),
+                Tags = await _dataContext.BlogTags.Select(t => new BlogTagViewModel(t.Id, t.Title)).ToListAsync(),
+                TagIds = blog.BlogTags.Select(pc => pc.BlogTagId).ToList(),
+            };
+
+
+            return View(model);
+        }
+
+        [HttpPost("update/{id}", Name = "admin-blog-update")]
+        public async Task<IActionResult> Update(UpdateViewModel model)
+        {
+            var blog = await _dataContext.Blogs
+                .Include(b=>b.BlogCategories).Include(b=> b.BlogTags)
+                .FirstOrDefaultAsync(b=> b.Id == model.Id);
+
+            if (!ModelState.IsValid)
+            {
+                return GetView(model);
+            }
+
+            foreach (var categoryId in model.CategoryIds)
+            {
+                if (!await _dataContext.BlogCategories.AnyAsync(c => c.Id == categoryId))
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong");
+                    _logger.LogWarning($"Category with id({categoryId}) not found in db ");
+                    return GetView(model);
+                }
+
+            }
+
+            foreach (var tagId in model.TagIds)
+            {
+                if (!await _dataContext.BlogTags.AnyAsync(c => c.Id == tagId))
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong");
+                    _logger.LogWarning($"Tag with id({tagId}) not found in db ");
+                    return GetView(model);
+                }
+
+            }
+
+
+
+            UpdateBlog();
+
+            await _dataContext.SaveChangesAsync();
+
+            return RedirectToRoute("admin-blog-list");
+
+
+
+            IActionResult GetView(UpdateViewModel model)
+            {
+
+                model.Categorys = _dataContext.BlogCategories
+                   .Select(c => new BlogCategoryViewModel(c.Id, c.Title))
+                   .ToList();
+
+                model.CategoryIds = blog.BlogCategories.Select(c => c.BlogCategoryId).ToList();
+
+                model.Tags = _dataContext.BlogTags
+                 .Select(c => new BlogTagViewModel(c.Id, c.Title))
+                 .ToList();
+
+                model.TagIds = blog.BlogTags.Select(c => c.BlogTagId).ToList(); 
+
+
+                return View(model);
+            }
+
+
+            async void UpdateBlog()
+            {
+                blog.Title = model.Title;
+                blog.Content = model.Content;
+
+            }
+        }
+
+        #endregion
 
         #region Delete
         [HttpPost("delete/{id}", Name = "admin-blog-delete")]
