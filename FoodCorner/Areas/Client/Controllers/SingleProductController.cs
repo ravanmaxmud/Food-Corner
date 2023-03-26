@@ -91,7 +91,8 @@ namespace FoodCorner.Areas.Client.Controllers
             {
                 ProductId = product.Id,
                 UserId = _userService.CurrentUser.Id,
-                Content = model.AddComments.Content
+                Content = model.AddComments.Content,
+                IsAccepted = false
 
             };
 

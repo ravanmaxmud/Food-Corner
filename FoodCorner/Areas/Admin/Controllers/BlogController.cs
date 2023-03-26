@@ -216,8 +216,6 @@ namespace FoodCorner.Areas.Admin.Controllers
 
             }
 
-
-
             UpdateBlog();
 
             await _dataContext.SaveChangesAsync();
@@ -250,6 +248,46 @@ namespace FoodCorner.Areas.Admin.Controllers
             {
                 blog.Title = model.Title;
                 blog.Content = model.Content;
+                blog.UpdateAt = DateTime.Now;
+
+
+                #region Catagory
+                var categoriesInDb = blog.BlogCategories.Select(bc => bc.BlogCategoryId).ToList();
+                var categoriesToRemove = categoriesInDb.Except(model.CategoryIds).ToList();
+                var categoriesToAdd = model.CategoryIds.Except(categoriesInDb).ToList();
+
+                blog.BlogCategories.RemoveAll(bc => categoriesToRemove.Contains(bc.BlogCategoryId));
+
+                foreach (var categoryId in categoriesToAdd)
+                {
+                    var blogCategory = new BlogAndBlogCategory
+                    {
+                        BlogCategoryId = categoryId,
+                        Blog = blog,
+                    };
+
+                    await _dataContext.BlogAndBlogCategories.AddAsync(blogCategory);
+                }
+                #endregion
+                #region Tag
+                var tagsInDb = blog.BlogTags.Select(bc => bc.BlogTagId).ToList();
+                var tagsToRemove = categoriesInDb.Except(model.TagIds).ToList();
+                var tagsToAdd = model.TagIds.Except(categoriesInDb).ToList();
+
+                blog.BlogTags.RemoveAll(bc => categoriesToRemove.Contains(bc.BlogTagId));
+
+                foreach (var tagId in tagsToAdd)
+                {
+                    var blogTag = new BlogAndBlogTag
+                    {
+                        BlogTagId = tagId,
+                        Blog = blog,
+                    };
+
+                    await _dataContext.BlogAndBlogTags.AddAsync(blogTag);
+                }
+                #endregion
+
 
             }
         }

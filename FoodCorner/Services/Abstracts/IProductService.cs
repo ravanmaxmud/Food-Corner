@@ -6,7 +6,7 @@ namespace FoodCorner.Services.Abstracts
 {
     public interface IProductService
     {
-        Task<List<ListItemViewModel>> GetAllProduct(string? search = null, string? searchBy = null);
+        Task<List<ListItemViewModel>> GetAllProduct(string? search = null, string? searchBy = null,int page = 1);
         Task AddProduct(AddViewModel model);
         Task<bool> CheckProductSize(List<int> SizeIds, ModelStateDictionary ModelState);
         Task<bool> CheckProductTag(List<int> TagIds, ModelStateDictionary ModelState);

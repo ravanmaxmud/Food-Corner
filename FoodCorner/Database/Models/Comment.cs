@@ -5,6 +5,7 @@ namespace FoodCorner.Database.Models
     public class Comment : BaseEntity, IAuditable
     {
         public string Content { get; set; }
+        public bool IsAccepted { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
         public int ProductId { get; set; }

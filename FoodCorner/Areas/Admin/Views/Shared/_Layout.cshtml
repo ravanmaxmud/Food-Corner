@@ -175,7 +175,10 @@
                                         <a asp-route="admin-blog-list" class="nav-link">Blog`s</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a asp-route="admin-blog-tag" class="nav-link">Blog Tag`s</a>
+                                        <a asp-route="admin-blogTag-list" class="nav-link">Blog Tag`s</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-route="admin-blogCate-list" class="nav-link">Blog Categories</a>
                                     </li>
                                 </ul><!--end nav-->
                             </div><!--end sidebarAnalytics-->
@@ -526,7 +529,6 @@
     <!-- Plugin Js -->
 
     @RenderSection("plugin_scripts", required: false)
-
 
     <!-- App js -->
     <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>

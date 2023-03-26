@@ -1,0 +1,42 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.BlogCategory
+@model List<ListItemViewModel>
+
+<div class="col-lg-12">
+    <div class="row justify-content-end">
+        <div class="">
+            <a asp-route="admin-blogCate-add" class="btn btn-secondary">Add new Category</a>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Blog Categoryies</h4>
+        </div><!--end card-header-->
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var nav in Model)
+                        {
+                            <tr>
+                                <td>@nav.Title</td>
+                                <td class="text-end">
+                                    <form method="POST" asp-route="admin-blogCate-delete" asp-route-id="@nav.Id" id="book-form-@nav.Id"></form>
+                                    <button style="background-color:none; border:none;" type="submit" form="book-form-@nav.Id">
+                                        <i class="las la-trash-alt text-secondary font-16"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table><!--end /table-->
+            </div><!--end /tableresponsive-->
+        </div><!--end card-body-->
+    </div><!--end card-->
+</div>

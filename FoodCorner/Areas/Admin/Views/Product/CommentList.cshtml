@@ -21,7 +21,16 @@
                             <tr>
                                 <td>@nav.Comment</td>
                                 <td>@nav.UserFullName</td>
-                                <td class="text-end">
+                                <td class="text-end d-flex  ">
+                          
+                                    @if (nav.IsAccepted == false)
+                                    {
+                                        <form method="POST" asp-route="admin-product-acceptComment" asp-route-commentId="@nav.Id" id="accept-@nav.Id"></form>
+                                        <button style="background-color:none; border:none;" type="submit" form="accept-@nav.Id">
+                                            <i class="fa-solid fa-circle-check text-success font-16"></i>
+                                        </button>
+                                    }
+
                                     <form method="POST" asp-route="admin-product-deleteComment" asp-route-commentId="@nav.Id" id="book-form-@nav.Id"></form>
                                     <button style="background-color:none; border:none;" type="submit" form="book-form-@nav.Id">
                                         <i class="las la-trash-alt text-secondary font-16"></i>

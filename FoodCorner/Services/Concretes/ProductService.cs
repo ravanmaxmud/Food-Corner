@@ -31,7 +31,7 @@ namespace FoodCorner.Services.Concretes
             _contextAccessor = contextAccessor;
         }
 
-        public async Task<List<ListItemViewModel>> GetAllProduct(string? search = null ,string? searchBy = null)
+        public async Task<List<ListItemViewModel>> GetAllProduct(string? search = null ,string? searchBy = null, int page = 1)
         {
             var productsQuery = _dataContext.Products.Include(p => p.ProductImages).Include(p => p.ProductCatagories).AsQueryable();
 

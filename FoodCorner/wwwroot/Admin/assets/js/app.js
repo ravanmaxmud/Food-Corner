@@ -322,3 +322,4 @@ let deletebutton = document.querySelectorAll(".deleteItemImage");
 deletebutton.forEach(btn => btn.addEventListener("click", function () {
     btn.parentElement.remove()
 }))
+

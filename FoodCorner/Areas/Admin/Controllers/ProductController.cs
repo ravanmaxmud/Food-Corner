@@ -34,8 +34,10 @@ namespace FoodCorner.Areas.Admin.Controllers
         }
 
         [HttpGet("list", Name = "admin-product-list")]
-        public async Task<IActionResult> List(string? search = null, string? searchBy = null)
+        public async Task<IActionResult> List(string? search = null, string? searchBy = null, int page = 1)
         {
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)_dataContext.Products.Count() / 6);
             return View(await _productService.GetAllProduct(search,searchBy));
         }
 
@@ -218,9 +220,25 @@ namespace FoodCorner.Areas.Admin.Controllers
             if (product is null) { return NotFound();}
 
             var model = await _dataContext.Comments.Where(pc=> pc.ProductId ==product.Id)
-                .Select(pc=> new ProductCommentList(pc.Id,pc.Content,$"{pc.User.FirstName} {pc.User.LastName}")).ToListAsync();
+                .Select(pc=> new ProductCommentList(pc.Id,pc.Content,$"{pc.User.FirstName} {pc.User.LastName}",pc.IsAccepted)).ToListAsync();
 
             return View(model);
+        }
+
+        [HttpPost("acceptComment/{commentId}", Name = "admin-product-acceptComment")]
+        public async Task<IActionResult> AcceptComment([FromRoute] int commentId)
+        {
+
+            var comment = await _dataContext.Comments.FirstOrDefaultAsync(c => c.Id == commentId);
+            if (comment is null)
+            {
+                return NotFound();
+            }
+
+            comment.IsAccepted = true;
+            await _dataContext.SaveChangesAsync();
+
+            return RedirectToRoute("admin-product-commentList", new { id = comment.ProductId });
         }
 
         [HttpPost("deleteComment/{commentId}", Name = "admin-product-deleteComment")]

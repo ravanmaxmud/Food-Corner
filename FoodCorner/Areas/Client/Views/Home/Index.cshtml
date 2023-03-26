@@ -5,362 +5,258 @@
 
 <!-- Slider -->
 <section class="section-slide">
-	<div class="wrap-slick1">
-		<div class="slick1">
-			@foreach (var item in Model.Sliders)
-			{
-			<div class="item-slick1" style="background-image: url(/@item.BackGroundImageUrl);">
-				<div class="container h-full">
-					<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
-						<div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
-							<span class="slider-header-text ltext-101 cl2 respon2">
-								@item.HeaderTitle
-							</span>
-						</div>
+    <div class="wrap-slick1">
+        <div class="slick1">
+            @foreach (var item in Model.Sliders)
+            {
+                <div class="item-slick1" style="background-image: url(/@item.BackGroundImageUrl);">
+                    <div class="container h-full">
+                        <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+                            <div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
+                                <span class="slider-header-text ltext-101 cl2 respon2">
+                                    @item.HeaderTitle
+                                </span>
+                            </div>
 
-						<div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
-							<h2 class="main-text ltext-201 cl2 p-t-19 p-b-43 respon1">
-								@item.MainTitle
-							</h2>
-						</div>
+                            <div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
+                                <h2 class="main-text ltext-201 cl2 p-t-19 p-b-43 respon1">
+                                    @item.MainTitle
+                                </h2>
+                            </div>
 
-						<div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
-							<a asp-route="@item.ButtonRedirectUrl" class="slider-btn flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-								@item.Button
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>	
-			}
-		</div>
-	</div>
+                            <div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
+                                <a asp-route="@item.ButtonRedirectUrl" class="slider-btn flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                                    @item.Button
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </section>
 
 <section class="our-story" style="background-image: url(/Client/assets/images/Logo/backgorondStory.jpg);">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 col-12">
-				<div class="story-title text-center">
-					<h1>Our Story</h1>
-				</div>
-			</div>
-			<div class="col-lg-12 col-12">
-				<div class="story-content text-center">
-					@foreach (var item in Model.Stories)
-					{
-						<p>@item.Contetn</p>
-					}
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="story-title text-center">
+                    <h1>Our Story</h1>
+                </div>
+            </div>
+            <div class="col-lg-12 col-12">
+                <div class="story-content text-center">
+                    @foreach (var item in Model.Stories)
+                    {
+                        <p>@item.Contetn</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Banner -->
 <div class="banner-tab sec-banner bg0">
-	<div class="slick-banner">
-		<div class="flex-w flex-c-m">
-			@foreach (var item in Model.Categories)
-			{
-			<div class="block1 wrap-pic-w">
-					<img src="~/@item.BackgroundİmageUrl" alt="IMG-BANNER">
+    <div class="slick-banner">
+        <div class="flex-w flex-c-m">
+            @foreach (var item in Model.Categories)
+            {
+                <div class="block1 wrap-pic-w">
+                    <img src="~/@item.BackgroundİmageUrl" alt="IMG-BANNER">
 
-					<a asp-route="client-homesearch-index" asp-route-categoryId="@item.Id" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
-						<div class="block1-txt-child1 flex-col-l">
-							<span class="block1-name ltext-102 trans-04 p-b-8">
-								@item.Title
-							</span>
-						</div>
-						<div class="block1-txt-child2 p-b-4 trans-05">
-							<div class="block1-link stext-101 cl0 trans-09">
-								Shop Now
-							</div>
-						</div>
-					</a>
-				</div>	
-			}
-		</div>
-	</div>
+                    <a asp-route="client-homesearch-index" asp-route-categoryId="@item.Id" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+                        <div class="block1-txt-child1 flex-col-l">
+                            <span class="block1-name ltext-102 trans-04 p-b-8">
+                                @item.Title
+                            </span>
+                        </div>
+                        <div class="block1-txt-child2 p-b-4 trans-05">
+                            <div class="block1-link stext-101 cl0 trans-09">
+                                Shop Now
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
 </div>
 
 <!--Product Slider-->
 <section id="product-slider">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="ps-top">
-					<div class="dwontime">
-						<h2>Best Selling Products</h2>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="ps-carts">
-			<div class="cart-box responsive mt-4">
-				@await Component.InvokeAsync(nameof(Products),"Best")
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ps-top">
+                    <div class="dwontime">
+                        <h2>Best Selling Products</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="ps-carts">
+            <div class="cart-box responsive mt-4">
+                @await Component.InvokeAsync(nameof(Products),"Best")
+            </div>
+        </div>
+    </div>
 </section>
 
 
 <!--Browse Category-->
 <section id="product-slider">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="ps-top">
-					<div class="dwontime">
-						<h2>New Products</h2>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="ps-carts">
-			<div class="cart-box responsive mt-4">
-				@await Component.InvokeAsync(nameof(Products),"NewProduct")
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ps-top">
+                    <div class="dwontime">
+                        <h2>New Products</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="ps-carts">
+            <div class="cart-box responsive mt-4">
+                @await Component.InvokeAsync(nameof(Products),"NewProduct")
+            </div>
+        </div>
+    </div>
 </section>
 
 <!--Blog-->
 
 
 <section id="section-blog" class="sec-blog bg0 p-t-60 p-b-90">
-	<div class="container">
-		<div class="blog-title p-b-66">
-			<h2 class="ltext-105 cl5 txt-center respon1">
-				Our Blogs
-			</h2>
-		</div>
+    <div class="container">
+        <div class="blog-title p-b-66">
+            <h2 class="ltext-105 cl5 txt-center respon1">
+                Our Blogs
+            </h2>
+        </div>
 
-		<div class="row">
-			@await Component.InvokeAsync(nameof(Blog))
-		</div>
-	</div>
+        <div class="row">
+            @await Component.InvokeAsync(nameof(Blog))
+        </div>
+    </div>
 </section>
 
 
 <!--Explore All Product-->
 <section id="explore">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 mt-5">
-				<div class="ps-top">
-					<div class="dwontime">
-						<h2>Explore our Products</h2>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="ps-carts">
-			<div class="cart-box responsive-explore mt-4">
-				@await Component.InvokeAsync(nameof(Products))
-			</div>
-			<div class="btn-cart text-center mt-5 mb-5">
-				<a href="">View All Products</a>
-			</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mt-5">
+                <div class="ps-top">
+                    <div class="dwontime">
+                        <h2>Explore our Products</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="ps-carts">
+            <div class="cart-box responsive-explore mt-4">
+                @await Component.InvokeAsync(nameof(Products))
+            </div>
+            <div class="btn-cart text-center mt-5 mb-5">
+                <a href="">View All Products</a>
+            </div>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </section>
 
 
 <!--User FeedBack-->
 
 <section id="feedback" style="background-color: #F9F3F0;">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="ps-top">
-					<div class="dwontime">
-						<h2>User Feed Back's</h2>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="ps-carts">
-			<div class="cart-box responsivee mt-4">
-				<div class="feed-cart">
-					<div class="fc-text">
-						<p>
-							“ It’s amazing how much easier it has been to
-							meet new people and create instantly non
-							connections. I have the exact same personal
-							the only thing that has changed is my mind
-							set and a few behaviors. “
-						</p>
-					</div>
-					<div class="fc-img d-flex align-items-center">
-						<div class="fed-img">
-							<img src="~/Client/assets/images/Product/SekaTort2.jpeg"
-								 alt="">
-						</div>
-						<div class="fed-txt">
-							<span>Head Of Idea</span>
-							<h6>James C. Anderson</h6>
-						</div>
-					</div>
-				</div>
-				<div class="feed-cart">
-					<div class="fc-text">
-						<p>
-							“ It’s amazing how much easier it has been to
-							meet new people and create instantly non
-							connections. I have the exact same personal
-							the only thing that has changed is my mind
-							set and a few behaviors. “
-						</p>
-					</div>
-					<div class="fc-img d-flex align-items-center">
-						<div class="fed-img">
-							<img src="https://new.axilthemes.com/demo/template/etrade~/Client/assets/images/testimonial/image-3.png"
-								 alt="">
-						</div>
-						<div class="fed-txt">
-							<span>Head Of Idea</span>
-							<h6>James C. Anderson</h6>
-						</div>
-					</div>
-				</div>
-				<div class="feed-cart">
-					<div class="fc-text">
-						<p>
-							“ It’s amazing how much easier it has been to
-							meet new people and create instantly non
-							connections. I have the exact same personal
-							the only thing that has changed is my mind
-							set and a few behaviors. “
-						</p>
-					</div>
-					<div class="fc-img d-flex align-items-center">
-						<div class="fed-img">
-							<img src="https://new.axilthemes.com/demo/template/etrade~/Client/assets/images/testimonial/image-2.png"
-								 alt="">
-						</div>
-						<div class="fed-txt">
-							<span>Head Of Idea</span>
-							<h6>James C. Anderson</h6>
-						</div>
-					</div>
-				</div>
-				<div class="feed-cart">
-					<div class="fc-text">
-						<p>
-							“ It’s amazing how much easier it has been to
-							meet new people and create instantly non
-							connections. I have the exact same personal
-							the only thing that has changed is my mind
-							set and a few behaviors. “
-						</p>
-					</div>
-					<div class="fc-img d-flex align-items-center">
-						<div class="fed-img">
-							<img src="https://new.axilthemes.com/demo/template/etrade~/Client/assets/images/testimonial/image-2.png"
-								 alt="">
-						</div>
-						<div class="fed-txt">
-							<span>Head Of Idea</span>
-							<h6>James C. Anderson</h6>
-						</div>
-					</div>
-				</div>
-				<div class="feed-cart">
-					<div class="fc-text">
-						<p>
-							“ It’s amazing how much easier it has been to
-							meet new people and create instantly non
-							connections. I have the exact same personal
-							the only thing that has changed is my mind
-							set and a few behaviors. “
-						</p>
-					</div>
-					<div class="fc-img d-flex align-items-center">
-						<div class="fed-img">
-							<img src="https://new.axilthemes.com/demo/template/etrade~/Client/assets/images/testimonial/image-1.png"
-								 alt="">
-						</div>
-						<div class="fed-txt">
-							<span>Head Of Idea</span>
-							<h6>James C. Anderson</h6>
-						</div>
-					</div>
-				</div>
-				<div class="feed-cart">
-					<div class="fc-text">
-						<p>
-							“ It’s amazing how much easier it has been to
-							meet new people and create instantly non
-							connections. I have the exact same personal
-							the only thing that has changed is my mind
-							set and a few behaviors. “
-						</p>
-					</div>
-					<div class="fc-img d-flex align-items-center">
-						<div class="fed-img">
-							<img src="https://new.axilthemes.com/demo/template/etrade~/Client/assets/images/testimonial/image-2.png"
-								 alt="">
-						</div>
-						<div class="fed-txt">
-							<span>Head Of Idea</span>
-							<h6>James C. Anderson</h6>
-						</div>
-					</div>
-				</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ps-top">
+                    <div class="dwontime">
+                        <h2>User Feed Back's</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="ps-carts">
+            <div class="cart-box responsivee mt-4">
+                @foreach (var item in Model.FeedBacks)
+                {
+                    <div class="feed-cart">
+                        <div class="fc-text">
+                            <p>
+                                “@item.CommentTitle.“
+                            </p>
+                        </div>
+                        <div class="fc-img d-flex align-items-center">
+                            <div class="fed-img">
+                                <img src="~/@item.ProductImgUrl"
+                                     alt="">
+                            </div>
+                            <div class="fed-txt">
+                                <span>@item.ProductName</span>
+                                <h6>From:@item.UserFullName</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
 </section>
 
 
 <section id="payment-benefit">
 
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-4">
-				<div class="payment-item">
-					<div class="payment-icon">
-						<img src="~/Client/assets/images/Logo/Delivery-removebg-preview.png" alt="">
-					</div>
-					<div class="payment-content">
-						<h4>Home Delivery</h4>
-						<p>Product Delivery is a customer-centric approach to defining.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4">
-				<div class="payment-item">
-					<div class="payment-icon">
-						<img src="~/Client/assets/images/Logo/Delivery-removebg-preview.png" alt="">
-					</div>
-					<div class="payment-content">
-						<h4>Home Delivery</h4>
-						<p>Product Delivery is a customer-centric approach to defining.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4">
-				<div class="payment-item">
-					<div class="payment-icon">
-						<img src="~/Client/assets/images/Logo/Delivery-removebg-preview.png" alt="">
-					</div>
-					<div class="payment-content">
-						<h4>Home Delivery</h4>
-						<p>Product Delivery is a customer-centric approach to defining.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="payment-item">
+                    <div class="payment-icon">
+                        <img src="~/Client/assets/images/Logo/Delivery-removebg-preview.png" alt="">
+                    </div>
+                    <div class="payment-content">
+                        <h4>Home Delivery</h4>
+                        <p>Product Delivery is a customer-centric approach to defining.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="payment-item">
+                    <div class="payment-icon">
+                        <img src="~/Client/assets/images/Logo/Delivery-removebg-preview.png" alt="">
+                    </div>
+                    <div class="payment-content">
+                        <h4>Home Delivery</h4>
+                        <p>Product Delivery is a customer-centric approach to defining.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="payment-item">
+                    <div class="payment-icon">
+                        <img src="~/Client/assets/images/Logo/Delivery-removebg-preview.png" alt="">
+                    </div>
+                    <div class="payment-content">
+                        <h4>Home Delivery</h4>
+                        <p>Product Delivery is a customer-centric approach to defining.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

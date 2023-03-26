@@ -41,7 +41,14 @@ namespace FoodCorner.Areas.Client.Controllers
                 .OrderByDescending(c=> c.Id).Take(3).Select(c => new CategoryViewModel(c.Id,c.Title,
                 _fileService.GetFileUrl(c.BackgroundİmageInFileSystem,UploadDirectory.Category))).ToListAsync(),
 
-                Stories = await _dataContext.Stories.Take(1).Select(S=> new StoryViewModel(S.Content)).ToListAsync()
+                Stories = await _dataContext.Stories.Take(1).Select(S=> new StoryViewModel(S.Content)).ToListAsync(),
+
+                FeedBacks = await _dataContext.Comments.Include(p=> p.Product).Include(p=> p.User).Where(c=> c.IsAccepted == true)
+                .Select(f=> new FeedBackViewModel(f.Id,f.Content,f.ProductId,f.Product.Name,
+                f.Product.ProductImages.Where(p=> p.IsPoster == true).FirstOrDefault() != null
+                              ? _fileService.GetFileUrl(f.Product.ProductImages.Where(p => p.IsPoster == true).FirstOrDefault().ImageNameFileSystem, Contracts.File.UploadDirectory.Product)
+                                  : String.Empty
+                                  , $"{f.User.FirstName} {f.User.LastName}")).ToListAsync()
 
                 
             };

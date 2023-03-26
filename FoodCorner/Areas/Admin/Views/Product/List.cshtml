@@ -37,7 +37,7 @@
                                             <h6 class="m-0 text-dark">₼@item.Price</h6>
                                         </div><!--end media-body-->
                                     </div>
-                                </div><!--end meta-box-->   
+                                </div><!--end meta-box-->
                                 <div class="d-flex justify-content-between aligin-items-center">
                                     <a class="btn btn-info" asp-route="admin-product-commentList" asp-route-id="@item.Id"><i class="fa-regular fa-comment"></i></a>
                                     <a class="btn btn-success" asp-route="admin-product-update" asp-route-Id="@item.Id"><i class="las la-pen text-dark font-16"></i></a>
@@ -55,4 +55,30 @@
         }
     </div><!--end row-->
 
+</div>
+
+<div class="card-body">
+    <nav aria-label="...">
+        <ul class="pagination pagination-sm">
+            @*            <li class="page-item active" aria-current="page">
+            <span class="page-link">
+            1
+            <span class="sr-only">(current)</span>
+            </span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>*@
+            @for (int i = 1; i <= ViewBag.TotalPage; i++)
+            {
+
+                <li class=@(ViewBag.CurrentPage == i ?"active":"") aria-current=@(ViewBag.CurrentPage)>
+                    <a asp-route-page="@i" class="page-link">
+                        @i
+                    </a>
+                </li>
+            }
+        </ul><!--end pagination-->
+    </nav><!--end nav-->
 </div>

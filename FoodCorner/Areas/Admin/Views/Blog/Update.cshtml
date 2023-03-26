@@ -9,7 +9,7 @@
             </div>
             <div class="card-body">
                 <div class="general-label">
-                    <form method="POST" asp-route="admin-blog-add" enctype="multipart/form-data">
+                    <form method="POST" asp-route="admin-blog-update" asp-route-id="@Model.Id" enctype="multipart/form-data">
                         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
 
                         <div class="form-group">
