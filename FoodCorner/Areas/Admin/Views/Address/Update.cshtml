@@ -1,0 +1,25 @@
+﻿@using FoodCorner.Areas.Admin.ViewModels.Address
+@model UpdateViewModel
+
+<div class="card-body">
+    <form method="POST" asp-route="admin-team-update" enctype="multipart/form-data" class="row g-3 needs-validation">
+        <div class="col-md-4">
+            <label asp-for="City" class="form-label"></label>
+            <input asp-for="City" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Street" class="form-label"></label>
+            <input asp-for="Street" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="Street" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="PhoneNumber" class="form-label"></label>
+            <input asp-for="PhoneNumber" type="text" class="form-control" id="validationCustom01">
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form><!--end form-->
+</div>

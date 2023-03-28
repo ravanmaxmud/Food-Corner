@@ -52,10 +52,11 @@
                     <h4 class="mtext-105 cl2 js-name-detail p-b-14">
                         @Model.Title
                     </h4>
-                    <span class="mtext-106 cl2">
+                    <span class="mtext-106 cl2 qiymetler">
                         @if (Model.DiscountPrice != null)
                         {
-                            <span class="newprice">₼@Model.DiscountPrice</span>
+                            <span class="mtext-106 cl2 endirim-qiymeti">₼@Model.Price</span>
+                            <span class="mtext-106 cl2 yeni-qiymet">₼@Model.DiscountPrice</span>
                         }
                         else
                         {

@@ -1,12 +1,15 @@
-﻿<div class=" " id="dashboad">
+﻿@using FoodCorner.Services.Abstracts
+@inject IUserService userService
+
+<div class=" " id="dashboad">
 	<div class="myaccount-content">
 		<h3>Dashboard</h3>
 		<div class="welcome mb-20">
 			<p>
-				Hello, <strong>Alex Tuntuni</strong> (If Not <strong>
-					Tuntuni
+				Hello, <strong>@userService.CurrentUser.FirstName @userService.CurrentUser.LastName</strong> (If Not <strong>
+					@userService.CurrentUser.FirstName
 					!
-				</strong><a href="login-register.html" class="logout">
+				</strong><a asp-route="client-auth-logout" class="logout">
 					Logout
 				</a>)
 			</p>

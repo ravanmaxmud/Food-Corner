@@ -23,6 +23,7 @@
 
     <link href="~/admin/assets/css/icons.min.css" rel="stylesheet" type="text/css" asp-append-version="true" />
     <link href="~/admin/assets/css/app.min.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="~/admin/assets/css/app.css" rel="stylesheet" type="text/css" asp-append-version="true" />
 
     <!-- Custom css -->
     @RenderSection("styles", required: false)
@@ -34,7 +35,7 @@
         <div class="main-icon-menu">
             <a href="index.html" class="logo logo-metrica d-block text-center">
                 <span>
-                    <img src="~/admin/assets/images/logo-sm.png" alt="logo-small" class="logo-sm" asp-append-version="true">
+                    <img style="width:100%; height:40px; object-fit:cover;" src="~/Client/assets/images/CatagoriImg/sirinniyat.svg" asp-append-version="true">
                 </span>
             </a>
             <div class="main-icon-menu-body">
@@ -53,11 +54,6 @@
                     </ul><!--end nav-->
                 </div><!--end /div-->
             </div><!--end main-icon-menu-body-->
-            <div class="pro-metrica-end">
-                <a href="" class="profile">
-                    <img src="~/admin/assets/images/users/user-4.jpg" alt="profile-user" class="rounded-circle thumb-sm" asp-append-version="true">
-                </a>
-            </div><!--end pro-metrica-end-->
         </div>
         <!--end main-icon-menu-->
 
@@ -65,10 +61,6 @@
             <!-- LOGO -->
             <div class="topbar-left">
                 <a href="index.html" class="logo">
-                    <span>
-                        <img src="~/admin/assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark" asp-append-version="true">
-                        <img src="~/admin/assets/images/logo.png" alt="logo-large" class="logo-lg logo-light" asp-append-version="true">
-                    </span>
                 </a><!--end logo-->
             </div><!--end topbar-left-->
             <!--end logo-->
@@ -182,6 +174,11 @@
                                     </li>
                                 </ul><!--end nav-->
                             </div><!--end sidebarAnalytics-->
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" asp-route="admin-contactus-list">
+                                Address
+                            </a>
                         </li><!--end nav-item-->
                     </ul>
 

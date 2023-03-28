@@ -15,12 +15,20 @@
 				</a>
 
 				<div class="size-215 flex-col-t p-t-8">
-					<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
+					<a asp-route="client-single-index" asp-route-id="@item.Id" class="stext-116 cl8 hov-cl1 trans-04">
 						@item.Name
 					</a>
 
 					<span class="stext-116 cl6 p-t-20">
-						@item.Price
+						@if (item.DiscountPrice != null)
+						{
+							<span class="mtext-106 cl2 endirim-qiymeti">₼@item.Price</span>
+							<span class="mtext-106 cl2 yeni-qiymet">₼@item.DiscountPrice</span>
+						}
+						else
+						{
+							<span class="newprice">₼@item.Price</span>
+						}
 					</span>
 				</div>
 			</li>

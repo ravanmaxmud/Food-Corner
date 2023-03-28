@@ -1,0 +1,9 @@
+﻿ @using FoodCorner.Areas.Admin.ViewModels.Address;
+ @model List<ListItemViewModel>
+
+ @foreach (var item in Model)
+{
+ <p class="stext-107 cl7 size-201">
+   Any questions? Let us know in @item.Street,@item.City,  call us on (+994) @item.PhoneNumber
+</p>   
+}
