@@ -1,4 +1,5 @@
 ﻿using FoodCorner.Areas.Admin.Hubs;
+using FoodCorner.Contracts.Alert;
 using FoodCorner.Contracts.Identity;
 using FoodCorner.Database;
 using FoodCorner.Services.Abstracts;
@@ -22,12 +23,27 @@ namespace FoodCorner.Services.Concretes
 
         public async Task SendOrderCreatedToAdmin(string orderId)
         {
-            string title = "New Order Created! Please Chechk";
-            string content = $"{_userService.CurrentUser.Email} Created New Order {orderId}";
+            foreach (var user in await _dataContext.Users.Where(u => u.Roles.Name == RoleNames.ADMIN).ToListAsync())
+            {
+                await _alertHub.Clients
+                    .Group(user.Id.ToString())
+                    .SendAsync("Notify", new
+                    {
+                        Title = AlertMessages.ORDER_CREATED_TITLE_TO_MODERATOR,
+                        Content = AlertMessages.ORDER_CREATED_CONTENT_TO_MODERATOR
+                                    .Replace("{user_email}", _userService.CurrentUser.Email)
+                                    .Replace("{tracking_code}", orderId)  //string builder should be used
+                    });
+            }
 
-            await _alertHub.Clients.All
-                               .SendAsync("Notify", new { Title = title, Content = content });
-
+            await _alertHub.Clients
+                    .Group(_userService.CurrentUser.Id.ToString())
+                     .SendAsync("Notify", new
+                    {
+                        Title = AlertMessages.ORDER_CREATED_TITLE_TO_OWNER,
+                           Content = AlertMessages.ORDER_CREATED_CONTENT_TO_OWNER
+                            .Replace("{tracking_code}", orderId)  //string builder should be used
+                      });
         }
     }
 }
