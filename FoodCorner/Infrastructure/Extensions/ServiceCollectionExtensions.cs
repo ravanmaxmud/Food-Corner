@@ -27,6 +27,8 @@ namespace FoodCorner.Infrastructure.Extensions
 
             //services.AddScoped<ValidationCurrentUserAttribute>();
 
+            services.AddSignalR();
+
             services.ConfigureMvc();
 
             services.AddControllers().AddJsonOptions(x =>

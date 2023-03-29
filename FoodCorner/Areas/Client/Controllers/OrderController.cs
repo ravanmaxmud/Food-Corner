@@ -17,12 +17,14 @@ namespace FoodCorner.Areas.Client.Controllers
         private readonly IFileService _fileService;
         private readonly IUserService _userService;
         private readonly IOrderService _orderService;
-        public OrderController(DataContext dbContext, IFileService fileService, IUserService userService, IOrderService orderService)
+        private readonly INotificationService _notificationService;
+        public OrderController(DataContext dbContext, IFileService fileService, IUserService userService, IOrderService orderService, INotificationService notificationService)
         {
             _dbContext = dbContext;
             _fileService = fileService;
             _userService = userService;
             _orderService = orderService;
+            _notificationService = notificationService;
         }
 
         [HttpGet("checkout",Name ="client-order-checkout")]
@@ -74,6 +76,8 @@ namespace FoodCorner.Areas.Client.Controllers
 
             await _dbContext.SaveChangesAsync();
 
+            await _notificationService.SendOrderCreatedToAdmin(order.Id);
+
             return RedirectToRoute("client-account-order");
 
 
@@ -110,7 +114,12 @@ namespace FoodCorner.Areas.Client.Controllers
                     Status = Database.Models.Enums.OrderStatus.Created
                 };
                 await _dbContext.Orders.AddAsync(order);
+
+          
+
                 return order;
+
+
             }
         }
 

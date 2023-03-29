@@ -1,4 +1,6 @@
-﻿namespace FoodCorner.Infrastructure.Extensions
+﻿using FoodCorner.Areas.Admin.Hubs;
+
+namespace FoodCorner.Infrastructure.Extensions
 {
     public static class AppBuilderExtensions
     {
@@ -12,6 +14,8 @@
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{area=exists}/{controller=home}/{action=index}");
+
+            app.MapHub<AlertHub>("hubs/alert-hub");
 
         }
     }
