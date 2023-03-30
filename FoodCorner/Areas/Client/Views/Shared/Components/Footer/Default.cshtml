@@ -8,14 +8,14 @@
 
                 <div class="col-sm-6 col-lg-3 p-b-50">
                     <h4 class="stext-301 cl0 p-b-30">
-                        Help
+                        Pages
                     </h4>
 
                     <ul>
                         @foreach (var item in Model)
                         {
                          <li class="p-b-10">
-                            <a href="@item.ToURL" class="stext-107 cl7 hov-cl1 trans-04">
+                            <a asp-route="@item.ToURL" class="stext-107 cl7 hov-cl1 trans-04">
                                @item.Name
                             </a>
                         </li>

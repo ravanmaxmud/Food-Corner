@@ -1,5 +1,10 @@
 ﻿@using FoodCorner.Areas.Admin.ViewCompanents;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@using FoodCorner.Services.Abstracts
+@inject IUserService userService
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -180,6 +185,11 @@
                             <a class="nav-link" asp-route="admin-contactus-list">
                                 Address
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-route="admin-user-list">
+                                User's
+                            </a>
                         </li><!--end nav-item-->
                     </ul>
 
@@ -224,21 +234,7 @@
         <!-- Navbar -->
         <nav class="navbar-custom" id="navbar-custom">
             <ul class="list-unstyled topbar-nav float-end mb-0">
-                <li class="dropdown">
-                    <a class="nav-link dropdown-toggle arrow-none nav-icon" data-bs-toggle="dropdown" href="#" role="button"
-                       aria-haspopup="false" aria-expanded="false">
-                        <img src="~/admin/assets/images/flags/us_flag.jpg" alt="" class="thumb-xxs rounded-circle" asp-append-version="true">
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#"><img src="~/admin/assets/images/flags/us_flag.jpg" alt="" height="15" class="me-2" asp-append-version="true">English</a>
-                        <a class="dropdown-item" href="#"><img src="~/admin/assets/images/flags/spain_flag.jpg" alt="" height="15" class="me-2" asp-append-version="true">Spanish</a>
-                        <a class="dropdown-item" href="#"><img src="~/admin/assets/images/flags/germany_flag.jpg" alt="" height="15" class="me-2" asp-append-version="true">German</a>
-                        <a class="dropdown-item" href="#"><img src="~/admin/assets/images/flags/french_flag.jpg" alt="" height="15" class="me-2" asp-append-version="true">French</a>
-                    </div>
-                </li><!--end topbar-language-->
-
-           
-
+               
 
              @await Component.InvokeAsync(nameof(ShowAlert))
 
@@ -248,11 +244,10 @@
                     <a class="nav-link dropdown-toggle nav-user" data-bs-toggle="dropdown" href="#" role="button"
                        aria-haspopup="false" aria-expanded="false">
                         <div class="d-flex align-items-center">
-                            <img src="~/admin/assets/images/users/user-4.jpg" alt="profile-user" class="rounded-circle me-2 thumb-sm" asp-append-version="true" />
                             <div>
                                 <small class="d-none d-md-block font-11">Admin</small>
                                 <span class="d-none d-md-block fw-semibold font-12">
-                                    Maria Gibson <i class="mdi mdi-chevron-down"></i>
+                                    @userService.CurrentUser.FirstName @userService.CurrentUser.LastName <i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </div>
                         </div>
@@ -261,7 +256,7 @@
                         <a class="dropdown-item" href="#"><i class="ti ti-user font-16 me-1 align-text-bottom"></i> Profile</a>
                         <a class="dropdown-item" href="#"><i class="ti ti-settings font-16 me-1 align-text-bottom"></i> Settings</a>
                         <div class="dropdown-divider mb-0"></div>
-                        <a class="dropdown-item" href="#"><i class="ti ti-power font-16 me-1 align-text-bottom"></i> Logout</a>
+                        <a class="dropdown-item" asp-route="admin-auth-logout"><i class="ti ti-power font-16 me-1 align-text-bottom"></i> Logout</a>
                     </div>
                 </li><!--end topbar-profile-->
 
