@@ -22,5 +22,6 @@ namespace FoodCorner.Database.Models
 
         public List<Order> Orders { get; set; }
         public List<Comment>? Comments { get; set; }
+        public List<AlertMessage>? Messages { get; set; }
     }
 }

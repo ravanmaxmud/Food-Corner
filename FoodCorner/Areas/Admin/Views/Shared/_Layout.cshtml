@@ -1,4 +1,5 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using FoodCorner.Areas.Admin.ViewCompanents;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -239,29 +240,7 @@
            
 
 
-                <li class="dropdown notification-list">
-                    <a class="nav-link dropdown-toggle arrow-none nav-icon" data-bs-toggle="dropdown" href="#" role="button"
-                       aria-haspopup="false" aria-expanded="false">
-                        <i class="ti ti-bell"></i>
-                        <span class="alert-badge"></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-lg pt-0">
-
-                        <h6 class="dropdown-item-text font-15 m-0 py-3 border-bottom d-flex justify-content-between align-items-center">
-                            Notifications <span class="badge bg-soft-primary badge-pill">2</span>
-                        </h6>
-                        <div class="notification-menu notification-menu-order" data-simplebar>
-                            <!-- item-->
-                            
-                            <!-- item-->
-                        </div>
-                        <!-- All-->
-                        <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
-                            View all <i class="fi-arrow-right"></i>
-                        </a>
-                    </div>
-                </li>
-
+             @await Component.InvokeAsync(nameof(ShowAlert))
 
 
 

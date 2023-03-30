@@ -45,6 +45,7 @@ namespace FoodCorner.Database
 		public DbSet<BlogAndBlogTag> BlogAndBlogTags { get; set; }
 
 		public DbSet<BlogFile> BlogFiles { get; set; }
+        public DbSet<AlertMessage> Messages { get; set; }
 
 
 
