@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using AspNetCore.IServiceCollection.AddIUrlHelper;
 using FoodCorner.Infrastructure.Configurations;
+using FoodCorner.BackgroundServices;
 
 namespace FoodCorner.Infrastructure.Extensions
 {
@@ -28,6 +29,9 @@ namespace FoodCorner.Infrastructure.Extensions
             //services.AddScoped<ValidationCurrentUserAttribute>();
 
             services.AddSignalR();
+
+            services.AddHostedService<DeleteExpiredUpUsers>();
+            services.AddHostedService<DeleteIsSeenMessages>();
 
             services.ConfigureMvc();
 

@@ -38,7 +38,7 @@ namespace FoodCorner.Services.Concretes
 
             var allSize = await _dataContext.Sizes.FirstOrDefaultAsync(s => s.Id == model.SizeId);
 
-            var increasePrice = (product.Price * allSize!.IncreasePercent) / 100;
+            var increasePrice = (product.Price * allSize!.IncreasePercent) / 100; 
             var sizePrice = product.Price + increasePrice;
 
             var increaseDiscountPrice = (product.DiscountPrice * allSize!.IncreasePercent) / 100;
