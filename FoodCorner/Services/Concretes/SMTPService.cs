@@ -24,14 +24,19 @@ namespace FoodCorner.Services.Concretes
 
         private MimeMessage CreateEmailMessage(MessageDto message)
         {
+            var bodyBuilder = new BodyBuilder();
+            bodyBuilder.HtmlBody = message.Content;
+
+
             var emailMessage = new MimeMessage();
             emailMessage.From.Add(new MailboxAddress(string.Empty, _emailConfig.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text)
-            {
-                Text = message.Content
-            };
+            emailMessage.Body = bodyBuilder.ToMessageBody();
+            //emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text)
+            //{
+            //    Text = message.Content
+            //};
             return emailMessage;
         }
 

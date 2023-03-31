@@ -15,6 +15,7 @@ namespace FoodCorner.Services.Concretes
         private readonly DateTime _activationExpireDate;
         private const string EMAIL_CONFIRMATION_ROUTE_NAME = "client-auth-activate";
         private const string PASSWORD_CHANGE_TOKEN = "client-auth-forgetPasswordToken";
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
 
         public UserActivationService(
@@ -22,7 +23,8 @@ namespace FoodCorner.Services.Concretes
             IHttpContextAccessor httpContextAccessor,
             IEmailService emailService,
             IUrlHelper urlHelper,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IWebHostEnvironment webHostEnvironment)
         {
             _dataContext = dataContext;
             _httpContextAccessor = httpContextAccessor;
@@ -33,6 +35,7 @@ namespace FoodCorner.Services.Concretes
                 Convert.ToDouble(configuration.GetRequiredSection("ActivationValidityMinute").Value);
 
             _activationExpireDate = DateTime.Now.AddMinutes(activationValidityMonute);
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -107,13 +110,29 @@ namespace FoodCorner.Services.Concretes
 
         private MessageDto PrepareActivationMessage(string email, string activationUrl)
         {
-            string body = EmailMessages.Body.ACTIVATION_MESSAGE
-                .Replace(EmailMessageKeyword.ACTIVATION_URL, activationUrl);
+            var pathToFile = _webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString() +
+            "Client" + Path.DirectorySeparatorChar.ToString() + "EmailTempalte" +
+            Path.DirectorySeparatorChar.ToString() + "ConfirimAccount.html";
+
+
+            string body = "";
+            using (StreamReader streamReader = System.IO.File.OpenText(pathToFile))
+            {
+                body = streamReader.ReadToEnd();
+            }
+
+            string message = activationUrl;
+
+            string messageBody = string.Format(body,
+            message);
 
             string subject = EmailMessages.Subject.ACTIVATION_MESSAGE;
 
-            return new MessageDto(email, subject, body);
+            return new MessageDto(email, subject, messageBody);
         }
+
+
+
 
         private MessageDto PrepareChangePasswordMessage(string email, string activationUrl)
         {

@@ -39,7 +39,7 @@ namespace FoodCorner.Areas.Client.ViewCompanents
 						productsQuery = productsQuery.OrderByDescending(p => p.Name);
 						break;
 					case 3:
-						productsQuery = productsQuery.OrderBy(p => p.CreatedAt);
+						productsQuery = productsQuery.OrderByDescending(p => p.CreatedAt);
 						break;
 					case 4:
 						productsQuery = productsQuery.OrderBy(p => p.Price);

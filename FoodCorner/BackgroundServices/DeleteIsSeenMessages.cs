@@ -21,7 +21,7 @@ namespace FoodCorner.BackgroundServices
 
             Console.WriteLine($"{nameof(DeleteIsSeenMessages)} is startet");
 
-            _timer = new Timer(DeleteMessages, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            _timer = new Timer(DeleteMessages, null, TimeSpan.Zero, TimeSpan.FromMinutes(20));
 
             return Task.CompletedTask;
         }
