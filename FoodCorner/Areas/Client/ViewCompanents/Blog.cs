@@ -5,6 +5,7 @@ using FoodCorner.Services.Abstracts;
 using System.Linq;
 using FoodCorner.Areas.Client.ViewModels.Home;
 using FoodCorner.Contracts.File;
+using FoodCorner.Extensions;
 
 namespace FoodCorner.Areas.Client.ViewCompanents
 {
@@ -26,7 +27,7 @@ namespace FoodCorner.Areas.Client.ViewCompanents
         {
             var model =
                await _dataContext.Blogs.Include(b => b.BlogTags).Include(b => b.BlogCategories).Include(b => b.BlogFiles)
-                .Select(b => new BlogViewModel(b.Id, b.Title, b.Content, b.CreatedAt,
+                .Select(b => new BlogViewModel(b.Id, b.Title, b.Content.Truncate(100,"..."), b.CreatedAt,
                 b.BlogTags.Select(b => b.Tag).Select(b => new BlogViewModel.TagViewModel(b.Title)).ToList(),
                 b.BlogCategories.Select(b => b.Category).Select(b => new BlogViewModel.CategoryViewModeL(b.Title, b.Parent.Title)).ToList(),
                 b.BlogFiles.Take(1).FirstOrDefault() != null

@@ -136,12 +136,25 @@ namespace FoodCorner.Services.Concretes
 
         private MessageDto PrepareChangePasswordMessage(string email, string activationUrl)
         {
-            string body = EmailMessages.Body.CHANGEPASSWORD_MESSAGE
-                .Replace(EmailMessageKeyword.CHANGEPASSWORD_URL, activationUrl);
+            var pathToFile = _webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString() +
+            "Client" + Path.DirectorySeparatorChar.ToString() + "EmailTempalte" +
+            Path.DirectorySeparatorChar.ToString() + "ChangePassword.html";
+
+
+            string body = "";
+            using (StreamReader streamReader = System.IO.File.OpenText(pathToFile))
+            {
+                body = streamReader.ReadToEnd();
+            }
+
+            string message = activationUrl;
+
+            string messageBody = string.Format(body,
+            message);
 
             string subject = EmailMessages.Subject.CHANGEPASSWORD_MESSAGE;
 
-            return new MessageDto(email, subject, body);
+            return new MessageDto(email, subject, messageBody);
         }
     }
 }
