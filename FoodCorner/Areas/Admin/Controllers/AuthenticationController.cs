@@ -52,7 +52,7 @@ namespace FoodCorner.Areas.Admin.Controllers
                 return View(model);
             }
 
-            return RedirectToRoute("admin-home-index");
+            return RedirectToRoute("admin-product-list");
            
         }
 

@@ -182,18 +182,18 @@ namespace FoodCorner.Areas.Client.Controllers
             {
                 return View(model);
             }
-            if (!await _userService.CheckPasswordAsync(model!.Email, model!.Password))
-            {
-                ModelState.AddModelError(String.Empty, "Email or password is not correct");
-                _logger.LogWarning($"({model.Email}{model.Password}) This Email and Password  is not correct.");
-                return View(model);
-            }
-            if (model.Password == model.NewPassword)
-            {
-                ModelState.AddModelError(String.Empty, "Password and NewPassword is not thseme");
-                _logger.LogWarning($"({model.Email}{model.Password}) This Email and Password  is not correct.");
-                return View(model);
-            }
+            //if (!await _userService.CheckPasswordAsync(model!.Email, model!.Password))
+            //{
+            //    ModelState.AddModelError(String.Empty, "Email or password is not correct");
+            //    _logger.LogWarning($"({model.Email}{model.Password}) This Email and Password  is not correct.");
+            //    return View(model);
+            //}
+            //if (model.Password == model.NewPassword)
+            //{
+            //    ModelState.AddModelError(String.Empty, "Password and NewPassword is not thseme");
+            //    _logger.LogWarning($"({model.Email}{model.Password}) This Email and Password  is not correct.");
+            //    return View(model);
+            //}
             var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
             if (user == null)
             {
@@ -201,6 +201,46 @@ namespace FoodCorner.Areas.Client.Controllers
             }
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
+            //user.Password = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
+            await _dataContext.SaveChangesAsync();
+
+
+            return RedirectToRoute("client-account-details");
+        }
+
+
+
+        [HttpGet("updatePassword", Name = "client-account-updatePassword")]
+        public IActionResult UpdatePassword()
+        {
+            return View();
+        }
+
+
+        [HttpPost("updatePassword", Name = "client-account-updatePassword")]
+        public async Task<IActionResult> UpdatePassword(UpdatePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (!await _userService.CheckPasswordAsync(_userService.CurrentUser.Email, model!.Password))
+            {
+                ModelState.AddModelError(String.Empty, "Email or password is not correct");
+                _logger.LogWarning($"({_userService.CurrentUser.Email}{model.Password}) This Email and Password  is not correct.");
+                return View(model);
+            }
+            if (model.Password == model.NewPassword)
+            {
+                ModelState.AddModelError(String.Empty, "Password and NewPassword is not thseme");
+                _logger.LogWarning($"({_userService.CurrentUser.Email}{model.Password}) This Email and Password  is not correct.");
+                return View(model);
+            }
+            var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == _userService.CurrentUser.Email);
+            if (user == null)
+            {
+                return NotFound();
+            }
             user.Password = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
             await _dataContext.SaveChangesAsync();
 

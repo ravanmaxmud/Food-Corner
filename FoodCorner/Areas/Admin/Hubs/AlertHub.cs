@@ -23,14 +23,14 @@ namespace FoodCorner.Areas.Admin.Hubs
             await base.OnConnectedAsync();
         }
 
-        public override async Task OnDisconnectedAsync(Exception? exception)
-        {
-            _logger.LogInformation($"Connection disconnected {Context.ConnectionId}");
+        //public override async Task OnDisconnectedAsync(Exception? exception)
+        //{
+        //    _logger.LogInformation($"Connection disconnected {Context.ConnectionId}");
 
-            var userClaim = Context.User!.Claims.Single(c => c.Type == CustomClaimNames.ID);
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, userClaim.Value);
+        //    var userClaim = Context.User!.Claims.Single(c => c.Type == CustomClaimNames.ID);
+        //    await Groups.RemoveFromGroupAsync(Context.ConnectionId, userClaim.Value);
 
-            await base.OnDisconnectedAsync(exception);
-        }
+        //    await base.OnDisconnectedAsync(exception);
+        //}
     }
 }

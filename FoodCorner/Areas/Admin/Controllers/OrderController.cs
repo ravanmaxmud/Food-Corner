@@ -7,6 +7,7 @@ using FoodCorner.Database;
 using FoodCorner.Services.Abstracts;
 using FoodCorner.Contracts.File;
 using FoodCorner.Services.Concretes;
+using Microsoft.AspNetCore.Hosting;
 
 namespace FoodCorner.Areas.Admin.Controllers
 {
@@ -19,15 +20,17 @@ namespace FoodCorner.Areas.Admin.Controllers
         private readonly IUserService _userService;
         private readonly IFileService _fileService;
         public IEmailService _emailService { get; set; }
-        public OrderController(DataContext dataContext, IUserService userService, IEmailService emailService, IFileService fileService)
-        {
-            _dataContext = dataContext;
-            _userService = userService;
-            _emailService = emailService;
-            _fileService = fileService;
-        }
+		private readonly IWebHostEnvironment _webHostEnvironment;
+		public OrderController(DataContext dataContext, IUserService userService, IEmailService emailService, IFileService fileService, IWebHostEnvironment webHostEnvironment)
+		{
+			_dataContext = dataContext;
+			_userService = userService;
+			_emailService = emailService;
+			_fileService = fileService;
+			_webHostEnvironment = webHostEnvironment;
+		}
 
-        [HttpGet("list",Name ="admin-order-list")]
+		[HttpGet("list",Name ="admin-order-list")]
         public async Task<IActionResult> List()
         {
             var model = await _dataContext.Orders.Include(o=> o.User)
@@ -74,13 +77,26 @@ namespace FoodCorner.Areas.Admin.Controllers
             await _dataContext.SaveChangesAsync();
 
             return RedirectToRoute("admin-order-list");
+
+
             MessageDto PrepareStausMessage(string email)
             {
-                string body = "Order Has Been Updated";
+				var pathToFile = _webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString() +
+			   "Client" + Path.DirectorySeparatorChar.ToString() + "EmailTempalte" +
+			    Path.DirectorySeparatorChar.ToString() + "OrderStatus.html";
 
-                string subject = EmailMessages.Subject.NOTIFICATION_MESSAGE;
 
-                return new MessageDto(email, subject, body);
+				string body = "";
+				using (StreamReader streamReader = System.IO.File.OpenText(pathToFile))
+				{
+					body = streamReader.ReadToEnd();
+				}
+
+				string messageBody = string.Format(body);
+
+				string subject = EmailMessages.Subject.NOTIFICATION_MESSAGE;
+
+                return new MessageDto(email, subject, messageBody);
             }
         }
 

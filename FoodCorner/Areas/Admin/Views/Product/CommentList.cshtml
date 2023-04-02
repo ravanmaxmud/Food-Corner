@@ -30,6 +30,13 @@
                                             <i class="fa-solid fa-circle-check text-success font-16"></i>
                                         </button>
                                     }
+                                    else
+                                    {
+                                        <form method="POST" asp-route="admin-product-acceptComment" asp-route-commentId="@nav.Id" id="accept-@nav.Id"></form>
+                                        <button style="background-color:none; border:none;" type="submit" form="accept-@nav.Id">
+                                            <i class="fa-solid fa-circle-minus text-danger"></i>
+                                        </button>
+                                    }
 
                                     <form method="POST" asp-route="admin-product-deleteComment" asp-route-commentId="@nav.Id" id="book-form-@nav.Id"></form>
                                     <button style="background-color:none; border:none;" type="submit" form="book-form-@nav.Id">

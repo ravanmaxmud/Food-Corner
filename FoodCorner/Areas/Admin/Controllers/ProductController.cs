@@ -235,7 +235,15 @@ namespace FoodCorner.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            comment.IsAccepted = true;
+            if (comment.IsAccepted == false)
+            {
+                comment.IsAccepted = true;
+            }
+            else
+            {
+                comment.IsAccepted = false; 
+            }
+         
             await _dataContext.SaveChangesAsync();
 
             return RedirectToRoute("admin-product-commentList", new { id = comment.ProductId });

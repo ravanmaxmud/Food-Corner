@@ -3,7 +3,12 @@
 
 <div class="" id="account-info">
 	<div class="myaccount-content">
-		<h3>Account Details</h3>
+		<div class="d-flex justify-content-between">
+			<h3>Account Details</h3>
+			<div style="float:right;" class="">
+				<a asp-route="client-account-updatePassword" class="btn btn-save">Change Password?</a>
+			</div>
+		</div>
 		<div class="text-danger" asp-validation-summary="ModelOnly"></div>
 		<div class="account-details-form">
 			<form method="POST" asp-route="client-account-details">
@@ -20,25 +25,7 @@
 						<input asp-for="Email" readonly id="email" placeholder="Email Address" type="email">
 						<span asp-validation-for="Email" class="text-danger"></span>
 					</div>
-					<div class="col-12  mb-2">
-						<h4>Password change</h4>
-					</div>
-					<div class="col-12  mb-2">
-						<input asp-for="Password" id="current-pwd" placeholder="Current Password"
-							   type="password">
-						<span asp-validation-for="Password" class="text-danger"></span>
-					</div>
-					<div class="col-lg-6 col-12  mb-2">
-						<input asp-for="NewPassword" id="new-pwd" placeholder="New Password"
-							   type="password">
-						<span asp-validation-for="NewPassword" class="text-danger"></span>
-					</div>
-					<div class="col-lg-6 col-12  mb-2">
-						<input asp-for="ConfirimNewPassword" id="confirm-pwd" placeholder="Confirm Password"
-							   type="password">
-						<span asp-validation-for="ConfirimNewPassword" class="text-danger"></span>
-					</div>
-					<div class="col-12">
+					<div class="col-12 mb-3">
 						<button class="btn btn-save">Save Changes</button>
 					</div>
 				</div>
