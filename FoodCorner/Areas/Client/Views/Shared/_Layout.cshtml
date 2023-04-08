@@ -188,6 +188,9 @@
     <div id="toaster" class="bg-success d-inline">
         <span class="text-light">Product Aded To Basket</span>
     </div>
+    <div id="wishToaster" class="bg-danger d-inline">
+        <span class="text-light">Product Aded To WishList</span>
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
@@ -214,6 +217,7 @@
     <script>
         AOS.init();
     </script>
+
     <!--===============================================================================================-->
     <script src="~/Client/assets/vendor/daterangepicker/moment.min.js"></script>
     <script src="~/Client/assets/vendor/daterangepicker/daterangepicker.js"></script>
@@ -255,7 +259,6 @@
                 scrollingThreshold: 1000,
                 wheelPropagation: false,
             });
-
             $(window).on('resize', function () {
                 ps.update();
             })

@@ -376,3 +376,34 @@ $(document).on("click", '.select-blog-tag', function (e) {
         });
 
 })
+
+
+
+$(document).on("click", '.add-wishlist', function (e) {
+    e.preventDefault();
+
+    let aHref = e.target.parentElement.href;
+    console.log(aHref);
+
+
+    document.getElementById('wishToaster').style.opacity = '1'
+    setTimeout(() => {
+        document.getElementById('wishToaster').style.opacity = '0'
+    }, 1000);
+
+    $.ajax(
+        {
+            type: "GET",
+            url: aHref,
+
+            success: function (response) {
+
+            },
+            error: function (err) {
+                $(".product-details-modal").html(err.responseText);
+
+            }
+
+        });
+
+})

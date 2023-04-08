@@ -1744,4 +1744,16 @@ header {
     color: #f00;
     margin-left: 10px;
 }
+
+#wishToaster {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    border-radius: 10px;
+    color: blue;
+    padding: 10px 20px;
+    opacity: 0;
+    transition: 0.5s;
+    z-index: 99999;
+}
 /*# sourceMappingURL=style.css.map */
