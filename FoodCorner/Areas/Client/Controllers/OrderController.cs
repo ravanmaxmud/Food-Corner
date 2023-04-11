@@ -111,7 +111,9 @@ namespace FoodCorner.Areas.Client.Controllers
                 {
                     Id = await _orderService.GenerateUniqueTrackingCodeAsync(),
                     UserId = _userService.CurrentUser.Id,
-                    Status = Database.Models.Enums.OrderStatus.Created
+                    Status = Database.Models.Enums.OrderStatus.Created,
+                    CreatedAt = DateTime.Now,
+
                 };
                 await _dbContext.Orders.AddAsync(order);
 

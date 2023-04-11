@@ -1,4 +1,5 @@
 ﻿using FoodCorner.Areas.Admin.Hubs;
+using FoodCorner.Areas.Client.Hubs;
 
 namespace FoodCorner.Infrastructure.Extensions
 {
@@ -16,7 +17,7 @@ namespace FoodCorner.Infrastructure.Extensions
                 pattern: "{area=exists}/{controller=home}/{action=index}");
 
             app.MapHub<AlertHub>("hubs/alert-hub");
-
+            app.MapHub<ChatHub>("hubs/chat-hub");
         }
     }
 }
