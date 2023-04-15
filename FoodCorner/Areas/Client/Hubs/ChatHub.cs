@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using FoodCorner.Contracts.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 
 namespace FoodCorner.Areas.Client.Hubs
 {
+    [Authorize]
     public class ChatHub :Hub
     {
         public async Task SendMessage(string message, string userId)
         {
+
             await Clients.Clients(userId).SendAsync("ReceiveMessage", message, Context.ConnectionId);
             await Clients.Clients(Context.ConnectionId).SendAsync("OwnMessage", message.Trim());
         }

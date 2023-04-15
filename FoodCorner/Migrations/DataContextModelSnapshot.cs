@@ -46,7 +46,7 @@ namespace FoodCorner.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vidios");
+                    b.ToTable("Vidios", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.Addres", b =>
@@ -118,7 +118,7 @@ namespace FoodCorner.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.Basket", b =>
@@ -213,7 +213,7 @@ namespace FoodCorner.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blogs", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.BlogAndBlogCategory", b =>
@@ -236,7 +236,7 @@ namespace FoodCorner.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("BlogAndBlogCategories");
+                    b.ToTable("BlogAndBlogCategories", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.BlogAndBlogTag", b =>
@@ -259,7 +259,7 @@ namespace FoodCorner.Migrations
 
                     b.HasIndex("BlogTagId");
 
-                    b.ToTable("BlogAndBlogTags");
+                    b.ToTable("BlogAndBlogTags", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.BlogCategory", b =>
@@ -287,7 +287,7 @@ namespace FoodCorner.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("BlogCategories");
+                    b.ToTable("BlogCategories", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.BlogFile", b =>
@@ -317,7 +317,7 @@ namespace FoodCorner.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("BlogFiles");
+                    b.ToTable("BlogFiles", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.BlogTag", b =>
@@ -340,7 +340,7 @@ namespace FoodCorner.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlogTags");
+                    b.ToTable("BlogTags", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.Category", b =>
@@ -412,7 +412,7 @@ namespace FoodCorner.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.Navbar", b =>
@@ -551,7 +551,7 @@ namespace FoodCorner.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PasswordForgets");
+                    b.ToTable("PasswordForgets", (string)null);
                 });
 
             modelBuilder.Entity("FoodCorner.Database.Models.Product", b =>
