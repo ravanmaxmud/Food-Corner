@@ -112,7 +112,7 @@ namespace FoodCorner.Services.Concretes
                 LastName = model.LastName,
                 Email = model.Email,
                 Password = BCrypt.Net.BCrypt.HashPassword(model.Password),
-                RoleId = 3,
+                RoleId =  _dataContext.Roles.Where(r=> r.Name =="User").FirstOrDefault()!.Id,
                 CreatedAt = DateTime.Now,
                 UpdateAt = DateTime.Now,
             };

@@ -142,7 +142,7 @@ namespace FoodCorner.Areas.Client.Controllers
 
             if (userActivation is null)
             { 
-               return NotFound();
+               return NotFound("Activation Token Not Found");
             }  
 
             if (DateTime.Now > userActivation.ExpiredDate)
@@ -165,7 +165,7 @@ namespace FoodCorner.Areas.Client.Controllers
 
             if (forgetPassword is null)
             {
-                return NotFound();
+                return NotFound("Forget Password Token Not Found");
             }
 
             if (DateTime.Now > forgetPassword.ExpiredDate)
